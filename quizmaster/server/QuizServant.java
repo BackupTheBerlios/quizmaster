@@ -163,7 +163,17 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void unregister(QuizClientServices client) throws RemoteException 
 	{
-		System.out.println(this.connectedClients.size() + " client(s) registered");
+		// Handling the highscore
+		if(this.isUseHighscore())
+		{
+			try {
+				this.highscore.processScore(client.getNickname(), client.getScore());
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// Unregistering
 		System.out.println("Trying to unregister client...");
 		
 		if(this.quizClients.contains(client))
@@ -309,14 +319,14 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	{
 		if(this.checker.isAlive())
 		{
-			if(this.isUseHighscore())
-			{
-				try {
-					this.highscore.processScore(client.getNickname(), client.getScore());
-				} catch (RemoteException e) {
-					e.printStackTrace();
-				}
-			}
+//			if(this.isUseHighscore())
+//			{
+//				try {
+//					this.highscore.processScore(client.getNickname(), client.getScore());
+//				} catch (RemoteException e) {
+//					e.printStackTrace();
+//				}
+//			}
 			
 			this.checker.getGame().removeClient(client);
 			return false;

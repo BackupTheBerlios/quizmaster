@@ -77,28 +77,31 @@ public class HighScore
 	 */
 	private void addEntry(String nick, int points)
 	{
+		Score sc = new Score(nick, points);
+		
 		if(this.highscore.isEmpty())
 		{
-			Score sc = new Score(nick, points);
 			this.highscore.add(sc);
 		}
 		else if(this.highscore.size() < MAXENTRIES)
 		{
-			Score sc = new Score(nick, points);
 			this.highscore.add(sc);
 		}
 		else
 		{
 			for(int i=0; i<this.highscore.size(); i++)
 			{
-				Score sc = (Score) this.highscore.elementAt(i);
-				if(sc.getScore()< points)
+				Score sc1 = (Score) this.highscore.elementAt(i);
+				if(sc1.getScore() == this.lowestscore)
 				{
 					this.highscore.removeElementAt(i);
 					this.highscore.add(sc);
+					continue;
 				}
 			}
 		}
+	
+		sc=null;
 		
 		try{
 			this.saveHighscore();
@@ -125,8 +128,7 @@ public class HighScore
 		for(int i=0; i<this.highscore.size(); i++)
 		{
 			Score sc = (Score) this.highscore.elementAt(i);
-			s.executeUpdate("insert into "+this.dbtable+" values("+sc.getId()+", '"
-													  +sc.getNick()+"', "+sc.getScore()+")");
+			s.executeUpdate("insert into "+this.dbtable+" values('', '"+sc.getNick()+"', "+sc.getScore()+")");
 		}
 	}
 	
