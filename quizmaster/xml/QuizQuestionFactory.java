@@ -1,8 +1,6 @@
-/*
+/* QuizQuestionFactory.java
+ * 
  * Created on 12.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
  */
 package xml;
 
@@ -163,22 +161,6 @@ public class QuizQuestionFactory {
 		return q;
 	}
 	
-	/*
-	 * Debug method for testing the results of the shuffle method...
-	 */
-	public static void printOutReadQuestion(QuizQuestion q)
-	{
-		System.out.println(q.getQuestion());
-		
-		for(int i=0; i<4; i++)
-		{
-			System.out.println((String)q.getAnswers().elementAt(i));
-		}
-		
-		System.out.println("Correct Answer: #"+q.getCorrectAnswer());
-		System.out.println();
-	}
-	
 	/**
 	 * Method to shuffle an array
 	 * @param array
@@ -198,7 +180,6 @@ public class QuizQuestionFactory {
 		return array;
 	}
 
-	
 	/**
 	 * Method for accessing a specific quiz question
 	 * @param number

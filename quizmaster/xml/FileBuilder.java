@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author reinhard
  *
- *
+ * A simple tool to generate quiz xml files
  */
 public class FileBuilder {
 	
