@@ -56,11 +56,15 @@ public class StateChecker extends Thread
 				this.servant.stopGame();
 			}
 			
+			// Checking if there are messages to send
 			if(this.servant.getMessages().size()>0)
 			{
 				for(int j=0; j<this.servant.getMessages().size(); j++)
 				{
-					ChatMessage msg = (ChatMessage) this.servant.getMessages().elementAt(j);
+					ChatMessage newMsg = (ChatMessage) this.servant.getMessages().elementAt(j);
+					
+					// DEBUG: Constructing a new message without sender, to see if that's the problem...
+					ChatMessage msg =  new ChatMessage(newMsg.getBody());
 					
 					for(int i=0; i<this.servant.getConnectedClients().size(); i++)
 					{

@@ -21,16 +21,17 @@ public class QuizServer {
 	{
 		QuizServant servant = null;
 		String filename = null;
+		boolean startRegistry = true;
 		
-		if(args.length!=1)
+		// Parsing commandline arguments
+		CliParamParser parser = new CliParamParser(args);
+		filename = parser.getStringArgument("-file");
+		startRegistry = parser.getBooleanArgument("-registry");
+		
+		if(filename == null)
 		{
 			// That's our standard quiz file
 			filename = "futurama.xml";
-		}
-		else
-		{
-			// If the user wants to use another quiz
-			filename = args[0];
 		}
 		
 		File f = new File(filename);
@@ -50,17 +51,20 @@ public class QuizServer {
 		System.setProperty("java.security.policy", "java.policy");
 		System.setSecurityManager (new RMISecurityManager());
 		
-		try{
-			// Create RMI-registry, we assume there's none running yet...
-			System.out.println("Creating local rmiregistry");
-			LocateRegistry.createRegistry(1099);
-			servant = new QuizServant(filename);
-		}
-		catch(RemoteException re)
+		if(startRegistry==true)
 		{
-			System.err.println("RemoteException in main: ");
-			System.err.println(re.getMessage());
-			re.printStackTrace();
+			try{
+				// Create RMI-registry, we assume there's none running yet...
+				System.out.println("Creating local rmiregistry");
+				LocateRegistry.createRegistry(1099);
+				servant = new QuizServant(filename);
+			}
+			catch(RemoteException re)
+			{
+				System.err.println("RemoteException in main: ");
+				System.err.println(re.getMessage());
+				re.printStackTrace();
+			}
 		}
 		
 		try{
