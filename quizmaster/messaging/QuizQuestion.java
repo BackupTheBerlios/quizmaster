@@ -50,6 +50,39 @@ public class QuizQuestion extends Message {
 	}
 	
 	/**
+	 * Return the answers to this question as a string array
+	 * @return
+	 */
+	public String[] getAnswersAsArray()
+	{
+		String[] array = new String[4];
+		
+		for(int i=0; i<this.answers.size(); i++)
+		{
+			array[i] = (String) this.answers.elementAt(i);
+		}
+		
+		return array;
+	}
+	
+	/**
+	 * Set a questions answer from a string array
+	 * @param array
+	 */
+	public void setAnswersFromArray(String[] array)
+	{
+		Vector v = new Vector();
+		
+		for(int i=0; i<this.answers.size(); i++)
+		{
+			v.add(array[i]);
+		}
+		
+		this.answers = v;
+		
+	}
+	
+	/**
 	 * @param answers The answers to set.
 	 */
 	public void setAnswers(Vector answers) {
@@ -75,6 +108,15 @@ public class QuizQuestion extends Message {
 	 */
 	public int getCorrectAnswer() {
 		return correctAnswer;
+	}
+	
+	/**
+	 * Get the correct answer text
+	 * @return
+	 */
+	public String getCorrectAnswerText()
+	{
+		return (String) this.answers.elementAt(this.correctAnswer);
 	}
 	
 	/**

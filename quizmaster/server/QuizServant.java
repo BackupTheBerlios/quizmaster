@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
+import xml.QuizQuestionFactory;
 import client.QuizClientServices;
 
 /**
@@ -27,6 +28,9 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	private StateChecker checker;
 	private volatile String filename;
 	private volatile Vector messages;
+	private Vector questions;
+	
+	private QuizQuestionFactory quizquestionfactory;
 	
 	/**
 	 * Standard constructor
@@ -41,6 +45,11 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.messages = new Vector();
 		this.activeQuiz = false;
 		this.filename = filename;
+		
+		this.quizquestionfactory = new QuizQuestionFactory(this.filename);
+		this.quizquestionfactory.readQuestions();
+		this.questions = this.quizquestionfactory.getQuestions();
+		this.quizquestionfactory = null;
 		
 		checker = new StateChecker();
 		checker.setServant(this);
@@ -306,7 +315,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	public void addAnswer(QuizAnswer answer)
 	{
 		System.out.println("Adding an answer");
-		answer.setAnswer(answer.getAnswer()+1);
+		answer.setAnswer(answer.getAnswer());
 		
 		this.answers.add(answer);
 	}
@@ -363,5 +372,11 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	public void resetMessages()
 	{
 		this.messages.removeAllElements();
+	}
+	/**
+	 * @return Returns the questions.
+	 */
+	public Vector getQuestions() {
+		return questions;
 	}
 }

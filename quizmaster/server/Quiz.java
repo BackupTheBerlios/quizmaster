@@ -41,10 +41,10 @@ public class Quiz extends Thread {
 		this.questionCounter = 0;
 		this.filename = filename;
 
-		this.quizfactory = new QuizQuestionFactory(this.filename);
-		this.quizfactory.readQuestions();
-		this.questions = this.quizfactory.getQuestions();
-		this.quizfactory = null;
+//		this.quizfactory = new QuizQuestionFactory(this.filename);
+//		this.quizfactory.readQuestions();
+//		this.questions = this.quizfactory.getQuestions();
+//		this.quizfactory = null;
 	}
 	
 	/*
@@ -326,5 +326,11 @@ public class Quiz extends Thread {
 	 */
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+	/**
+	 * @param questions The questions to set.
+	 */
+	public void setQuestions(Vector questions) {
+		this.questions = questions;
 	}
 }

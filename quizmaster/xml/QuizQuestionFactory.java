@@ -116,7 +116,7 @@ public class QuizQuestionFactory {
 				if(correct)
 				{
 					// QUICK HACK
-					q.setCorrectAnswer(j+1);
+					q.setCorrectAnswer(j);
 				}
 				
 			}	
@@ -148,6 +148,7 @@ public class QuizQuestionFactory {
 			questionArray[i] = (QuizQuestion) q.elementAt(i);
 		}
 		
+		// Shuffle questions
 		questionArray = (QuizQuestion[]) shuffle(questionArray);
 		
 		q = new Vector();
@@ -155,7 +156,34 @@ public class QuizQuestionFactory {
 		// Now we're adding all read questions
 		for (i=0; i<questionArray.length; i++)
 		{
-			q.add(questionArray[i]);
+			QuizQuestion thisQuestion = questionArray[i];
+			String correct = thisQuestion.getCorrectAnswerText();
+			
+			System.out.println("Correct answer: "+correct);
+			
+			String[] answers = thisQuestion.getAnswersAsArray();
+			
+			// Shuffle answers
+			answers = (String[]) shuffle((Object[]) answers);
+			
+			int newCorrectIndex=0;
+			
+			// Update new correct index
+			for(newCorrectIndex=0; newCorrectIndex<answers.length; newCorrectIndex++)
+			{
+				String s = answers[newCorrectIndex];
+				
+				if(s.equals(correct))
+				{
+					break;
+				}
+			}
+			
+			thisQuestion.setAnswersFromArray(answers);
+			thisQuestion.setCorrectAnswer(newCorrectIndex);
+			
+			q.add(thisQuestion);
+			
 		}
 		
 		return q;

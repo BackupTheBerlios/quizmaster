@@ -46,6 +46,7 @@ public class StateChecker extends Thread
 				game = new Quiz(this.servant.getFilename());
 				game.setServant(this.servant);
 				game.setClients(this.servant.getQuizClients());
+				game.setQuestions(this.servant.getQuestions());
 				game.start();
 			}
 			
