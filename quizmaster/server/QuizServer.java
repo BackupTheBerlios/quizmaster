@@ -37,11 +37,12 @@ public class QuizServer {
 			reader=null;
 		}
 
+		
 		// Then parse the commandline arguments
-		if(CliParamParser.paramCount(args) > 1)
+		CliParamParser parser = new CliParamParser(args, ":");
+		
+		if(parser.paramCount() > 0)
 		{
-			CliParamParser parser = new CliParamParser(args, ":");
-			
 			if(parser.existsParam("-quizfile")) filename = parser.getStringValue("-quizfile");
 			if(parser.existsParam("-startregistry")) startRegistry = parser.getBooleanValue("-startregistry");
 			if(parser.existsParam("-cycletime")) questionCycle = parser.getIntValue("-cycletime");

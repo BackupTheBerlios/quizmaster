@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 public class CliParamParser 
 {
 	private String[] args;
-	private String seperator;
+	private String separator;
 	
 	/**
 	 * Constructor
@@ -24,7 +24,7 @@ public class CliParamParser
 	public CliParamParser(String[] args, String seperator)
 	{
 		this.args = args;
-		this.seperator = seperator;
+		this.separator = seperator;
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class CliParamParser
 		{
 			if(args[i].startsWith(arg))
 			{
-				StringTokenizer tok = new StringTokenizer(args[i], seperator);
+				StringTokenizer tok = new StringTokenizer(args[i], separator);
 				
 				if(tok.countTokens()==2)
 				{
@@ -133,7 +133,7 @@ public class CliParamParser
 	 * Get the number of commandline arguments
 	 * @return Number of commandline arguments
 	 */
-	public static int paramCount(String[] args)
+	public int paramCount()
 	{
 		return args.length;
 	}
@@ -147,10 +147,12 @@ public class CliParamParser
 	{
 		for(int i=0; i< args.length; i++)
 		{
-			if(args[i].equals(arg))
+			StringTokenizer tok = new StringTokenizer(args[i], separator);
+			if(tok.nextToken().equals(arg))
 			{
 				return true;
 			}
+			tok=null;
 		}
 		
 		return false;
