@@ -14,10 +14,17 @@ import java.util.StringTokenizer;
 public class CliParamParser 
 {
 	private String[] args;
+	private String seperator;
 	
-	public CliParamParser(String[] args)
+	/**
+	 * Constructor
+	 * @param args The String array to parse
+	 * @param seperator The seperator, which seperates the argument name from the argument value
+	 */
+	public CliParamParser(String[] args, String seperator)
 	{
 		this.args = args;
+		this.seperator = seperator;
 	}
 	
 	/**
@@ -33,7 +40,7 @@ public class CliParamParser
 		{
 			if(args[i].startsWith(arg))
 			{
-				StringTokenizer tok = new StringTokenizer(args[i], ":");
+				StringTokenizer tok = new StringTokenizer(args[i], seperator);
 				
 				if(tok.countTokens()==2)
 				{
@@ -59,7 +66,7 @@ public class CliParamParser
 		{
 			if(args[i].startsWith(arg))
 			{
-				StringTokenizer tok = new StringTokenizer(args[i], ":");
+				StringTokenizer tok = new StringTokenizer(args[i], seperator);
 				
 				if(tok.countTokens()==2)
 				{

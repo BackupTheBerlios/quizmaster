@@ -24,7 +24,7 @@ public class QuizServer {
 		boolean startRegistry = true;
 		
 		// Parsing commandline arguments
-		CliParamParser parser = new CliParamParser(args);
+		CliParamParser parser = new CliParamParser(args, ":");
 		filename = parser.getStringArgument("-file");
 		startRegistry = parser.getBooleanArgument("-registry");
 		
