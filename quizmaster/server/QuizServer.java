@@ -48,7 +48,7 @@ public class QuizServer {
 		
 		try{
 			// Create RMI-registry, we assume there's none running yet...
-			System.out.println("Creating local rmiregistry...");
+			System.out.println("Creating local rmiregistry");
 			LocateRegistry.createRegistry(1099);
 			servant = new QuizServant(filename);
 		}
@@ -60,7 +60,7 @@ public class QuizServer {
 		}
 		
 		try{
-			System.out.println("trying to bind...");
+			System.out.println("Trying to bind");
 			Naming.rebind("rmi://localhost/Quizmaster", servant);
 			System.out.println("Binding successful. ");
 			
