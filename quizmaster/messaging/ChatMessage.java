@@ -13,7 +13,32 @@ package messaging;
 public class ChatMessage extends Message {
 	
 	private String text;
+	private String nickname;
 	
+	/**
+	 * @return Returns the nickname.
+	 */
+	public String getNickname() {
+		return nickname;
+	}
+	/**
+	 * @param nickname The nickname to set.
+	 */
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	/**
+	 * @return Returns the text.
+	 */
+	public String getText() {
+		return text;
+	}
+	/**
+	 * @param text The text to set.
+	 */
+	public void setText(String text) {
+		this.text = text;
+	}
 	/**
 	 * Constructor which takes a String argument for the message text
 	 * @param body
