@@ -1,0 +1,12 @@
+# TODO-Liste für Quizmaster
+#
+# Geordnet nach Priorität
+#
+
+1. Highscorelsite (Reinhard)
+2. Dokumentation (Reinhard)
+3. Präsentation (Hannes)
+4. Beschreibungstag für Quizdatei, welches am Anfang jedem User angezeigt wird (Hannes?)
+5. Systemmeldungen z.b. "reinhard has left..." (Hannes?)
+6. Userliste mit Punkten
+7. Userliste funktioniert nicht richtig
