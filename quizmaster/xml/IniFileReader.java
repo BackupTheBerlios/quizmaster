@@ -134,7 +134,7 @@ public class IniFileReader
 	 */
 	private void readParams()
 	{
-		Document doc = XMLReader.readDocFromFile(this.iniFile);
+		Document doc = XMLHandler.readDocFromFile(this.iniFile);
 		
 		if(doc==null)
 		{

@@ -44,7 +44,7 @@ public class FileBuilder {
 			return;
 		}
 		
-		Document doc = XMLReader.readDocFromFile(f);
+		Document doc = XMLHandler.readDocFromFile(f);
 		
 		if(doc==null)
 		{
@@ -133,7 +133,7 @@ public class FileBuilder {
 
 		parser = null;
 		
-		XMLReader xmlhandler = new XMLReader();
+		XMLHandler xmlhandler = new XMLHandler();
 		
 		int id=0;
 		

@@ -45,7 +45,7 @@ public class QuizQuestionFactory {
 	{
 		File f = new File(this.filename);
 		
-		Document doc = XMLReader.readDocFromFile(f);
+		Document doc = XMLHandler.readDocFromFile(f);
 		
 		if(doc==null)
 		{
