@@ -23,4 +23,88 @@
 		<answer>A washing machine</answer>
 		<answer>A microwave</answer>
 	</question>
+	<question id="4" text="What is Bart's blood type?" points="25">
+		<answer correct="true">Double 0 negative</answer>
+		<answer>0 negative</answer>
+		<answer>AB postive</answer>
+		<answer>B positive</answer>
+	</question>
+	<question id="5" text="What was Lisa's first words?" points="20">
+		<answer correct="true">Da da!</answer>
+		<answer>Daddy!</answer>
+		<answer>Mummy!</answer>
+		<answer>Whoaa, dude, my hands are huge!</answer>
+	</question>
+	<question id="6" text="What IQ did Martin score on his IQ test in school?" points="30">
+		<answer correct="true">216</answer>
+		<answer>68</answer>
+		<answer>122</answer>
+		<answer>105</answer>
+	</question>
+	<question id="7" text="Bart Simpson is eternally how old?" points="15">
+		<answer correct="true">10</answer>
+		<answer>15</answer>
+		<answer>5</answer>
+		<answer>7</answer>
+	</question>
+	<question id="8" text="Which of the following isn't an alias of Bart?" points="15">
+		<answer correct="true">El Monstro</answer>
+		<answer>Rudiger</answer>
+		<answer>El Barto</answer>
+		<answer>The Boy of 1000 voices</answer>
+	</question>
+	<question id="9" text="Bart sawed off the statue head of which Springfield elder?" points="10">
+		<answer correct="true">Jebediah Springfield</answer>
+		<answer>Jed Clampeett</answer>
+		<answer>Jobadoobry Springfield</answer>
+		<answer>Jebediah Shelbyville</answer>
+	</question>
+	<question id="10" text="Who does Bart regularly make prank phonecalls to?" points="5">
+		<answer correct="true">Moe</answer>
+		<answer>Barney</answer>
+		<answer>Principal Skinner</answer>
+		<answer>Mr. Burns</answer>
+	</question>
+	<question id="11" text="Who's life did Bart save by donating blood?" points="15">
+		<answer correct="true">Mr. Burns</answer>
+		<answer>Marge</answer>
+		<answer>Homer</answer>
+		<answer>Apu</answer>
+	</question>
+	<question id="12" text="Bart pretended to be Timmy O'Toole when he was stuck in a..." points="20">
+		<answer correct="true">Well</answer>
+		<answer>Vault</answer>
+		<answer>Fridge</answer>
+		<answer>Oven</answer>
+	</question>
+	<question id="13" text="Which rock star came to Bart's aid during the Well incident?" points="20">
+		<answer correct="true">Sting</answer>
+		<answer>Prince</answer>
+		<answer>Coolio</answer>
+		<answer>Michael Jackson</answer>
+	</question>
+	<question id="14" text="What did Bart win in a radio competition?" points="10">
+		<answer correct="true">An Elephant</answer>
+		<answer>An Orangutan</answer>
+		<answer>An Ostrich</answer>
+		<answer>A Horse</answer>
+	</question>
+	<question id="15" text="Who is Bart's evil nemesis?" points="10">
+		<answer correct="true">Sideshow Bob</answer>
+		<answer>Sideshow Mel</answer>
+		<answer>Principal Skinner</answer>
+		<answer>Milhouse</answer>
+	</question>
+	<question id="16" text="Bart became famous an Krusty's show as whom?" points="10">
+		<answer correct="true">I Didn't dDo It Boy</answer>
+		<answer>Don't Have a Cow Boy</answer>
+		<answer>Do The Bartman Boy</answer>
+		<answer>Do It Again Sam Boy</answer>
+	</question>
+	<question id="17" text="He was a child actor" points="What was Moe's childhood claim to fame?">
+		<answer correct="true">He was a child actor</answer>
+		<answer>He invented Duff beer</answer>
+		<answer>He was Americas youngest bartender</answer>
+		<answer>He shot John F. Kennedy</answer>
+	</question>
 </quiz>
