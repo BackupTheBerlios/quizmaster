@@ -255,17 +255,6 @@ public class SimpleClient implements QuizClientServices{
 						}
 						
 						break;
-						
-					case 'k':
-						try
-						{
-							server.killCheckerThread();
-						} catch (RemoteException e)
-						{
-							System.err.println(e.getMessage());
-							e.printStackTrace();
-						}
-						break;
 				
 					case '0':
 						
