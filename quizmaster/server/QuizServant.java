@@ -96,9 +96,8 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void takeMessage(ChatMessage msg)  throws RemoteException 
 	{
+		msg.setNickname(msg.getSender().getNickname());
 		this.messages.add(msg);
-		this.setNickname(msg.getSender().getNickname());
-	
 	}
 	
 	/* (non-Javadoc)
