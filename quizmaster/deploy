@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Project: Quizmaster
+# Date: January 24th, 2005
+# Last Modified: January 30th, 2005
+#
+# --
+# This script is used to deploy all necessary client
+# files...
+#
+# --
+# Usage:
+# deploy <location> [-nocompile]
+#
+
+# Check for correct usage first
+if [ $# -gt 2 ]; then
+echo "Usage: deploy <location> [-nocompile]";
+echo "";
+exit -1;
+fi
+
+# Check if compilation is disabled 
+if [ $# = 2 ]; then
+if [$2="-nocompile" ] || [ $2="-nc" ]; then
+echo "Compiling...";
+compile all;
+fi
+fi
+
+# Deploy the files
+echo "Deploying applet files..."
+cp html/*.* $1
+cp client/ClientApplet.class $1/client/
+cp client/ClientApplet_Stub.class $1/client/
+cp client/QuizClientServices.class $1/client/
+cp messaging/*.class $1/messaging/
+cp server/QuizServant_Stub.class $1/server/
+cp server/QuizServices.class $1/server/
+echo "Finished...";
+echo "";
+
+exit 0;
