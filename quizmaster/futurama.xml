@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE quiz SYSTEM "quiz.dtd">
-<quiz>
+<quiz description="Welcome to the Futurama trivia!">
 	<question id="0" text="Who is Zapp Brannigan's sidekick?" points="10">
 		<answer>Pif</answer>
 		<answer>Zif</answer>

@@ -27,7 +27,8 @@ import server.CliParamParser;
 public class FileBuilder {
 	
 	private static Vector recentQuestions;
-	private static String filename;
+	private static String filename="";
+	private static String quizdesc="";
 	
 	/**
 	 * This method checks if the specified file exists and backs up questions
@@ -49,11 +50,15 @@ public class FileBuilder {
 			System.err.println("File: "+ filename);
 		}
         
+		// Read the quiz description
+		NodeList quiz = doc.getElementsByTagName("quiz");
+		quizdesc = quiz.item(0).getAttributes().getNamedItem("description").getNodeValue();
+		quiz=null;
+		
         // Iterate over question elements
     		NodeList questions = doc.getElementsByTagName("question");
 		
-    		int i=0;
-		
+    		int i=0;		
     		for(i=0; i<questions.getLength(); i++)
 		{
 			Node question = questions.item(i);
@@ -137,10 +142,28 @@ public class FileBuilder {
 		recentQuestions = new Vector();
 		checkAndBackup();
 		
+		// We need an InputStreamReader for reading user input
+		InputStreamReader reader = new InputStreamReader(System.in);
+		// Wrap the reader with a buffered reader.
+		BufferedReader buf_in = new BufferedReader (reader);
+		
 		String tmp=null;
 		
 		xmlhandler.setDocType("1.0", "UTF-8", "quiz", "quiz.dtd"); 
-		xmlhandler.appendForSaving("<quiz>");
+		
+		if(recentQuestions.size()==0)
+		{
+			System.out.print("Please enter a short description for this quiz: ");
+			try {
+				quizdesc = buf_in.readLine();
+			} catch (IOException e) {
+				System.err.println("Client IOException in SimpleClient.sendMessage()");
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		xmlhandler.appendForSaving("<quiz description=\""+quizdesc+"\">");
 		
 		if(recentQuestions.size()>0)
 		{
@@ -171,11 +194,8 @@ public class FileBuilder {
 			}
 		}
 		
-		// We need an InputStreamReader for reading user input
-		InputStreamReader reader = new InputStreamReader(System.in);
-		// Wrap the reader with a buffered reader.
-		BufferedReader buf_in = new BufferedReader (reader);
-		
+
+		// Reading more questions.... or not...
 		System.out.print("More questions? [y/n]: ");
 		try {
 			tmp = buf_in.readLine();

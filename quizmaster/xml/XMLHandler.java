@@ -177,8 +177,8 @@ public class XMLHandler
 	 */
 	public void setDocType(String ver, String encoding, String doctypename, String dtdfile)
 	{
-		this.xmlString="<?xml version="+ver+" encoding="+encoding+"?>\n"+
-					  "<!DOCTYPE "+doctypename+" SYSTEM "+dtdfile+">\n"+this.xmlString;
+		this.xmlString="<?xml version=\""+ver+"\" encoding=\""+encoding+"\"?>\n"+
+					  "<!DOCTYPE "+doctypename+" SYSTEM \""+dtdfile+"\">\n"+this.xmlString;
 	}
 
 }

@@ -1,4 +1,5 @@
 <!ELEMENT quiz (question*)>
+<!ATTLIST quiz description CDATA #REQUIRED>
 
 <!ELEMENT question (answer*)>
 <!ATTLIST question 	id CDATA ''

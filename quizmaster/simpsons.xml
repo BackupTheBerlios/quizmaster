@@ -1,4 +1,6 @@
-<quiz>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE quiz SYSTEM "quiz.dtd">
+<quiz description="Welcome to the Simpsons trivia!">
 	<question id="0" text="What was the value of the bank note that Mr. Burns stole?" points="10">
 		<answer correct="true">1 trillian dollars</answer>
 		<answer>1 million dollars</answer>

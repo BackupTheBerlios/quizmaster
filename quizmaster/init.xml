@@ -12,4 +12,9 @@
 	
 	<!-- Use Highscore feature, requires database -->
 	<param name="highscore" value="true"></param>
+	
+	<!-- The name of the database and table to use, if highscore feature is active -->
+	<param name="dbname" value="quizmaster"></param>
+	<param name="dbtable" value="highscore"></param>
+	
 </config>
