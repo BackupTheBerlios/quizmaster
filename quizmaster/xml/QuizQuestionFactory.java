@@ -167,7 +167,7 @@ public class QuizQuestionFactory {
 	
 	/**
 	 * Class method which takes a vector of questions and shuffles it
-	 * @param q
+	 * @param q The vector to sort
 	 * @return Newly sorted vector
 	 */
 	public static Vector mixQuestions(Vector q)
