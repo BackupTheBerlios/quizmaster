@@ -159,8 +159,6 @@ public class QuizQuestionFactory {
 			QuizQuestion thisQuestion = questionArray[i];
 			String correct = thisQuestion.getCorrectAnswerText();
 			
-			System.out.println("Correct answer: "+correct);
-			
 			String[] answers = thisQuestion.getAnswersAsArray();
 			
 			// Shuffle answers
