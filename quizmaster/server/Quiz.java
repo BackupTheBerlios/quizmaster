@@ -28,18 +28,20 @@ public class Quiz extends Thread {
 	private Vector questions;
 	private int questionCounter;
 	private volatile String filename;
+	private int questionCycle;
 
 
 	/**
 	 * Constructor
 	 * @param filename The filename from which we want to read the questions
 	 */
-	public Quiz(String filename)
+	public Quiz(String filename, int questionCycle)
 	{
 		this.quit = false;
 		this.questionCounter = 0;
 		this.filename = filename;
 		this.setName("Quiz");
+		this.questionCycle = questionCycle;
 	}
 	
 	/*
@@ -100,7 +102,7 @@ public class Quiz extends Thread {
 			
 			// Wait for client answers
 			try {
-				Thread.sleep(7500);
+				Thread.sleep(this.questionCycle);
 			} catch(InterruptedException e)
 			{
 				System.err.println(e.getMessage());

@@ -125,7 +125,8 @@ public class QuizQuestionFactory {
 		}
     		
     		// We want a different question order each game, so once again, we're shuffling
-    		this.questions = QuizQuestionFactory.mixQuestions(qs);    		
+    		this.questions = QuizQuestionFactory.mixQuestions(qs);
+    		docFile=null;
 		
 		System.out.println(i+" questions read from file");
 	}

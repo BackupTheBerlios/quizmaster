@@ -10,6 +10,8 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
+import xml.IniFileReader;
+
 /**
  * @author reinhard
  *
@@ -22,13 +24,31 @@ public class QuizServer {
 		QuizServant servant = null;
 		String filename = null;
 		boolean startRegistry = true;
+		int questionCycle = 7500;
 		
-		// Parsing commandline arguments
-		CliParamParser parser = new CliParamParser(args, ":");
-		filename = parser.getStringArgument("-file");
-		startRegistry = parser.getBooleanArgument("-registry");
+		// Process configuration file first
+		if(IniFileReader.isConfigFileExisting("init.xml"))
+		{
+			IniFileReader reader = new IniFileReader("init.xml");
+			filename = reader.getStringValue("file");
+			startRegistry = reader.getBooleanValue("registry");
+			questionCycle = reader.getIntValue("cycle");
+			
+			reader=null;
+		}
 		
-		parser = null;
+		
+		// Then parse the commandline arguments
+		if(CliParamParser.paramCount(args) > 1)
+		{
+			CliParamParser parser = new CliParamParser(args, ":");
+			
+			if(parser.existsParam("-file")) filename = parser.getStringValue("-file");
+			if(parser.existsParam("-registry")) startRegistry = parser.getBooleanValue("-registry");
+			if(parser.existsParam("-cycle")) questionCycle = parser.getIntValue("-cycle");
+			
+			parser = null;
+		}
 		
 		if(filename == null)
 		{
@@ -59,7 +79,7 @@ public class QuizServer {
 				// Create RMI-registry, we assume there's none running yet...
 				System.out.println("Creating local rmiregistry");
 				LocateRegistry.createRegistry(1099);
-				servant = new QuizServant(filename);
+				servant = new QuizServant(filename, questionCycle);
 			}
 			catch(RemoteException re)
 			{

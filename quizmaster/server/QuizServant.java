@@ -29,6 +29,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	private volatile String filename;
 	private volatile Vector messages;
 	private Vector questions;
+	private int questionCycle;
 	
 	private QuizQuestionFactory quizquestionfactory;
 	
@@ -36,7 +37,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 * Standard constructor
 	 * @throws RemoteException
 	 */
-	public QuizServant(String filename) throws RemoteException
+	public QuizServant(String filename, int questionCycle) throws RemoteException
 	{
 		super();
 		this.connectedClients = new Vector();
@@ -45,6 +46,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.messages = new Vector();
 		this.activeQuiz = false;
 		this.filename = filename;
+		this.questionCycle = questionCycle;
 		
 		this.quizquestionfactory = new QuizQuestionFactory(this.filename);
 		this.quizquestionfactory.readQuestions();
@@ -366,5 +368,11 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public Vector getQuestions() {
 		return questions;
+	}
+	/**
+	 * @return Returns the questionCycle.
+	 */
+	public int getQuestionCycle() {
+		return questionCycle;
 	}
 }

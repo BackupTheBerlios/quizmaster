@@ -30,37 +30,85 @@ public class CliParamParser
 	/**
 	 * Parses a string array for the specified argument
 	 * @param arg The argument to look for
-	 * @return Value of the specified argument, null if argument not found
+	 * @return Value of the specified argument, defaults to true
 	 */
-	public String getStringArgument(String arg)
+	public boolean getBooleanValue(String arg)
 	{
-		String value;
+		String value=this.getStringValue(arg);
 		
-		for(int i=0; i<args.length; i++)
+		if(value.equals("no") || value.equals("false"))
 		{
-			if(args[i].startsWith(arg))
-			{
-				StringTokenizer tok = new StringTokenizer(args[i], seperator);
-				
-				if(tok.countTokens()==2)
-				{
-					arg = tok.nextToken();
-					value = tok.nextToken();
-					return value;
-				}
-			}
+			return false;
 		}
-		return null;
+		
+		return true;
 	}
 	
 	/**
-	 * Parses a string array for the specified argument
-	 * @param arg The argument to look for
-	 * @return Value of the specified argument, defaults to true
+	 * Returns the value of an argument as an int
+	 * @param arg
+	 * @return The value of an argument as an int
 	 */
-	public boolean getBooleanArgument(String arg)
+	public int getIntValue(String arg) throws NumberFormatException
 	{
-		String value;
+		int intValue=0;
+		String value=this.getStringValue(arg);
+		
+		if(value==null)
+		{
+			return 0;
+		}
+		
+		intValue = Integer.parseInt(value);
+		return intValue;
+	}
+	
+	/**
+	 * Returns the value of an argument as a float
+	 * @param arg
+	 * @return The value of an argument as a float
+	 */
+	public float getFloatValue(String arg) throws NumberFormatException
+	{
+		float floatValue=0;
+		String value=this.getStringValue(arg);
+		
+		if(value==null)
+		{
+			return 0;
+		}
+		
+		floatValue = Float.parseFloat(value);
+		return floatValue;
+	}
+	
+	/**
+	 * Returns the value of an argument as a double
+	 * @param arg
+	 * @return The value of an argument as a double
+	 */
+	public double getDoubleValue(String arg) throws NumberFormatException
+	{
+		double doubleValue=0;
+		String value=this.getStringValue(arg);
+		
+		if(value==null)
+		{
+			return 0;
+		}
+		
+		doubleValue = Double.parseDouble(value);
+		return doubleValue;
+	}
+	
+	/**
+	 * Get the String value of an argument
+	 * @param arg
+	 * @return the value of an argument
+	 */
+	public String getStringValue(String arg)
+	{
+		String value="";
 		
 		for(int i=0; i<args.length; i++)
 		{
@@ -73,22 +121,38 @@ public class CliParamParser
 					arg = tok.nextToken();
 					value = tok.nextToken();
 					
-					if(value.equals("false") || value.equals("no"))
-					{
-						return false;
-					}
+					return value;
 				}
 			}
 		}
-		return true;
+		
+		return null;
 	}
 	
 	/**
 	 * Get the number of commandline arguments
 	 * @return Number of commandline arguments
 	 */
-	public int paramCount()
+	public static int paramCount(String[] args)
 	{
-		return this.args.length;
+		return args.length;
+	}
+	
+	/**
+	 * Check if a specific parameter exists
+	 * @param arg
+	 * @return TRUE if specified parameter exists, FALSE if not
+	 */
+	public boolean existsParam(String arg)
+	{
+		for(int i=0; i< args.length; i++)
+		{
+			if(args[i].equals(arg))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

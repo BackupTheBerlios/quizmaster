@@ -200,7 +200,7 @@ public class SimpleClient implements QuizClientServices{
 		CliParamParser parser = new CliParamParser(args, ":");
 		
 		String host = null;
-		host = parser.getStringArgument("-host");
+		host = parser.getStringValue("-host");
 		
 		if(host==null)
 		{
