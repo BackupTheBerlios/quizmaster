@@ -114,8 +114,6 @@ public class FileBuilder {
 			}	
 			q.setAnswers(a);
 			
-			QuizQuestionFactory.printOutReadQuestion(q);
-			
 			recentQuestions.add(q);
 		}
 	}
