@@ -21,11 +21,9 @@ exit -1;
 fi
 
 # Check if compilation is disabled 
-if [ $# = 2 ]; then
-if [$2="-nocompile" ] || [ $2="-nc" ]; then
+if [ $# = 1 ]; then
 echo "Compiling...";
 compile all;
-fi
 fi
 
 # Deploy the files

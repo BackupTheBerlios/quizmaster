@@ -61,7 +61,8 @@ public class HighScore
 	 */
 	public boolean processScore(String nick, int points)
 	{
-		if(points>=this.lowestscore)
+		// Only process scores above 0 points
+		if(points!=0 && (points>=this.lowestscore || this.highscore.size()<MAXENTRIES))
 		{
 			this.addEntry(nick, points);
 		}

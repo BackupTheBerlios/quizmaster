@@ -17,13 +17,13 @@
 
 if [ $# -gt 2 ]; then
 echo "Usage: start <option>";
-echo "Available options:"
-echo "server - starts the server application"
-echo "client - starts the cli-client"
-echo "applet - starts the client applet"
-echo "xml <filename>- starts xml filebuilder"
-echo ""
-exit -1
+echo "Available options:";
+echo "server - starts the server application";
+echo "client - starts the cli-client";
+echo "applet - starts the client applet";
+echo "xml <filename>- starts xml filebuilder";
+echo "";
+exit -1;
 fi
 
 if [ $1 = "server" ]; then

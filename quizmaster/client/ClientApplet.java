@@ -57,7 +57,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private JTextArea questionLabel;
 	private JLabel pointsLabel;
 	private JButton[] answerButtons;
-	private JButton connectButton;
+	//private JButton connectButton;
 	private JButton startGame;
 	private JScrollPane clientListPane;
 	private JTextArea chatArea;
@@ -66,7 +66,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	
 	private QuizServices server;
 	private boolean quizMode;
-	private boolean connected;
+	//private boolean connected;
 	private QuizQuestion currentQuestion;
 	private QuizAnswer currentAnswer;
 	private int score;
@@ -133,20 +133,20 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			}
 		}
 
-		//Quit
-		if (e.getSource() == connectButton) 
-		{
-			//if we're connected, disconnect
-			if(this.connected){
-				this.connectButton.setText("Connect");
-				disconnect();
-			}
-			//otherwise, re-init applet
-			else
-			{
-				init();
-			}
-		}
+//		//Quit
+//		if (e.getSource() == connectButton) 
+//		{
+//			//if we're connected, disconnect
+//			if(this.connected){
+//				this.connectButton.setText("Connect");
+//				disconnect();
+//			}
+//			//otherwise, re-init applet
+//			else
+//			{
+//				init();
+//			}
+//		}
 		
 		//user clicks join game button
 		if(e.getSource() == startGame)
@@ -356,16 +356,16 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		JPanel menu = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		menu.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH, 35));
 		
-		connectButton = new JButton("Disconnect");
-		connectButton.addActionListener(this);
-		menu.add(connectButton);
+//		connectButton = new JButton("Disconnect");
+//		connectButton.addActionListener(this);
+//		menu.add(connectButton);
 		startGame = new JButton("Join game");
 		startGame.addActionListener(this);
 		menu.add(startGame);		
 		
 		//spacer
 		JLabel spacer = new JLabel();
-		spacer.setPreferredSize(new Dimension(450, 10));
+		spacer.setPreferredSize(new Dimension(470, 10));
 		menu.add(spacer);
 		
 		//points display
@@ -441,7 +441,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			System.out.println("trying to connect to " + hostname + "...");
 			String name = "rmi://" + hostname + "/Quizmaster";
 			this.server = (QuizServices) Naming.lookup(name);
-			this.connected = true;
+			//this.connected = true;
 			System.out.println("Successfully connected to " + hostname);
 			System.out.println("");
 		} catch (RemoteException e) {
@@ -467,7 +467,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		try {
 			server.unregister(this);
 			UnicastRemoteObject.unexportObject(this, true);
-			this.connected = false;
+			//this.connected = false;
 		} catch (NoSuchObjectException e) 
 		{
 			e.printStackTrace();
