@@ -1,4 +1,4 @@
-<questions>
+<quiz>
 	<question text="Katey Sagal starred on what show prior to Futurama?">
 		<answer correct="true">Married with Children</answer>
 		<answer>Cheers</answer>
@@ -12,4 +12,4 @@
 		<answer correct="true">Philip J. Fry</answer>
 		<answer>French Fry</answer>
 	</question>
-</questions>
+</quiz>

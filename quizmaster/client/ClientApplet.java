@@ -35,163 +35,308 @@ import server.QuizServices;
 
 /**
  * @author hannes
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * 
+ * TODO To change the template for this generated type comment go to Window -
+ * Preferences - Java - Code Style - Code Templates
  */
-public class ClientApplet extends JApplet implements QuizClientServices, ActionListener{
-	
+public class ClientApplet extends JApplet implements QuizClientServices,
+		ActionListener {
+
 	private static final int NR_OF_ANSWERS = 4;
+
 	private static final int LEFT_INNER_WIDTH = 580;
+
 	private static final int RIGHT_INNER_WIDTH = 190;
+
 	private static final int TOTAL_OUTER_WIDTH = 790;
+
 	private static final int TOTAL_INNER_WIDTH = TOTAL_OUTER_WIDTH - 10;
+
 	private static final int BOTTOM_INNER_HEIGHT = 215;
-	
+
 	private QuizServices server;
+
 	private Vector clients;
+
 	private String[] answers;
-	
+
 	private String nickname;
 
 	private Container pane;
+
 	private JPanel top;
+
 	private JPanel bottom;
-	
+
 	private JLabel questionLabel;
+
 	private JButton[] answerButtons;
+
 	private JButton quit;
+
 	private JScrollPane clientListPane;
+
 	private JTextArea chatArea;
+
 	private JTextField input;
-	
+
 	private JList clientList;
-	
-	/* (non-Javadoc)
-	 * @see java.applet.Applet#init()
+
+	/**
+	 * Initialization method.
 	 */
 	public void init() {
 		super.init();
 		nickname = getParameter("nickname");
-		
-//		 Set the codebase for this application
-//		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
-		
-		
+
+		//		 Set the codebase for this application
+		//		System.setProperty("java.rmi.server.codebase",
+		// "http://localhost/classes/");
+
 		connect(getParameter("host"));
-//		 Register the client with the server
+		//		 Register the client with the server
 		try {
 			UnicastRemoteObject.exportObject(this);
 			server.register((QuizClientServices) this);
 			initGUI();
-		} 
-		catch(RemoteException e)
-		{
+		} catch (RemoteException e) {
 			System.out.println("RemoteException in SimpleClient.main():");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.applet.Applet#destroy()
 	 */
 	public void destroy() {
 		System.out.println("destroy...");
-		try{
+		try {
 			server.unregister((QuizClientServices) this);
-		}catch(RemoteException re){
-			System.out.println("RemoteException caught in destroy(): " + re.getMessage());
+		} catch (RemoteException re) {
+			System.out.println("RemoteException caught in destroy(): "	+ re.getMessage());
 			re.printStackTrace();
 		}
 		super.destroy();
 	}
-	
-	private String getCurrentQuestion(){
-		return "What is Fry's full name?";
-	}
-	
+
+	/**
+	 * Handles all events.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		//user entered chat message
-		if(e.getSource() == input){
-			if(!"".equals(input.getText())){
+		if (e.getSource() == input) {
+			if (!"".equals(input.getText())) {
 				ChatMessage message = new ChatMessage(input.getText());
 				message.setSender(nickname);
-				try{
+				try {
 					server.takeMessage(message);
-				}catch(Exception re){
-					System.out.println("Exception caught in actionPerformed: " + re.getMessage());
+				} catch (Exception re) {
+					System.out.println("Exception caught in actionPerformed: "	+ re.getMessage());
 					re.printStackTrace();
 				}
-//				apend input to textarea (replace by sendMessage call later)
-//				display(message);
-				//		onMessageReceived(input.getText());
+				//				apend input to textarea (replace by sendMessage call later)
+				//				display(message);
 				//clear input line
-				input.setText("");	
+				input.setText("");
 			}
 		}
-		
+
 		//Quit
-		if(e.getSource() == quit){
+		if (e.getSource() == quit) {
 			destroy();
 		}
-		
+
 	}
 
-	public void display(ChatMessage msg) 
-	{
+	/**
+	 * Invokes the text of a ChatMessage to be displayed in the chat area.
+	 */
+	public void display(ChatMessage msg) {
 		chatArea.append("\n<" + msg.getSender() + "> " + msg.getBody());
 		chatArea.setCaretPosition(chatArea.getDocument().getLength());
 		//TODO special treatment for own messages (display those immediately)
 	}
-	
-	/* (non-Javadoc)
-	 * @see client.QuizClientServices#getNickname()
+
+	/**
+	 * Returns the applet's owner's nickname.
 	 */
 	public String getNickname() throws RemoteException {
 		return this.nickname;
 	}
-	
-	
-	/* (non-Javadoc)
-	 * @see client.QuizClientServices#setNickname(java.lang.String)
+
+	/**
+	 * Setter for nickname.
 	 */
 	public void setNickname(String nickname) throws RemoteException {
 		this.nickname = nickname;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see client.QuizClientServices#getNrOfGamesWon()
 	 */
 	public String getNrOfGamesWon() throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see client.QuizClientServices#notify(messaging.QuizQuestion)
 	 */
 	public void display(QuizQuestion msg) throws RemoteException {
 		// TODO Auto-generated method stub
-//		this.answers = msg.getAnswers();
+		//		this.answers = msg.getAnswers();
 	}
-	
-	private void setAnswersToButtons(Vector v){
-		for(int i = 0; i<v.size(); i++){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see client.QuizClientServices#readAnswer()
+	 */
+	public QuizAnswer readAnswer() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see client.QuizClientServices#isQuizMode()
+	 */
+	public boolean isQuizMode() throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see client.QuizClientServices#setQuizMode(boolean)
+	 */
+	public void setQuizMode(boolean b) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see client.QuizClientServices#updateScore(int)
+	 */
+	public void updateScore(int points) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Displays list of connected clients in client list combo box.
+	 */
+	public void updateClientList(String[] clients) throws RemoteException {
+		if (clientList != null) {
+			clientList.setListData(clients);
+		}
+	}
+
+	/**
+	 * Initializes all swing components of applet.
+	 * 
+	 * @throws RemoteException
+	 */
+	private void initGUI() throws RemoteException {
+		pane = getContentPane();
+		pane.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		//top panel
+		top = new JPanel();
+		top.setPreferredSize(new Dimension(TOTAL_OUTER_WIDTH, 330));
+		top.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		JPanel menu = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		menu.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH, 35));
+		quit = new JButton("Disconnect");
+		quit.addActionListener(this);
+		menu.add(quit);
+		top.add(menu);
+
+		//question
+		questionLabel = new JLabel(getCurrentQuestion());
+		questionLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+		questionLabel.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
+		top.add(questionLabel);
+
+		//answer buttons
+		answerButtons = new JButton[NR_OF_ANSWERS];
+		for (int i = 0; i < answerButtons.length; i++) {
+			answerButtons[i] = new JButton("Answer #" + i);
+			answerButtons[i].setPreferredSize(new Dimension(LEFT_INNER_WIDTH,
+					30));
+			top.add(answerButtons[i]);
+		}
+
+		//dev
+		{
+			Vector dummyAnswers = new Vector();
+			for (int i = 0; i < answerButtons.length; i++) {
+				dummyAnswers.add("Answer #" + i);
+			}
+			setAnswersToButtons(dummyAnswers);
+		}
+		pane.add(top);
+
+		//bottom panel
+		bottom = new JPanel();
+		bottom.setPreferredSize(new Dimension(TOTAL_OUTER_WIDTH, 250));
+
+		//chat window
+		chatArea = new JTextArea();
+		chatArea.setEditable(false);
+		chatArea.setLineWrap(true);
+		chatArea.setWrapStyleWord(true);
+		JScrollPane scrollPane = new JScrollPane(chatArea);
+		scrollPane.setPreferredSize(new Dimension(LEFT_INNER_WIDTH,
+				BOTTOM_INNER_HEIGHT));
+		bottom.add(scrollPane);
+
+		clientList = new JList(server.getClientNames());
+		clientList.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+		clientListPane = new JScrollPane(clientList);
+		clientListPane.setPreferredSize(new Dimension(RIGHT_INNER_WIDTH,
+				BOTTOM_INNER_HEIGHT));
+		bottom.add(clientListPane);
+
+		//input field
+		input = new JTextField();
+		input.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH, 20));
+		input.setAlignmentY(JComponent.BOTTOM_ALIGNMENT);
+		input.addActionListener(this);
+
+		bottom.add(input);
+		pane.add(bottom);
+		input.requestFocus();
+	}
+
+	private void setAnswersToButtons(Vector v) {
+		for (int i = 0; i < v.size(); i++) {
 			answerButtons[i].setText((String) v.elementAt(i));
 		}
 	}
-	
+
 	/**
-	 * Connection method
+	 * Connection method.
+	 * 
 	 * @param hostname
 	 */
-	private void connect(String hostname)
-	{
+	private void connect(String hostname) {
 		try {
 			String name = "//" + hostname + "/Quizmaster";
 			this.server = (QuizServices) Naming.lookup(name);
-		} catch(RemoteException e)
-		{
+		} catch (RemoteException e) {
 			System.err.println("Client RemoteException in connect(): ");
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -204,113 +349,17 @@ public class ClientApplet extends JApplet implements QuizClientServices, ActionL
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Successfully connected to " + hostname);
 		System.out.println("");
 	}
-	
-	/* (non-Javadoc)
-	 * @see client.QuizClientServices#readAnswer()
-	 */
-	public QuizAnswer readAnswer() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	/* (non-Javadoc)
-	 * @see client.QuizClientServices#isQuizMode()
-	 */
-	public boolean isQuizMode() throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	/* (non-Javadoc)
-	 * @see client.QuizClientServices#setQuizMode(boolean)
-	 */
-	public void setQuizMode(boolean b) throws RemoteException {
-		// TODO Auto-generated method stub
 
-	}
-	/* (non-Javadoc)
-	 * @see client.QuizClientServices#updateScore(int)
+	/**
+	 * Returns current quiz question.
+	 * 
+	 * @return
 	 */
-	public void updateScore(int points) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-	
-	private void initGUI() throws RemoteException{
-		pane = getContentPane();
-	    	pane.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    	
-	    	//top panel
-	    	top = new JPanel();
-	    	top.setPreferredSize(new Dimension(TOTAL_OUTER_WIDTH,330));
-	    	top.setLayout(new FlowLayout(FlowLayout.LEFT));
-	    	
-	        	JPanel menu = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        	menu.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH,35));
-		    		quit = new JButton("Disconnect");
-		    		quit.addActionListener(this);
-		    		menu.add(quit);
-	        	top.add(menu);
-	        	
-	    		//question
-	    		questionLabel = new JLabel(getCurrentQuestion());
-	    		questionLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-	        	questionLabel.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
-	        	top.add(questionLabel);
-	        	
-	        	//answer buttons
-	        	answerButtons = new JButton[NR_OF_ANSWERS];
-	        	for(int i=0; i<answerButtons.length; i++){
-	    			answerButtons[i] = new JButton("Answer #" + i);
-	    			answerButtons[i].setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
-	    			top.add(answerButtons[i]);
-	    		}
-	        	
-	        	//dev
-	        	{
-	        		Vector dummyAnswers = new Vector();
-	        		for(int i=0; i<answerButtons.length; i++){
-	        			dummyAnswers.add("Answer #" + i);
-	        		}
-	        		setAnswersToButtons(dummyAnswers);
-		    }
-	    pane.add(top);
-	     
-	    //bottom panel
-	    bottom = new JPanel();
-	    bottom.setPreferredSize(new Dimension(TOTAL_OUTER_WIDTH,250));
-	        	
-	    		//chat window
-	    		chatArea = new JTextArea();
-	        	chatArea.setEditable(false);
-	        	chatArea.setLineWrap(true);
-	        	chatArea.setWrapStyleWord(true);
-	        	JScrollPane scrollPane = new JScrollPane(chatArea);
-	       	scrollPane.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, BOTTOM_INNER_HEIGHT));
-	       	bottom.add(scrollPane);
-	    	
-	       	clientList = new JList(server.getClientNames());
-	    		clientList.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
-	    		clientListPane = new JScrollPane(clientList);
-	    		clientListPane.setPreferredSize(new Dimension(RIGHT_INNER_WIDTH, BOTTOM_INNER_HEIGHT));
-	    		bottom.add(clientListPane);
-		
-	    		//input field
-			input = new JTextField();
-	        	input.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH, 20));
-	        	input.setAlignmentY(JComponent.BOTTOM_ALIGNMENT);
-	        	input.addActionListener(this);
-	        	
-	        	bottom.add(input);
-	    	pane.add(bottom);
-	    	input.requestFocus();
-	}
-	
-	public void updateClientList(String[] clients) throws RemoteException{
-		if(clientList!=null){
-			clientList.setListData(clients);
-		}
+	private String getCurrentQuestion() {
+		return "What is Fry's full name?";
 	}
 }

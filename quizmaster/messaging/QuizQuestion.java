@@ -19,6 +19,14 @@ public class QuizQuestion extends Message {
 	private int points;
 
 	/**
+	 * Default constructor. 
+	 * @param question
+	 */
+	public QuizQuestion(String question){
+		this.question = question;
+	}
+	
+	/**
 	 * @return Returns the points.
 	 */
 	public int getPoints() {
