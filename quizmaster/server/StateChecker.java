@@ -24,9 +24,9 @@ public class StateChecker extends Thread
 	{
 		while(!quit)
 		{
-			// Sending the state checker thread to sleep for 750ms
+			// Sending the state checker thread to sleep for 500ms
 			try {
-				Thread.sleep(750);
+				Thread.sleep(500);
 			} catch (InterruptedException e)
 			{
 				System.err.println(e.getMessage());
@@ -80,7 +80,6 @@ public class StateChecker extends Thread
 	public void setServant(QuizServant servant) {
 		this.servant = servant;
 	}
-	
 
 	/**
 	 * @return Returns the game.

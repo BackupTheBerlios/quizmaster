@@ -2,6 +2,7 @@
  * 
  * Created on 11.01.2005
  */
+
 package server;
 
 import java.rmi.RemoteException;
@@ -17,12 +18,11 @@ import client.QuizClientServices;
 /**
  * @author reinhard
  *
- *
+ * The Quiz class manages all quiz tasks
  */
 public class Quiz extends Thread {
 
 	private QuizServant servant;
-	private int numQuestions;
 	private volatile boolean quit;
 	private volatile Vector clients;
 	private QuizQuestionFactory quizfactory;
@@ -32,67 +32,30 @@ public class Quiz extends Thread {
 
 
 	/**
-	 * Default constructor, by not stating a number of questions, we're entering trivia mode
-	 *
+	 * Constructor
+	 * @param filename The filename from which we want to read the questions
 	 */
 	public Quiz(String filename)
 	{
-		this.numQuestions = -1;
 		this.quit = false;
 		this.questionCounter = 0;
 		this.filename = filename;
-		
-		System.out.println("Using: "+this.filename);
+
 		this.quizfactory = new QuizQuestionFactory(this.filename);
 		this.quizfactory.readQuestions();
 		this.questions = this.quizfactory.getQuestions();
 		this.quizfactory = null;
 	}
 	
-	/* (non-Javadoc)
+	/*
+	 *  (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	public synchronized void run()
+	public void run()
 	{
-		int counter=0;
-		
 		System.out.println("Quiz thread running");
 		
-		while(!quit)
-		{
-			// Only counting if there's a limit, thus preventing apotential overflow
-			if(numQuestions>0) counter+=1;	
-			
-			if(this.clients.size()==0 || (this.numQuestions != -1 && counter > this.numQuestions ))
-			{
-				this.setQuit(true);
-				this.servant.stopGame();
-				continue;
-			}
-			
-			// Get a new question
-			QuizQuestion question = this.fetchQuestion();
-			
-			// Send the question to all clients
-			if(this.sendQuestion(question)==0)
-			{
-				this.quit=true;
-				continue;
-			}
-			
-			// Now wait for client answers
-			try {
-				Thread.sleep(7500);
-			} catch(InterruptedException e)
-			{
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
-
-			// Now we are checking all answers
-			this.checkAnswers(question);
-
-		}
+		this.runGame();
 		
 		// Doing some cleanup before exiting
 		for(int i=0; i< this.clients.size(); i++)
@@ -109,19 +72,61 @@ public class Quiz extends Thread {
 		}
 		
 		this.servant.setActiveQuiz(false);
-		
-		
+			
 		System.out.println("Quiz thread terminating");
 		return;
 	}
 	
 	/**
+	 * All the quiz logic
+	 *
+	 */
+	private synchronized void runGame()
+	{
+		int counter=0;
+		
+		while(!quit)
+		{
+			// If no more clients want to play the quiz
+			if(this.clients.size()==0)
+			{
+				this.setQuit(true);
+				this.servant.stopGame();
+				continue;
+			}
+			
+			// Get a new question
+			QuizQuestion question = this.fetchQuestion();
+			
+			// Send the question to all clients
+			if(this.sendQuestion(question)==0)
+			{
+				this.quit=true;
+				continue;
+			}
+			
+			// Wait for client answers
+			try {
+				Thread.sleep(7500);
+			} catch(InterruptedException e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+
+			// Checking all answers
+			this.checkAnswers(question);
+
+		}
+	}
+	
+	/**
 	 * Send a question to all clients of the quiz
 	 * @param question The question to send
-	 * @return Number of sent Questions
+	 * @return Number of sent questions
 	 * @throws RemoteException
 	 */
-	public int sendQuestion(QuizQuestion question) 
+	private int sendQuestion(QuizQuestion question) 
 	{
 		int i=0;
 		
@@ -135,19 +140,18 @@ public class Quiz extends Thread {
 			} catch(RemoteException e)
 			{
 				System.err.println("RemoteException in Quiz.sendQuestion");
-				System.err.println("i="+i);
+				System.err.println("Client="+i);
 				System.err.println(e.getMessage());
 				e.printStackTrace();
 			}
 		}
-		
 		return i;
 	}
 	
 	/**
 	 * Method checks all answers to a question
 	 * @param question
-	 * @return
+	 * @return Number of correct answers
 	 */
 	private int checkAnswers(QuizQuestion question)
 	{
@@ -158,6 +162,7 @@ public class Quiz extends Thread {
 		System.out.println("Correct answer would be #"+question.getCorrectAnswer());
 		System.out.println("There are "+answers.size()+" answers to be checked");
 		
+		// Iterating over the available answers
 		for(int i=0; i<answers.size(); i++)
 		{
 			QuizAnswer answer = (QuizAnswer) answers.elementAt(i);
@@ -172,6 +177,7 @@ public class Quiz extends Thread {
 				e.printStackTrace();
 			}
 			
+			// Just to be sure that the current answer is related to the current question (SimpleClient)
 			if(answer.getQuestionId()!=question.getId())
 			{
 				System.out.println("Answer from client "+ nick +" is not related to the current question");
@@ -180,14 +186,16 @@ public class Quiz extends Thread {
 			
 			System.out.println(nick+" answered: #"+answer.getAnswer());
 			
+			// Check if the answer is correct
 			if(answer.getAnswer() == question.getCorrectAnswer())
 			{
 				QuizClientServices client = (QuizClientServices) answer.getSender();
 				try {
+					// Updating client's score
 					client.updateScore(question.getPoints());
 					SystemMessage sysMsg = new SystemMessage();
 					sysMsg.setOpCode(SystemMessage.RIGHT_ANSWER);
-					sysMsg.setBody("Your answer was right. " + question.getPoints() + " points for you!");
+					sysMsg.setBody("Your answer was right. " + question.getPoints() + " points!");
 					client.display(sysMsg);
 				} catch(RemoteException e)
 				{
@@ -205,6 +213,7 @@ public class Quiz extends Thread {
 			System.out.println("No correct answer");
 		}
 		
+		// Reset the servant's answer vector
 		this.servant.clearAnswers();
 		
 		return correctAnswers;
@@ -246,20 +255,6 @@ public class Quiz extends Thread {
 	 */
 	public void setServant(QuizServant servant) {
 		this.servant = servant;
-	}
-	
-	/**
-	 * @return Returns the numQuestions.
-	 */
-	public int getNumQuestions() {
-		return this.numQuestions;
-	}
-	
-	/**
-	 * @param numQuestions The numQuestions to set.
-	 */
-	public void setNumQuestions(int numQuestions) {
-		this.numQuestions = numQuestions;
 	}
 	
 	/**

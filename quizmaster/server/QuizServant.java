@@ -129,33 +129,43 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		sendClientList();
 	}
 	
-	
 	/**
-	 * Method to make sure the client's username isn't already in use
-	 * 
-	 * @param nick
-	 * @param nr
+	 * Method checks for unique nicknames and modifies it, if necessary
+	 * @param nick The nickname to check
+	 * @param nr The number to add in case of not unique nickname
 	 * @return
-	 * @throws RemoteException
 	 */
-	private String checkNickname(String nick, int nr)throws RemoteException{
+	private String checkNickname(String nick, int nr) 
+	{
 		if(nr!=0){
 			nick += nr;
 		}
-		for(int i=0; i<connectedClients.size();i++){
+		for(int i=0; i<connectedClients.size();i++)
+		{
 			QuizClientServices c = (QuizClientServices) connectedClients.elementAt(i);
-			if(nick.equals(c.getNickname())){
-				nick = checkNickname(nick, nr+1);
-				break;
+
+			try {
+				if(nick.equals(c.getNickname()))
+				{
+					// Recursivly call checkNickname, until a unique name is found
+					nick = checkNickname(nick, nr+1);
+					break;
+				}
+			} catch (RemoteException e) 
+			{
+				e.printStackTrace();
 			}
+
 		}
 		return nick;
 	}
 	
-	/**
-	 * @return Returns the nicknames of all clients. 
+	/*
+	 *  (non-Javadoc)
+	 * @see server.QuizServices#getClientNames()
 	 */
-	public String[] getClientNames() throws RemoteException{
+	public String[] getClientNames() throws RemoteException
+	{
 		String[] res = new String[connectedClients.size()];
 		for(int i=0; i<connectedClients.size(); i++){
 			res[i] = ((QuizClientServices) connectedClients.elementAt(i)).getNickname();
@@ -163,8 +173,14 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		return res;
 	}
 	
-	private void sendClientList() throws RemoteException{
-		for(int i=0; i<connectedClients.size(); i++){
+	/**
+	 * Method for sending the list of currently connected clients
+	 * @throws RemoteException
+	 */
+	private void sendClientList() throws RemoteException
+	{
+		for(int i=0; i<connectedClients.size(); i++)
+		{
 			((QuizClientServices) connectedClients.elementAt(0)).updateClientList(getClientNames());
 		}
 	}
@@ -172,33 +188,36 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	/**
 	 * @return Returns the connectedClients.
 	 */
-	public Vector getConnectedClients() {
+	public Vector getConnectedClients() 
+	{
 		return connectedClients;
 	}
 	
 	/**
 	 * @param connectedClients The connectedClients to set.
 	 */
-	public void setConnectedClients(Vector connectedClients) {
+	public void setConnectedClients(Vector connectedClients) 
+	{
 		this.connectedClients = connectedClients;
 	}
 	
 	/**
 	 * @return Returns the quizClients.
 	 */
-	public Vector getQuizClients() {
+	public Vector getQuizClients() 
+	{
 		return quizClients;
 	}
 	
 	/**
 	 * @param quizClients The quizClients to set.
 	 */
-	public void setQuizClients(Vector quizClients) {
+	public void setQuizClients(Vector quizClients) 
+	{
 		this.quizClients = quizClients;
 	}
 	
 	/**
-	 * 
 	 * @return The number of clients currently in a quiz game
 	 */
 	public int getNumQuizClients()
@@ -207,7 +226,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * 
 	 * @return The number of currently connected clients
 	 */
 	public int getNumConnectedClients()
@@ -216,23 +234,22 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * @return Returns the activeQuiz.
+	 * @return Returns true if a quiz is running, false if not
 	 */
 	public boolean isActiveQuiz() {
 		return activeQuiz;
 	}
 	
 	/**
-	 * @param activeQuiz The activeQuiz to set.
+	 * @param activeQuiz Set if a quiz is running
 	 */
 	public void setActiveQuiz(boolean activeQuiz) {
 		this.activeQuiz = activeQuiz;
 	}
 	
-	/**
-	 * A client can request to join a quizgame using this method
-	 * @param client
-	 * @return Returns if joining a quiz was successful
+	/*
+	 *  (non-Javadoc)
+	 * @see server.QuizServices#joinGame(client.QuizClientServices)
 	 */
 	public boolean joinGame(QuizClientServices client)
 	{
@@ -243,19 +260,10 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		}
 		return false;
 	}
-	
-	/**
-	 * DEBUG: Method for killing the statechecker thread
-	 *
-	 */
-	public void killCheckerThread()
-	{
-		System.out.println("Active threads: "+ Thread.activeCount());
-		this.checker.setQuit(true);
-	}
-	
-	/**
-	 * A client can request to leave the running game using this method
+
+	/*
+	 *  (non-Javadoc)
+	 * @see server.QuizServices#requestLeaveGame(client.QuizClientServices)
 	 */
 	public boolean requestLeaveGame(QuizClientServices client)
 	{
@@ -283,9 +291,9 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		return false;
 	}
 	
-	/**
-	 * Add a quiz answer to the vector of quiz answers
-	 * @param answer
+	/*
+	 *  (non-Javadoc)
+	 * @see server.QuizServices#addAnswer(messaging.QuizAnswer)
 	 */
 	public void addAnswer(QuizAnswer answer)
 	{
@@ -305,7 +313,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * 
 	 * @return Quiz answers for the current question
 	 */
 	public Vector getAnswers()
@@ -314,14 +321,14 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * @return Returns the filename.
+	 * @return Returns the filename of the quizdata
 	 */
 	public String getFilename() {
 		return filename;
 	}
 	
 	/**
-	 * @param filename The filename to set.
+	 * @param filename The filename of the quizdata to set.
 	 */
 	public void setFilename(String filename) {
 		this.filename = filename;

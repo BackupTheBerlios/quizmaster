@@ -24,19 +24,24 @@ public class QuizServer {
 		
 		if(args.length!=1)
 		{
+			// That's our standard quiz file
 			filename = "futurama.xml";
 		}
 		else
 		{
+			// If the user wants to use another quiz
 			filename = args[0];
 		}
 		
 		File f = new File(filename);
+		
+		// Error handling
 		if(!f.exists())
 		{
 			System.out.println("The specified file <"+filename+"> does not exist!\n");
 			System.exit(-1);
 		}
+		
 		f=null;
 		
 		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
@@ -60,10 +65,10 @@ public class QuizServer {
 		}
 		
 		try{
+			// Bind the servant to the rmi naming service
 			System.out.println("Trying to bind");
 			Naming.rebind("//localhost/Quizmaster", servant);
 			System.out.println("Binding successful. ");
-			
 		}
 		catch(Exception e){
 			System.err.println("Exception in QuizServer.main(): ");
