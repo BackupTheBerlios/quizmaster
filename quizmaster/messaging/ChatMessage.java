@@ -2,6 +2,7 @@
  * 
  * Created on 05.01.2005
  */
+
 package messaging;
 
 /**
@@ -11,28 +12,28 @@ package messaging;
  */
 public class ChatMessage extends Message {
 	
-	private String body;
+	private String text;
 	
 	/**
-	 * Constructor which takes a String argument for the body
+	 * Constructor which takes a String argument for the message text
 	 * @param body
 	 */
 	public ChatMessage(String body)
 	{
-		this.body = body;
+		this.text = body;
 	}
-	
 	
 	/**
-	 * @return Returns the body.
+	 * @return Returns the message text
 	 */
 	public String getBody() {
-		return body;
+		return this.text;
 	}
+	
 	/**
 	 * @param body The body to set.
 	 */
 	public void setBody(String body) {
-		this.body = body;
+		this.text = body;
 	}
 }

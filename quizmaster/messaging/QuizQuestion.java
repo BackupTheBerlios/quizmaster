@@ -9,7 +9,7 @@ import java.util.Vector;
 /**
  * @author reinhard
  *
- *
+ * A simple class for QuizQuestions
  */
 public class QuizQuestion extends Message {
 	
@@ -20,19 +20,7 @@ public class QuizQuestion extends Message {
 	
 	/**
 	 * Constructor
-	 *
-	 */
-	public QuizQuestion()
-	{
-		//empty
-	}
-	
-	/**
-	 * Constructor which takes all necessary information for a quiz question
-	 * @param question
-	 * @param correctAnswer
-	 * @param answers
-	 * @param points
+	 * @param question The text of the question
 	 */
 	public QuizQuestion(String question)
 	{
@@ -53,12 +41,14 @@ public class QuizQuestion extends Message {
 	public void setPoints(int points) {
 		this.points = points;
 	}
+	
 	/**
 	 * @return Returns the answers.
 	 */
 	public Vector getAnswers() {
 		return answers;
 	}
+	
 	/**
 	 * @param answers The answers to set.
 	 */
@@ -72,18 +62,21 @@ public class QuizQuestion extends Message {
 	public String getQuestion() {
 		return question;
 	}
+	
 	/**
 	 * @param question The question to set.
 	 */
 	public void setQuestion(String question) {
 		this.question = question;
 	}
+	
 	/**
 	 * @return Returns the correctAnswer.
 	 */
 	public int getCorrectAnswer() {
 		return correctAnswer;
 	}
+	
 	/**
 	 * @param correctAnswer The correctAnswer to set.
 	 */

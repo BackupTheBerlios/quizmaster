@@ -20,27 +20,32 @@ public abstract class Message implements Serializable {
 	private QuizClientServices sender;
 	
 	/**
-	 * @return Returns the id.
+	 * Method for getting the message id
+	 * @return Returns the id
 	 */
 	public int getId() {
 		return id;
 	}
+
 	/**
-	 * @param id The id to set.
+	 * Method for setting the message id
+	 * @param id The message id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
 	/**
-	 * @return Returns the sender.
+	 * Method for getting a message's sender
+	 * @return Returns the sender
 	 */
 	public QuizClientServices getSender() {
 		return sender;
 	}
+	
 	/**
-	 * @param sender The sender to set.
+	 * Method for setting a message's sender
+	 * @param sender The sender to set
 	 */
 	public void setSender(QuizClientServices sender) {
 		this.sender = sender;
