@@ -139,17 +139,17 @@ public class QuizQuestionFactory {
 	}
 	
 	/**
-	 * "Das ist alles nur geklaut...."
-	 * @param A
+	 * Method to shuffle an array
+	 * @param array
 	 */
-	private void shuffle(Object[] A) {
-		for (int lastPlace = A.length-1; lastPlace > 0; lastPlace--) {
+	private void shuffle(Object[] array) {
+		for (int lastPlace = array.length-1; lastPlace > 0; lastPlace--) {
 			// Choose a random location from among 0,1,...,lastPlace.
 			int randLoc = (int)(Math.random()*(lastPlace+1));
 			// Swap items in locations randLoc and lastPlace.
-			Object temp = A[randLoc];
-			A[randLoc] = A[lastPlace];
-			A[lastPlace] = temp;
+			Object temp = array[randLoc];
+			array[randLoc] = array[lastPlace];
+			array[lastPlace] = temp;
 		}
 	}
 

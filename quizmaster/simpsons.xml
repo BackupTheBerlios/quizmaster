@@ -1,0 +1,8 @@
+<quiz>
+	<question id="0" text="What's Frys full name?" points="10">
+		<answer correct="true">Philip J. Fry</answer>
+		<answer>French Fry</answer>
+		<answer>George W. Fry</answer>
+		<answer>Gerhard Fry</answer>
+	</question>
+</quiz>

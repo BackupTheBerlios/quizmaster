@@ -2,7 +2,7 @@
  * 
  * Created on 16.01.2005
  */
-package server;
+package xml;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -7,6 +7,8 @@ package server;
 import java.rmi.RemoteException;
 import java.util.Vector;
 
+import xml.QuizQuestionFactory;
+
 import messaging.QuizAnswer;
 import messaging.QuizQuestion;
 import messaging.SystemMessage;
