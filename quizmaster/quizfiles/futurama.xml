@@ -241,4 +241,82 @@
 		<answer>Leela W.S. Ever</answer>
 		<answer>Leela Wong</answer>
 	</question>
+	<question id="40" text="What's the name of the robot starring in Futurama?" points="5">
+		<answer correct="true">Bender</answer>
+		<answer>Fry</answer>
+		<answer>Lrr</answer>
+		<answer>Zoidberg</answer>
+	</question>
+	<question id="41" text="What color is Leela's hair?" points="10">
+		<answer correct="true">purple</answer>
+		<answer>blue</answer>
+		<answer>black</answer>
+		<answer>red</answer>
+	</question>
+	<question id="42" text="Who was Fry's pizza in the first episode adressed to?" points="10">
+		<answer correct="true">I.C. Wiener</answer>
+		<answer>Bender</answer>
+		<answer>Bea o'Problem</answer>
+		<answer>Bill Clinton</answer>
+	</question>
+	<question id="43" text="What color is Kif?" points="10">
+		<answer correct="true">Green</answer>
+		<answer>White</answer>
+		<answer>Blue</answer>
+		<answer>Who is Kif?</answer>
+	</question>
+	<question id="44" text="Who's the only one that can resist the flying brains' stupid ray?" points="15">
+		<answer correct="true">Fry</answer>
+		<answer>Bender</answer>
+		<answer>Zapp Brannigan</answer>
+		<answer>Kif</answer>
+	</question>
+	<question id="45" text="Who made Futurama?" points="5">
+		<answer correct="true">Matt Groening</answer>
+		<answer>Steven Spielberg</answer>
+		<answer>Homer Simpson</answer>
+		<answer>Dave Burchill</answer>
+	</question>
+	<question id="46" text="Who makes the robots?" points="10">
+		<answer correct="true">Mom</answer>
+		<answer>Dad</answer>
+		<answer>Uncle Fixit</answer>
+		<answer>The robot making man</answer>
+	</question>
+	<question id="47" text="Where do Leela's parents live?" points="10">
+		<answer correct="true">The New New York sewers</answer>
+		<answer>The New York sewers</answer>
+		<answer>Cyclopia</answer>
+		<answer>New Texas</answer>
+	</question>
+	<question id="48" text="Who is Nibbler?" points="10">
+		<answer correct="true">The black 3 eyed thing</answer>
+		<answer>The lobster dude</answer>
+		<answer>The old man</answer>
+		<answer>The jamaican guy</answer>
+	</question>
+	<question id="49" text="Which of these instruments exists on Futurama?" points="15">
+		<answer correct="true">Holophone</answer>
+		<answer>Laserpiano</answer>
+		<answer>Rocketguitar</answer>
+		<answer>Universadrum</answer>
+	</question>
+	<question id="50" text="Who is Professor Farnsworth's rival?" points="10">
+		<answer correct="true">Professor Wornstrum</answer>
+		<answer>Doctor Zoidberg</answer>
+		<answer>President Nixon</answer>
+		<answer>Santa Claus</answer>
+	</question>
+	<question id="51" text="What's the name of Professor Farnsworths clone?" points="15">
+		<answer correct="true">Cubert</answer>
+		<answer>Hubert</answer>
+		<answer>Fred</answer>
+		<answer>Moses</answer>
+	</question>
+	<question id="52" text="What record did Fry hide his 7 leaf clover in?" points="35">
+		<answer correct="true">The Breakfast Club Soundtrack</answer>
+		<answer>A Beatles album</answer>
+		<answer>AC/DC's 'Highway to hell'</answer>
+		<answer>An Elvis record</answer>
+	</question>
 </quiz>
