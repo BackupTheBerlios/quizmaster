@@ -17,13 +17,36 @@ public class QuizQuestion extends Message {
 	private int correctAnswer;
 	private Vector answers;
 	private int points;
+	
+	/**
+	 * Constructor
+	 *
+	 */
+	public QuizQuestion()
+	{
+		//empty
+	}
+	
+	/**
+	 * Constructor which takes all necessary information for a quiz question
+	 * @param question
+	 * @param correctAnswer
+	 * @param answers
+	 * @param points
+	 */
+	public QuizQuestion(String question)
+	{
+		this.question = question;
+	}
 
 	/**
 	 * @return Returns the points.
 	 */
-	public int getPoints() {
+	public int getPoints()
+	{
 		return points;
 	}
+	
 	/**
 	 * @param points The points to set.
 	 */

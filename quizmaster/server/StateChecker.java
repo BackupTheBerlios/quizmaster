@@ -15,7 +15,6 @@ public class StateChecker extends Thread
 	private volatile boolean quit=false;
 	private volatile Quiz game;
 	private QuizServant servant;
-
 	
 	/**
 	 * The run method for this thread

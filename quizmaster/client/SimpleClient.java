@@ -17,6 +17,7 @@ import java.rmi.server.UnicastRemoteObject;
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
 import messaging.QuizQuestion;
+import messaging.SystemMessage;
 import server.QuizServices;
 
 /**
@@ -105,6 +106,13 @@ public class SimpleClient implements QuizClientServices{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see client.QuizClientServices#display(messaging.SystemMessage)
+	 */
+	public void display(SystemMessage msg) throws RemoteException {
+		// TODO Auto-generated method stub
+
+	}
 	/**
 	 * Method for reading the answer from the user
 	 * @param questionid ID of the corresponding question
@@ -143,7 +151,8 @@ public class SimpleClient implements QuizClientServices{
 			return new QuizAnswer(0, this.currentQuestion.getId(), this);
 		}
 		
-		return new QuizAnswer(answer, this.currentQuestion.getId(), this);
+		// HACK: We don't want to enter 0-3, so we decrement the answerid...
+		return new QuizAnswer(answer-1, this.currentQuestion.getId(), this);
 	}
 	
 	/**

@@ -25,7 +25,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	private Vector answers;
 	
 	private StateChecker checker;
-
+	
 	
 	/**
 	 * Standard constructor
@@ -93,7 +93,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 			QuizClientServices client = (QuizClientServices) this.connectedClients.elementAt(i);
 			client.display(msg);
 		}
-
+		
 	}
 	
 	/* (non-Javadoc)
@@ -109,6 +109,28 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		//send updated client list to all clients
 		sendClientList();
 	}
+	
+	/* (non-Javadoc)
+	 * @see server.QuizServices#unregister(client.QuizClientServices)
+	 */
+	public void unregister(QuizClientServices client) throws RemoteException 
+	{
+		System.out.println(this.connectedClients.size() + " client(s) registered");
+		System.out.println("Trying to unregister client...");
+		
+		if(this.quizClients.contains(client))
+		{
+			this.quizClients.remove(client);
+			this.checker.getGame().removeClient(client);
+		}
+		
+		this.connectedClients.removeElement(client);
+		System.out.println(this.connectedClients.size() + " client(s) registered");
+		
+		//send updated client list to all clients
+		sendClientList();
+	}
+	
 	
 	/**
 	 * Method to make sure the client's username isn't already in use
@@ -130,19 +152,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 			}
 		}
 		return nick;
-	}
-	
-	/* (non-Javadoc)
-	 * @see server.QuizServices#unregister(client.QuizClientServices)
-	 */
-	public void unregister(QuizClientServices client) throws RemoteException 
-	{
-		System.out.println(this.connectedClients.size() + " client(s) registered");
-		System.out.println("Trying to unregister client...");
-		this.connectedClients.removeElement(client);
-		System.out.println(this.connectedClients.size() + " client(s) registered");
-		//send updated client list to all clients
-		sendClientList();
 	}
 	
 	/**
@@ -207,12 +216,14 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	{
 		return this.connectedClients.size();
 	}
+	
 	/**
 	 * @return Returns the activeQuiz.
 	 */
 	public boolean isActiveQuiz() {
 		return activeQuiz;
 	}
+	
 	/**
 	 * @param activeQuiz The activeQuiz to set.
 	 */
@@ -257,7 +268,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		}
 		return true;
 	}
-
+	
 	/**
 	 * Clients call this method if they want to leave a quiz game
 	 * @param client The caller
@@ -280,7 +291,12 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void addAnswer(QuizAnswer answer)
 	{
+		System.out.println("Adding an answer for question #" + answer.getQuestionId());
 		System.out.println("Adding an answer");
+		
+		// HACK: Manipulating the answerid
+		answer.setAnswer(answer.getAnswer()+1);
+		
 		this.answers.add(answer);
 	}
 	

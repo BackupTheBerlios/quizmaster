@@ -15,7 +15,7 @@
 #	server - Starts the server application
 #	client - Starts the client application
 
-if [ $# -ne 1 ]; then
+if [ $# -gt 2 ]; then
 echo "Usage: start <option>";
 echo "Available options:"
 echo "server - starts the server application"
@@ -34,5 +34,5 @@ java client.SimpleClient
 fi
 
 if [ $1 = "applet" ]; then
-/Library/Java/home/bin/appletviewer file://localhost/Users/hannes/fhtw/semester6/vsys/quizmaster/Quizmaster/index.html &
+/Library/Java/home/bin/appletviewer applet.php &
 fi

@@ -18,7 +18,7 @@ public class QuizServer {
 	public static void main(String args[])
 	{
 		QuizServant servant = null;
-	
+		
 		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
 		
 		try{

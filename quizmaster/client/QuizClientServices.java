@@ -9,6 +9,7 @@ import java.rmi.RemoteException;
 
 import messaging.ChatMessage;
 import messaging.QuizQuestion;
+import messaging.SystemMessage;
 
 
 /**
@@ -25,12 +26,10 @@ public interface QuizClientServices extends Remote {
 	public String getNickname() throws RemoteException;
 	public void setNickname(String nickname) throws RemoteException;
 	public void updateClientList(String[] clients) throws RemoteException;
-	public String getNrOfGamesWon() throws RemoteException;
 
 	public void display(ChatMessage msg) throws RemoteException;
 	public void display(QuizQuestion msg) throws RemoteException;
-	//public QuizAnswer readAnswer() throws RemoteException;
-
+	public void display(SystemMessage msg) throws RemoteException;
 
 	public boolean isQuizMode() throws RemoteException;
 	public void setQuizMode(boolean b) throws RemoteException;

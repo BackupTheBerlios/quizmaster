@@ -69,6 +69,12 @@ public interface QuizServices extends Remote {
 	 */
 	public void addAnswer(QuizAnswer answer) throws RemoteException;
 	
+	/**
+	 * 
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean isActiveQuiz() throws RemoteException;
 	
 	// DEBUG
 	public void killCheckerThread() throws RemoteException;

@@ -1,15 +1,58 @@
 <quiz>
-	<question text="Katey Sagal starred on what show prior to Futurama?">
+	<question id="0" text="Who is Zapp Brannigan's sidekick?" points="10">
+		<answer correct="true">Kif</answer>
+		<answer>Zif</answer>
+		<answer>Pif</answer>
+		<answer>Mif</answer>
+	</question>
+	<question id="1" text=" In 'Hell is Other Robots,' what group's heads perform a concert?" points="10">
+		<answer correct="true">Beastie Boys</answer>
+		<answer>The Eagles</answer>
+		<answer>Backstreet Boys</answer>
+		<answer>Jefferson Starship</answer>
+	</question>
+	<question id="2" text="Who does Fry spend Valentine's Day with in 'Put Your Head on My Shoulder?'" points="10">
+		<answer correct="true">Amy</answer>
+		<answer>Leela</answer>
+		<answer>Bender</answer>
+		<answer>Professor Farnsworth</answer>
+	</question>
+	<question id="3" text="What is the name of Professor's Farnsworth's delivery service?" points="10">
+		<answer correct="true">Planet Express</answer>
+		<answer>UPS Yours</answer>
+		<answer>Deliver Now</answer>
+		<answer>Universal Shipping</answer>
+	</question>
+	<question id="4" text="Who was abandoned on Earth as a baby?" points="10">
+		<answer correct="true">Leela</answer>
+		<answer>Fry</answer>
+		<answer>Amy</answer>
+		<answer>Zapp Brannigan</answer>
+	</question>
+	<question id="5" text="Which actress from 'The Simpsons' provides voices for many bit characters on 'Futurama?'" points="10">
+		<answer>Julie Kavner</answer>
+		<answer correct="true">Tress MacNeille</answer>
+		<answer>Maggie Roswell</answer>
+		<answer>Marcia Wallace</answer>
+	</question>
+	<question id="6" text="Katey Sagal starred on what show prior to Futurama?" points="10">
 		<answer correct="true">Married with Children</answer>
 		<answer>Cheers</answer>
 		<answer>The A-Team</answer>
 		<answer>The Ropers</answer>
 	</question>
 	
-	<question text="What is Fry's full name?">
+	<question id="7" text="What is Fry's full name?" points="5">
 		<answer>Fry Farnsworth</answer>
 		<answer>Glen Fry</answer>
 		<answer correct="true">Philip J. Fry</answer>
 		<answer>French Fry</answer>
+	</question>
+	
+	<question id="8" text="Which career was Fry orignally assigned to after being unfrozen?" points="10">
+		<answer>Space pilot</answer>
+		<answer>Science officer</answer>
+		<answer>Vice chairman of Planet Express</answer>
+		<answer correct="true">Delivery boy</answer>
 	</question>
 </quiz>

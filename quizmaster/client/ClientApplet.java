@@ -1,9 +1,3 @@
-/*
- * Created on 10.01.2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
 package client;
 
 import java.awt.Container;
@@ -13,9 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JApplet;
@@ -31,13 +28,13 @@ import javax.swing.JTextField;
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
 import messaging.QuizQuestion;
+import messaging.SystemMessage;
 import server.QuizServices;
 
 /**
  * @author hannes
  * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * Swing-based GUI client applet for Quizmaster, a client-server quiz game application. 
  */
 public class ClientApplet extends JApplet implements QuizClientServices,
 		ActionListener {
@@ -69,10 +66,14 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private JPanel bottom;
 
 	private JLabel questionLabel;
+	
+	private JLabel pointsLabel;
 
 	private JButton[] answerButtons;
 
-	private JButton quit;
+	private JButton connectButton;
+	
+	private JButton startGame;
 
 	private JScrollPane clientListPane;
 
@@ -83,26 +84,32 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private JList clientList;
 	
 	private boolean quizMode;
+	
+	private boolean connected;
+	
+	private QuizQuestion currentQuestion;
+	
+	private QuizAnswer currentAnswer;
+	
+	private int score;
 
 	/**
 	 * Initialization method.
 	 */
-	public void init() {
+	public void init() 
+	{
 		super.init();
 		nickname = getParameter("nickname");
-
-		//		 Set the codebase for this application
-		//		System.setProperty("java.rmi.server.codebase",
-		// "http://localhost/classes/");
+		score = 0;
 
 		connect(getParameter("host"));
-		//		 Register the client with the server
+		
+		// Register the client with the server
 		try {
 			UnicastRemoteObject.exportObject(this);
 			server.register((QuizClientServices) this);
 			initGUI();
 		} catch (RemoteException e) {
-			System.out.println("RemoteException in SimpleClient.main():");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
@@ -114,54 +121,128 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 * @see java.applet.Applet#destroy()
 	 */
 	public void destroy() {
-		System.out.println("destroy...");
-		try {
-			server.unregister((QuizClientServices) this);
-		} catch (RemoteException re) {
-			System.out.println("RemoteException caught in destroy(): "	+ re.getMessage());
-			re.printStackTrace();
-		}
+		disconnect();
 		super.destroy();
 	}
 
 	/**
 	 * Handles all events.
 	 */
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) 
+	{
 		//user entered chat message
 		if (e.getSource() == input) {
 			if (!"".equals(input.getText())) {
 				ChatMessage message = new ChatMessage(input.getText());
 				message.setSender(this);
+				
 				try {
 					server.takeMessage(message);
 				} catch (Exception re) {
 					System.out.println("Exception caught in actionPerformed: "	+ re.getMessage());
 					re.printStackTrace();
 				}
-				//				apend input to textarea (replace by sendMessage call later)
-				//				display(message);
+				
 				//clear input line
 				input.setText("");
 			}
 		}
 
 		//Quit
-		if (e.getSource() == quit) {
-			destroy();
+		if (e.getSource() == connectButton) 
+		{
+			//if we're connected, disconnect
+			if(this.connected){
+				this.connectButton.setText("Connect");
+				disconnect();
+			}
+			//otherwise, re-init applet
+			else{
+				System.out.println("initializing...");
+				init();
+			}
 		}
-
+		
+		//user clicks join game button
+		if(e.getSource() == startGame)
+		{
+			try{
+				server.joinGame(this);
+				pointsLabel.setVisible(true);
+				startGame.setEnabled(false);
+			}catch(RemoteException re){
+				System.err.println(re.getMessage());
+				re.printStackTrace();
+			}
+		}
+		
+		//check if one of the answer buttons is pressed
+		List buttons =  Arrays.asList(answerButtons);
+		int answerNo = buttons.indexOf(e.getSource());
+		if(answerNo != -1 && currentQuestion != null)
+		{
+			//set current answer so that server can fetch it later
+			this.currentAnswer = new QuizAnswer(answerNo, currentQuestion.getId(), this);
+			try {
+				server.addAnswer(this.currentAnswer);
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			
+			//disable all answer buttons (user can only answer once per question)
+			for(int i=0; i<this.answerButtons.length; i++){
+				this.answerButtons[i].setEnabled(false);
+			}
+		}
 	}
 
 	/**
 	 * Invokes the text of a ChatMessage to be displayed in the chat area.
 	 */
-	public void display(ChatMessage msg) {
-		chatArea.append("\n<" + msg.getSender() + "> " + msg.getBody());
-		chatArea.setCaretPosition(chatArea.getDocument().getLength());
-		//TODO special treatment for own messages (display those immediately)
+	public void display(ChatMessage msg){
+		try {
+			chatArea.append("\n<" + msg.getSender().getNickname() + "> " + msg.getBody());
+			chatArea.setCaretPosition(chatArea.getDocument().getLength());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see client.QuizClientServices#notify(messaging.QuizQuestion)
+	 */
+	public void display(QuizQuestion msg) throws RemoteException 
+	{
+		//reset current answer
+		this.currentAnswer = null;
+		//store current question in internal memory
+		this.currentQuestion = msg;
+		//write question on label
+		questionLabel.setText(msg.getQuestion());
+		//write answers on buttons
+		Vector answers = msg.getAnswers();
+		for(int i=0; i<answers.size(); i++)
+		{
+			answerButtons[i].setText((String)answers.elementAt(i));
+			answerButtons[i].setVisible(true);
+			//enable buttons again
+			answerButtons[i].setEnabled(true);
+		}
+	}
+
+	/**
+	 * Handles system messages. 
+	 */
+	public void display(SystemMessage msg) throws RemoteException 
+	{
+		if(msg.getOpCode() == SystemMessage.RIGHT_ANSWER)
+		{
+			chatArea.append("\n<Quizmaster> " + msg.getBody());
+			chatArea.setCaretPosition(chatArea.getDocument().getLength());
+		}
+	}
 	/**
 	 * Returns the applet's owner's nickname.
 	 */
@@ -179,31 +260,11 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see client.QuizClientServices#getNrOfGamesWon()
-	 */
-	public String getNrOfGamesWon() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see client.QuizClientServices#notify(messaging.QuizQuestion)
-	 */
-	public void display(QuizQuestion msg) throws RemoteException {
-		// TODO Auto-generated method stub
-		//		this.answers = msg.getAnswers();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see client.QuizClientServices#readAnswer()
 	 */
 	public QuizAnswer readAnswer() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("readAnswer on " + this.getNickname() + " invoked.");
+		return this.currentAnswer;
 	}
 
 	/*
@@ -212,8 +273,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 * @see client.QuizClientServices#isQuizMode()
 	 */
 	public boolean isQuizMode() throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		return this.quizMode;
 	}
 
 	/*
@@ -222,8 +282,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 * @see client.QuizClientServices#setQuizMode(boolean)
 	 */
 	public void setQuizMode(boolean b) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		this.quizMode = b;
 	}
 
 	/*
@@ -232,25 +291,57 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 * @see client.QuizClientServices#updateScore(int)
 	 */
 	public void updateScore(int points) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		this.score += points;
+		this.pointsLabel.setText(this.score + " points");
 	}
 
 	/**
 	 * Displays list of connected clients in client list combo box.
 	 */
-	public void updateClientList(String[] clients) throws RemoteException {
+	public void updateClientList(String[] clients) throws RemoteException 
+	{
 		if (clientList != null) {
 			clientList.setListData(clients);
 		}
 	}
 
 	/**
+	 * Notifies the client that the current quiz has ended. 
+	 */
+	public void gameEnded()
+	{
+		try {
+			System.out.println("gameEnded(), client" + this.getNickname());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		this.quizMode=false;
+		//Quiz has ended. Make join game button clickable again. 
+		this.startGame.setEnabled(true);
+	}
+
+	
+	/**
+	 * @return Returns the score.
+	 */
+	public int getScore() {
+		return score;
+	}
+	
+	/**
+	 * @param score The score to set.
+	 */
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	/**
 	 * Initializes all swing components of applet.
 	 * 
 	 * @throws RemoteException
 	 */
-	private void initGUI() throws RemoteException {
+	private void initGUI() throws RemoteException 
+	{
 		pane = getContentPane();
 		pane.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -261,34 +352,47 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 		JPanel menu = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		menu.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH, 35));
-		quit = new JButton("Disconnect");
-		quit.addActionListener(this);
-		menu.add(quit);
+		
+		connectButton = new JButton("Disconnect");
+		connectButton.addActionListener(this);
+		menu.add(connectButton);
+		startGame = new JButton("Start/Join Quiz");
+		startGame.addActionListener(this);
+		if(server.isActiveQuiz()){
+			startGame.setVisible(false);
+		}
+		menu.add(startGame);
+		
+		//spacer
+		JLabel spacer = new JLabel();
+		spacer.setPreferredSize(new Dimension(450, 10));
+		menu.add(spacer);
+		
+		//points display
+		this.pointsLabel = new JLabel(this.score + " points");
+		this.pointsLabel.setVisible(false);
+
+		menu.add(pointsLabel);
+
 		top.add(menu);
 
 		//question
-		questionLabel = new JLabel(getCurrentQuestion());
+		questionLabel = new JLabel();
 		questionLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		questionLabel.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
 		top.add(questionLabel);
-
+		
 		//answer buttons
 		answerButtons = new JButton[NR_OF_ANSWERS];
 		for (int i = 0; i < answerButtons.length; i++) {
 			answerButtons[i] = new JButton("Answer #" + i);
-			answerButtons[i].setPreferredSize(new Dimension(LEFT_INNER_WIDTH,
-					30));
+			answerButtons[i].setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
+			answerButtons[i].addActionListener(this);
+			//make buttons invisible at first
+			answerButtons[i].setVisible(false);
 			top.add(answerButtons[i]);
 		}
 
-		//dev
-		{
-			Vector dummyAnswers = new Vector();
-			for (int i = 0; i < answerButtons.length; i++) {
-				dummyAnswers.add("Answer #" + i);
-			}
-			setAnswersToButtons(dummyAnswers);
-		}
 		pane.add(top);
 
 		//bottom panel
@@ -323,6 +427,10 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		input.requestFocus();
 	}
 
+	/**
+	 * Sign the buttons with the quiz answers
+	 * @param v Vector of answers
+	 */
 	private void setAnswersToButtons(Vector v) {
 		for (int i = 0; i < v.size(); i++) {
 			answerButtons[i].setText((String) v.elementAt(i));
@@ -334,7 +442,8 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 * 
 	 * @param hostname
 	 */
-	private void connect(String hostname) {
+	private void connect(String hostname) 
+	{
 		try {
 			String name = "//" + hostname + "/Quizmaster";
 			this.server = (QuizServices) Naming.lookup(name);
@@ -351,22 +460,26 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-
+		this.connected = true;
 		System.out.println("Successfully connected to " + hostname);
 		System.out.println("");
 	}
-
-	/**
-	 * Returns current quiz question.
-	 * 
-	 * @return
-	 */
-	private String getCurrentQuestion() {
-		return "What is Fry's full name?";
-	}
 	
-	public void gameEnded()
+	/**
+	 * Disconnects from server.
+	 */
+	private void disconnect()
 	{
-		this.quizMode=false;
+		try {
+			server.unregister((QuizClientServices) this);
+			UnicastRemoteObject.unexportObject(this, true);
+			this.connected = false;
+		} catch (NoSuchObjectException e) 
+		{
+			e.printStackTrace();
+		} catch (RemoteException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }

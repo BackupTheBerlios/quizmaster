@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import messaging.QuizAnswer;
 import messaging.QuizQuestion;
+import messaging.SystemMessage;
 import client.QuizClientServices;
 
 /**
@@ -22,6 +23,9 @@ public class Quiz extends Thread {
 	private int numQuestions;
 	private volatile boolean quit;
 	private volatile Vector clients;
+	private QuizQuestionFactory quizfactory;
+	private Vector questions;
+	private int questionCounter;
 
 
 	/**
@@ -32,6 +36,12 @@ public class Quiz extends Thread {
 	{
 		this.numQuestions = -1;
 		this.quit = false;
+		this.questionCounter = 0;
+		
+		this.quizfactory = new QuizQuestionFactory();
+		this.quizfactory.readQuestions();
+		this.questions = this.quizfactory.getQuestions();
+		this.quizfactory = null;
 	}
 	
 	/**
@@ -40,8 +50,8 @@ public class Quiz extends Thread {
 	 */
 	public Quiz(int numQuestions)
 	{
+		this();
 		this.numQuestions = numQuestions;
-		this.quit = false;
 	}	
 	
 	/* (non-Javadoc)
@@ -57,6 +67,13 @@ public class Quiz extends Thread {
 		{
 			// Only counting if there's a limit, thus preventing apotential overflow
 			if(numQuestions>0) counter+=1;	
+			
+			if(this.clients.size()==0 || (this.numQuestions != -1 && counter > this.numQuestions ))
+			{
+				this.setQuit(true);
+				this.servant.stopGame();
+				continue;
+			}
 			
 			// Get a new question
 			QuizQuestion question = this.fetchQuestion();
@@ -80,10 +97,6 @@ public class Quiz extends Thread {
 			// Now we are checking all answers
 			this.checkAnswers(question);
 
-			if(numQuestions>0 && counter>=this.numQuestions)
-			{
-				this.quit = true;
-			}
 		}
 		
 		// Doing some cleanup before exiting
@@ -99,6 +112,9 @@ public class Quiz extends Thread {
 				e.printStackTrace();
 			}
 		}
+		
+		this.servant.setActiveQuiz(false);
+		
 		
 		System.out.println("Quiz thread terminating");
 		return;
@@ -143,6 +159,7 @@ public class Quiz extends Thread {
 		int correctAnswers=0;
 		Vector answers = this.servant.getAnswers();
 		
+		System.out.println("Current question: " + question.getId());
 		System.out.println("Correct answer would be #"+question.getCorrectAnswer());
 		System.out.println("There are "+answers.size()+" answers to be checked");
 		
@@ -163,7 +180,6 @@ public class Quiz extends Thread {
 			if(answer.getQuestionId()!=question.getId())
 			{
 				System.out.println("Answer from client "+ nick +" is not related to the current question");
-				
 				continue;
 			}
 			
@@ -174,6 +190,10 @@ public class Quiz extends Thread {
 				QuizClientServices client = (QuizClientServices) answer.getSender();
 				try {
 					client.updateScore(question.getPoints());
+					SystemMessage sysMsg = new SystemMessage();
+					sysMsg.setOpCode(SystemMessage.RIGHT_ANSWER);
+					sysMsg.setBody("Your answer was right. " + question.getPoints() + " points for you!");
+					client.display(sysMsg);
 				} catch(RemoteException e)
 				{
 					System.err.println(e.getMessage());
@@ -200,32 +220,19 @@ public class Quiz extends Thread {
 	 * @return
 	 */
 	public QuizQuestion fetchQuestion()
-	{
+	{	
 		System.out.println("Fetching a new quiz question");
 		
-		// TODO: Correct implementation
-		// This is just a dummy for testing purposes...
+		// If all question have been answered, begin again
+		if(this.questionCounter>=this.questions.size())
+		{
+			this.questionCounter=0;
+			// TODO: Maybe mix the question vector to achieve a new question ordering
+		}
 		
-		QuizQuestion question = new QuizQuestion();
+		QuizQuestion question = (QuizQuestion) this.questions.elementAt(this.questionCounter);
 		
-		question.setId(0);
-		question.setQuestion("Wie lang war der Dreißigjährige Krieg?");
-		
-		Vector answers = new Vector();
-		String answer = new String("1000 Jahre");
-		answers.add(answer);
-		
-		answer = new String("30 Jahre");
-		answers.add(answer);
-		
-		answer = new String("12.5 Jahre");
-		answers.add(answer);
-		
-		question.setAnswers(answers);
-		
-		question.setCorrectAnswer(2);
-		
-		question.setPoints(10);
+		this.questionCounter+=1;
 		
 		return question;
 	}
@@ -300,4 +307,17 @@ public class Quiz extends Thread {
 		this.servant.leaveGame(client);
 	}
 
+	/**
+	 * @return Returns the questionCounter.
+	 */
+	public int getQuestionCounter() {
+		return questionCounter;
+	}
+	
+	/**
+	 * @param questionCounter The questionCounter to set.
+	 */
+	public void setQuestionCounter(int questionCounter) {
+		this.questionCounter = questionCounter;
+	}
 }

@@ -69,7 +69,7 @@ echo "Compiling applet..."
 javac client/ClientApplet.java
 rmic client.ClientApplet
 cp client/ClientApplet_Stub.class /Library/WebServer/Documents/classes/
-/Library/Java/home/bin/appletviewer file://localhost/Users/hannes/fhtw/semester6/vsys/quizmaster/Quizmaster/index.html &
+/Library/Java/home/bin/appletviewer applet.php &
 fi
 
 echo "Finished..."
