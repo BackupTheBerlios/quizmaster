@@ -7,9 +7,6 @@ package xml;
 import java.io.File;
 import java.util.Vector;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import messaging.QuizQuestion;
 
 import org.w3c.dom.Document;
@@ -46,22 +43,15 @@ public class QuizQuestionFactory {
 	 */
 	public void readQuestions()
 	{
-		Document doc = null;
+		File f = new File(this.filename);
 		
-		System.out.println("Reading question from file: "+this.filename);
-		File docFile = new File( this.filename );
-
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            doc = db.parse(docFile);
-        } catch (java.io.IOException e) {
-            System.out.println("Can't find the file");
-        } catch (Exception e) {
-            System.out.println("Problem parsing the file.");
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
-        }
+		Document doc = XMLReader.readDocFromFile(f);
+		
+		if(doc==null)
+		{
+			System.err.println("No Document constructed from XML-File");
+			System.err.println("File: "+ this.filename);
+		}
         
         // Iterate over question elements
     		NodeList questions = doc.getElementsByTagName("question");
@@ -126,7 +116,6 @@ public class QuizQuestionFactory {
     		
     		// We want a different question order each game, so once again, we're shuffling
     		this.questions = QuizQuestionFactory.mixQuestions(qs);
-    		docFile=null;
 		
 		System.out.println(i+" questions read from file");
 	}

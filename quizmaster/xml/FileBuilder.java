@@ -46,19 +46,13 @@ public class FileBuilder {
 			return;
 		}
 		
-		Document doc = null;
-
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            doc = db.parse(f);
-        } catch (java.io.IOException e) {
-            System.out.println("Can't find the file");
-        } catch (Exception e) {
-            System.out.println("Problem parsing the file.");
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
-        }
+		Document doc = XMLReader.readDocFromFile(f);
+		
+		if(doc==null)
+		{
+			System.err.println("No Document constructed from XML-File");
+			System.err.println("File: "+ filename);
+		}
         
         // Iterate over question elements
     		NodeList questions = doc.getElementsByTagName("question");

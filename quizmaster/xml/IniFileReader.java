@@ -5,12 +5,7 @@
 package xml;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Hashtable;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -139,23 +134,12 @@ public class IniFileReader
 	 */
 	private void readParams()
 	{
-		Document doc = null;
+		Document doc = XMLReader.readDocFromFile(this.iniFile);
 		
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		dbf.setIgnoringComments(true);
-		try {
-			DocumentBuilder db= dbf.newDocumentBuilder();
-			doc = db.parse(this.iniFile);
-		} catch (ParserConfigurationException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		} catch(IOException e)
+		if(doc==null)
 		{
-			System.err.println(e.getMessage());
-		} catch(Exception e)
-		{
-			System.err.println(e.getMessage());
-			e.printStackTrace();
+			System.err.println("No Document constructed from XML-File");
+			System.err.println("File: "+ this.iniFile);
 		}
 		
 		// Iterate over param elements
