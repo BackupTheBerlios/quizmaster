@@ -16,29 +16,20 @@ public class ChatMessage extends Message {
 	private String nickname;
 	
 	/**
+	 * Getter for nickname. 
 	 * @return Returns the nickname.
 	 */
 	public String getNickname() {
 		return nickname;
 	}
 	/**
+	 * Sets nickname. 
 	 * @param nickname The nickname to set.
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	/**
-	 * @return Returns the text.
-	 */
-	public String getText() {
-		return text;
-	}
-	/**
-	 * @param text The text to set.
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
+	
 	/**
 	 * Constructor which takes a String argument for the message text
 	 * @param body
@@ -49,6 +40,7 @@ public class ChatMessage extends Message {
 	}
 	
 	/**
+	 * Gets body. 
 	 * @return Returns the message text
 	 */
 	public String getBody() {
