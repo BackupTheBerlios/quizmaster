@@ -91,12 +91,11 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 		// Register the client with the server
 		String host = getCodeBase().getHost();
-		if(host==null)
-		{
-			host="localhost";
+		if(host==null){
+//			host="localhost";
 		}
+		connect(host);
 		
-		connect(getCodeBase().getHost());
 
 		try {
 			UnicastRemoteObject.exportObject(this);
@@ -127,7 +126,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			if (!"".equals(input.getText())) {
 				ChatMessage message = new ChatMessage(input.getText());
 				message.setSender(this);
-				
+				message.setNickname(this.nickname);
 				try {
 					server.takeMessage(message);
 				} catch (Exception re) {
@@ -239,7 +238,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		System.err.println(msg.getBody());
 //		try 
 //		{
-			chatArea.append("\n<" + "nick" + "> " + msg.getBody());
+			chatArea.append("\n<" + msg.getNickname() + "> " + msg.getBody());
 			chatArea.setCaretPosition(chatArea.getDocument().getLength());
 //		} catch (RemoteException e) {
 //			e.printStackTrace();
@@ -440,6 +439,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private void connect(String hostname) 
 	{
 		try {
+			System.out.println("trying to connect to " + hostname + "...");
 			String name = "rmi://" + hostname + "/Quizmaster";
 			this.server = (QuizServices) Naming.lookup(name);
 			this.connected = true;
