@@ -17,6 +17,7 @@ import org.w3c.dom.NodeList;
 public class QuizQuestionFactory {
 	
 	private Vector questions;
+	private String quizDesc;
 	private String filename;
 	
 	/**
@@ -52,6 +53,11 @@ public class QuizQuestionFactory {
 			System.err.println("No Document constructed from XML-File");
 			System.err.println("File: "+ this.filename);
 		}
+		
+		// QUICK HACK! Get quiz description
+		NodeList quiz = doc.getElementsByTagName("quiz");
+		this.quizDesc = quiz.item(0).getAttributes().getNamedItem("description").getNodeValue();
+		quiz=null;
         
         // Iterate over question elements
     		NodeList questions = doc.getElementsByTagName("question");
@@ -221,5 +227,12 @@ public class QuizQuestionFactory {
 	 */
 	public void setQuestions(Vector questions) {
 		this.questions = questions;
+	}
+	
+	/**
+	 * @return Returns the quizDesc.
+	 */
+	public String getQuizDesc() {
+		return quizDesc;
 	}
 }

@@ -30,7 +30,6 @@ public class Quiz extends Thread {
 	private volatile String filename;
 	private int questionCycle;
 
-
 	/**
 	 * Constructor
 	 * @param filename The filename from which we want to read the questions

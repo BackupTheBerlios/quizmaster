@@ -94,13 +94,13 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		if(host==null){
 //			host="localhost";
 		}
+		
 		connect(host);
 		
-
 		try {
 			UnicastRemoteObject.exportObject(this);
-			server.register(this);
 			initGUI();
+			server.register(this);
 		} catch (RemoteException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -269,6 +269,12 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	public void display(SystemMessage msg) throws RemoteException 
 	{
 		if(msg.getOpCode() == SystemMessage.RIGHT_ANSWER)
+		{
+			chatArea.append("\n<Quizmaster> " + msg.getBody());
+			chatArea.setCaretPosition(chatArea.getDocument().getLength());
+		}
+		
+		if(msg.getOpCode() == SystemMessage.QUIZ_DESC)
 		{
 			chatArea.append("\n<Quizmaster> " + msg.getBody());
 			chatArea.setCaretPosition(chatArea.getDocument().getLength());

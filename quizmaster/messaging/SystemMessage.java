@@ -15,6 +15,7 @@ public class SystemMessage extends Message {
 	public static final int WRONG_ANSWER = 6;
 	public static final int QUIZ_ENDED = 10;
 	public static final int ENTERLEAVE = 15;
+	public static final int QUIZ_DESC = 20;
 	
 	private int opCode;
 	private String body;

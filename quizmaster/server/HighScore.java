@@ -23,23 +23,22 @@ public class HighScore
 	private int lowestscore = Integer.MAX_VALUE;
 	
 	// For the database
-	private String dbHost = "localhost";
-	private String dbName = "quizmaster";
-	private String dbUser = "quizmaster";
-	private String dbPassword = "quizpass";
-	private String dbUri = "jdbc:mysql://" + dbHost + "/" + dbName + "?user=" + dbUser + "&password=" + dbPassword;
+	private String dbtable;
 	private Connection con;
 	
 	/**
 	 * Constructor
 	 * @throws Exception
 	 */
-	public HighScore() throws Exception
+	public HighScore(String dbhost, String dbname, String dbtable, String dbuser, String dbpass) throws Exception
 	{
 		this.highscore = new Vector( MAXENTRIES );
+		this.dbtable = dbtable;
+		
+		String dbUri="jdbc:mysql://" + dbhost + "/" + dbname + "?user=" + dbuser + "&password=" + dbpass;
 		
 		Class.forName("org.gjt.mm.mysql.Driver");
-		con = DriverManager.getConnection(this.dbUri);
+		con = DriverManager.getConnection(dbUri);
 		
 		try{
 			this.loadHighscore();
@@ -111,12 +110,15 @@ public class HighScore
 	public void saveHighscore() throws SQLException
 	{
 		Statement s = con.createStatement();
-		
+
+		// Deleting all data from the database, all logic done by this class
+		s.executeUpdate("delete from "+this.dbtable);
+
 		for(int i=0; i<this.highscore.size(); i++)
 		{
 			Score sc = (Score) this.highscore.elementAt(i);
-			s.executeUpdate("insert into highscore values("+sc.getId()+", '"
-													+sc.getNick()+"', "+sc.getScore()+")");
+			s.executeUpdate("insert into "+this.dbtable+" values("+sc.getId()+", '"
+													  +sc.getNick()+"', "+sc.getScore()+")");
 		}
 	}
 	
@@ -127,7 +129,7 @@ public class HighScore
 	private void loadHighscore() throws SQLException
 	{
 		Statement s = con.createStatement();
-		ResultSet rs = s.executeQuery("select id, nick, score from highscore order by score desc");
+		ResultSet rs = s.executeQuery("select id, nick, score from "+this.dbtable+" order by score desc");
 		
 		while(rs.next())
 		{
@@ -136,79 +138,6 @@ public class HighScore
 		}
 		
 		this.setLowestscore();
-		
-		// For now, we're just deleting all data from the database, all logic done by this class
-		s.executeUpdate("delete from highscore");
-	}
-
-	/**
-	 * @return Returns the dbHost.
-	 */
-	private String getDbHost() {
-		return dbHost;
-	}
-	
-	/**
-	 * @param dbHost The dbHost to set.
-	 */
-	private void setDbHost(String dbHost) {
-		this.dbHost = dbHost;
-	}
-	
-	/**
-	 * @return Returns the dbName.
-	 */
-	private String getDbName() {
-		return dbName;
-	}
-	
-	/**
-	 * @param dbName The dbName to set.
-	 */
-	private void setDbName(String dbName) {
-		this.dbName = dbName;
-	}
-	
-	/**
-	 * @return Returns the dbPassword.
-	 */
-	private String getDbPassword() {
-		return dbPassword;
-	}
-	
-	/**
-	 * @param dbPassword The dbPassword to set.
-	 */
-	private void setDbPassword(String dbPassword) {
-		this.dbPassword = dbPassword;
-	}
-	
-	/**
-	 * @return Returns the dbUri.
-	 */
-	private String getDbUri() {
-		return dbUri;
-	}
-	
-	/**
-	 * @param dbUri The dbUri to set.
-	 */
-	private void setDbUri(String dbUri) {
-		this.dbUri = dbUri;
-	}
-	
-	/**
-	 * @return Returns the dbUser.
-	 */
-	private String getDbUser() {
-		return dbUser;
-	}
-	
-	/**
-	 * @param dbUser The dbUser to set.
-	 */
-	private void setDbUser(String dbUser) {
-		this.dbUser = dbUser;
 	}
 	
 	/**

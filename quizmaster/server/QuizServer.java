@@ -26,6 +26,11 @@ public class QuizServer {
 		boolean startRegistry = true;
 		int questionCycle = 7500;
 		boolean useHighscore = false;
+		String dbname="";
+		String dbtable="";
+		String dbuser="";
+		String dbpass="";
+		String dbhost="";
 		
 		// Process configuration file first
 		if(IniFileReader.isConfigFileExisting("init.xml"))
@@ -35,6 +40,15 @@ public class QuizServer {
 			startRegistry = reader.getBooleanValue("startregistry");
 			questionCycle = reader.getIntValue("cycletime");
 			useHighscore = reader.getBooleanValue("highscore");
+			
+			if(useHighscore)
+			{
+				dbhost = reader.getStringValue("dbhost");
+				dbname = reader.getStringValue("dbname");
+				dbtable = reader.getStringValue("dbtable");
+				dbuser = reader.getStringValue("dbuser");
+				dbpass = reader.getStringValue("dbpass");
+			}
 			
 			reader=null;
 		}
@@ -48,7 +62,6 @@ public class QuizServer {
 			if(parser.existsParam("-quizfile")) filename = parser.getStringValue("-quizfile");
 			if(parser.existsParam("-startregistry")) startRegistry = parser.getBooleanValue("-startregistry");
 			if(parser.existsParam("-cycletime")) questionCycle = parser.getIntValue("-cycletime");
-			if(parser.existsParam("-highscore")) useHighscore = parser.getBooleanValue("-highscore");
 			
 			parser = null;
 		}
@@ -78,6 +91,16 @@ public class QuizServer {
 				System.out.println("Creating local rmiregistry");
 				LocateRegistry.createRegistry(1099);
 				servant = new QuizServant(filename, questionCycle, useHighscore);
+				if(useHighscore)
+				{
+					servant.setDbhost(dbhost);
+					servant.setDbname(dbname);
+					servant.setDbtable(dbtable);
+					servant.setDbuser(dbuser);
+					servant.setDbpass(dbpass);
+					
+					servant.setupHighscore();
+				}
 			}
 			catch(RemoteException re)
 			{

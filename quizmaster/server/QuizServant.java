@@ -6,11 +6,11 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.SQLException;
 import java.util.Vector;
 
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
+import messaging.SystemMessage;
 import xml.QuizQuestionFactory;
 import client.QuizClientServices;
 
@@ -30,6 +30,13 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	private boolean useHighscore;
 	private volatile String filename;	
 	private int questionCycle;
+	private String quizDesc;
+	
+	private String dbname;
+	private String dbtable;
+	private String dbuser;
+	private String dbpass;
+	private String dbhost;
 
 	private StateChecker checker;
 	private QuizQuestionFactory quizquestionfactory;
@@ -50,24 +57,33 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.filename = filename;
 		this.questionCycle = questionCycle;
 		this.useHighscore=useHighscore;
-		if(this.isUseHighscore())
-		{
-			try {
-				this.highscore = new HighScore();
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
-		}
 		
 		this.quizquestionfactory = new QuizQuestionFactory(this.filename);
 		this.quizquestionfactory.readQuestions();
 		this.questions = this.quizquestionfactory.getQuestions();
+		this.quizDesc = this.quizquestionfactory.getQuizDesc();
 		this.quizquestionfactory = null;
 		
 		checker = new StateChecker();
 		checker.setServant(this);
 		checker.start();
+	}
+	
+	/**
+	 * Tells the servant that the game is using the highscore feature
+	 *
+	 */
+	public void setupHighscore()
+	{
+		if(this.isUseHighscore())
+		{
+			try {
+				this.highscore = new HighScore(this.dbhost, this.dbname, this.dbtable, this.dbuser, this.dbpass);
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
@@ -123,8 +139,15 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		
 		this.connectedClients.add(client);
 		
+		SystemMessage msg = new SystemMessage();
+		msg.setOpCode(SystemMessage.QUIZ_DESC);
+		msg.setBody(this.quizDesc);
+		
 		//send updated client list to all clients
 		sendClientList();
+		
+		// Send welcome message
+		client.display(msg);
 	}
 	
 	/* (non-Javadoc)
@@ -404,4 +427,45 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		return useHighscore;
 	}
 
+	/**
+	 * @param dbname The dbname to set.
+	 */
+	public void setDbname(String dbname) {
+		this.dbname = dbname;
+	}
+	
+	/**
+	 * @param dbtable The dbtable to set.
+	 */
+	public void setDbtable(String dbtable) {
+		this.dbtable = dbtable;
+	}
+	
+	/**
+	 * @param dbpass The dbpass to set.
+	 */
+	public void setDbpass(String dbpass) {
+		this.dbpass = dbpass;
+	}
+	
+	/**
+	 * @param dbuser The dbuser to set.
+	 */
+	public void setDbuser(String dbuser) {
+		this.dbuser = dbuser;
+	}
+	
+	/**
+	 * @param dbhost The dbhost to set.
+	 */
+	public void setDbhost(String dbhost) {
+		this.dbhost = dbhost;
+	}
+	
+	/**
+	 * @return Returns the quizDesc.
+	 */
+	public String getQuizDesc() {
+		return quizDesc;
+	}
 }
