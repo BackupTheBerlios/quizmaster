@@ -11,5 +11,5 @@
 	<param name="cycletime" value="8000"></param>
 	
 	<!-- Use Highscore feature, requires database -->
-	<param name="highscore" value="false"></param>
+	<param name="highscore" value="true"></param>
 </config>

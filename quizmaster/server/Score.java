@@ -14,6 +14,21 @@ public class Score
 	private int id;
 	private String nick;
 	private int score;
+	private static int counter;
+	
+	/**
+	 * Constructor, which sets the id automatically
+	 * @param nick
+	 * @param score
+	 */
+	public Score(String nick, int score)
+	{
+		this.id = Score.counter;
+		this.nick = nick;
+		this.score = score;
+		
+		Score.counter++;
+	}
 	
 	/**
 	 * Constructor
@@ -24,6 +39,7 @@ public class Score
 	public Score(int id, String nick, int score)
 	{
 		this.id=id;
+		Score.counter++;
 		this.nick=nick;
 		this.score=score;
 	}

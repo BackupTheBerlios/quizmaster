@@ -20,11 +20,11 @@ public class HighScore
 {
 	private Vector highscore;
 	private final int MAXENTRIES = 10;
-	private int lowestScore;
+	private int lowestscore = Integer.MAX_VALUE;
 	
 	// For the database
 	private String dbHost = "localhost";
-	private String dbName = "highscore";
+	private String dbName = "quizmaster";
 	private String dbUser = "quizmaster";
 	private String dbPassword = "quizpass";
 	private String dbUri = "jdbc:mysql://" + dbHost + "/" + dbName + "?user=" + dbUser + "&password=" + dbPassword;
@@ -37,8 +37,6 @@ public class HighScore
 	public HighScore() throws Exception
 	{
 		this.highscore = new Vector( MAXENTRIES );
-		this.lowestScore = 0;
-		this.loadHighscore();
 		
 		Class.forName("org.gjt.mm.mysql.Driver");
 		con = DriverManager.getConnection(this.dbUri);
@@ -57,7 +55,7 @@ public class HighScore
 	 */
 	public boolean processScore(String nick, int points)
 	{
-		if(points>=this.getLowestScore())
+		if(points>=this.getLowestscore())
 		{
 			this.addEntry(nick, points);
 		}
@@ -74,34 +72,26 @@ public class HighScore
 	{
 		if(this.highscore.isEmpty())
 		{
-			this.highscore.add(nick);
-			this.highscore.add(new Integer(points));
+			Score sc = new Score(nick, points);
+			this.highscore.add(sc);
+		}
+		else if(this.highscore.size() < MAXENTRIES)
+		{
+			Score sc = new Score(nick, points);
+			this.highscore.add(sc);
 		}
 		else
 		{
-			for(int i=1; i<MAXENTRIES; i=i+2)
+			for(int i=0; i<this.highscore.size(); i++)
 			{
-				Integer score = (Integer) this.highscore.elementAt(i);
-				
-				if(score.intValue()<points)
+				Score sc = (Score) this.highscore.elementAt(i);
+				if(sc.getScore()< points)
 				{
-					// Add nickname and points
-					this.highscore.add(i-1, nick);
-					this.highscore.add(i, new Integer(points));
-					break;
+					this.highscore.removeElementAt(i);
+					this.highscore.add(sc);
 				}
 			}
 		}
-		
-		// Remove last nickname and points if MAXENTRIES has been reached
-		if(this.highscore.size()>MAXENTRIES)
-		{
-			this.highscore.removeElementAt(this.highscore.size()-1);
-			this.highscore.removeElementAt(this.highscore.size()-1);
-		}
-		
-		// Update lowest score
-		this.setLowestScore( ((Integer) this.highscore.elementAt(this.highscore.size()-1)).intValue() );
 		
 		try{
 			this.saveHighscore();
@@ -110,6 +100,8 @@ public class HighScore
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
+		
+		this.setLowestscore();
 	}
 	
 	/**
@@ -123,8 +115,8 @@ public class HighScore
 		for(int i=0; i<this.highscore.size(); i++)
 		{
 			Score sc = (Score) this.highscore.elementAt(i);
-			s.executeQuery("insert into highscore values('"+sc.getId()+"', '"
-													+sc.getNick()+"', '"+sc.getScore()+"");
+			s.executeUpdate("insert into highscore values("+sc.getId()+", '"
+													+sc.getNick()+"', "+sc.getScore()+")");
 		}
 	}
 	
@@ -135,7 +127,7 @@ public class HighScore
 	private void loadHighscore() throws SQLException
 	{
 		Statement s = con.createStatement();
-		ResultSet rs = s.executeQuery("select nick, score from highscore order by score desc");
+		ResultSet rs = s.executeQuery("select id, nick, score from highscore order by score desc");
 		
 		while(rs.next())
 		{
@@ -143,24 +135,12 @@ public class HighScore
 			this.highscore.add(sc);
 		}
 		
+		this.setLowestscore();
+		
 		// For now, we're just deleting all data from the database, all logic done by this class
-		rs = s.executeQuery("delete * from highscore");
+		s.executeUpdate("delete from highscore");
 	}
 
-	/**
-	 * @return Returns the lowestScore.
-	 */
-	private int getLowestScore() {
-		return lowestScore;
-	}
-	
-	/**
-	 * @param lowestScore The lowestScore to set.
-	 */
-	private void setLowestScore(int lowestScore) {
-		this.lowestScore = lowestScore;
-	}
-	
 	/**
 	 * @return Returns the dbHost.
 	 */
@@ -229,5 +209,31 @@ public class HighScore
 	 */
 	private void setDbUser(String dbUser) {
 		this.dbUser = dbUser;
+	}
+	
+	/**
+	 * @return Returns the lowestscore.
+	 */
+	private int getLowestscore() {
+		return lowestscore;
+	}
+	/**
+	 * Set the lowest score in the highscore
+	 */
+	private void setLowestscore() {
+		
+		if(this.highscore.size()==0)
+		{
+			this.lowestscore=0;
+		}
+		
+		for(int i=0; i<this.highscore.size(); i++)
+		{
+			Score sc = (Score) this.highscore.elementAt(i);
+			if(sc.getScore()< this.lowestscore)
+			{
+				this.lowestscore = sc.getScore();
+			}
+		}
 	}
 }
