@@ -40,6 +40,7 @@ public class Quiz extends Thread {
 		this.quit = false;
 		this.questionCounter = 0;
 		this.filename = filename;
+		this.setName("Quiz");
 
 //		this.quizfactory = new QuizQuestionFactory(this.filename);
 //		this.quizfactory.readQuestions();

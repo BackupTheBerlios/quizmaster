@@ -21,6 +21,16 @@ public class StateChecker extends Thread
 	private volatile Quiz game;
 	private QuizServant servant;
 	
+	
+	/**
+	 * Constructor
+	 *
+	 */
+	public StateChecker()
+	{
+		this.setName("StateChecker");
+	}
+	
 	/**
 	 * The run method for this thread
 	 * 
@@ -89,24 +99,28 @@ public class StateChecker extends Thread
 	}
 	
 	/**
+	 * Getter method for the quit variable, which indicates that the thread will be quitting soon
 	 * @return Returns the quit.
 	 */
 	public boolean isQuit() {
 		return quit;
 	}
 	/**
+	 * Setter method for the quit variable, which indicates that the thread will be quitting soon
 	 * @param quit The quit to set.
 	 */
 	public void setQuit(boolean quit) {
 		this.quit = quit;
 	}
 	/**
+	 * Sets the servant, the statechecker is watching
 	 * @return Returns the servant.
 	 */
 	public QuizServant getServant() {
 		return servant;
 	}
 	/**
+	 * Gets the servant the statechecker is watching
 	 * @param servant The servant to set.
 	 */
 	public void setServant(QuizServant servant) {
@@ -114,6 +128,7 @@ public class StateChecker extends Thread
 	}
 
 	/**
+	 * Gets the quiz object the statechecker is watching
 	 * @return Returns the game.
 	 */
 	public Quiz getGame() {

@@ -56,7 +56,7 @@ public class CliParamParser
 	/**
 	 * Parses a string array for the specified argument
 	 * @param arg The argument to look for
-	 * @return Value of the specified argument, null if argument not found
+	 * @return Value of the specified argument, defaults to true
 	 */
 	public boolean getBooleanArgument(String arg)
 	{
@@ -73,7 +73,7 @@ public class CliParamParser
 					arg = tok.nextToken();
 					value = tok.nextToken();
 					
-					if(value.equals("false"))
+					if(value.equals("false") || value.equals("no"))
 					{
 						return false;
 					}
