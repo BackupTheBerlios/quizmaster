@@ -31,7 +31,7 @@ java server.QuizServer $2
 fi
 
 if [ $1 = "client" ]; then
-java client.SimpleClient
+java client.SimpleClient $2
 fi
 
 if [ $1 = "xml" ]; then
