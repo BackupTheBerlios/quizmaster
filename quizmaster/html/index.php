@@ -1,6 +1,6 @@
 <?
 include("portscan.php");
-$val = portscan("localhost", 1099);
+$val = scanport("localhost", 1099);
 ?>
 
 <html>

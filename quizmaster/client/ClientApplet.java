@@ -22,14 +22,12 @@ import java.util.Vector;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
