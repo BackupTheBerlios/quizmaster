@@ -136,6 +136,7 @@ public class Quiz extends Thread {
 			QuizClientServices client = (QuizClientServices) this.clients.elementAt(i);
 			
 			try {
+				question.setSender((QuizClientServices) this.clients.elementAt(0));
 				client.display(question);
 			} catch(RemoteException e)
 			{
@@ -159,7 +160,7 @@ public class Quiz extends Thread {
 		Vector answers = this.servant.getAnswers();
 		
 		System.out.println("Current question: " + question.getId());
-		System.out.println("Correct answer would be #"+question.getCorrectAnswer());
+		System.out.println("Correct answer: #"+question.getCorrectAnswer());
 		System.out.println("There are "+answers.size()+" answers to be checked");
 		
 		// Iterating over the available answers

@@ -4,6 +4,7 @@
  */
 package client;
 
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -17,7 +18,7 @@ import messaging.SystemMessage;
  *
  * The client interface is used for RMI callbacks
  */
-public interface QuizClientServices extends Remote {
+public interface QuizClientServices extends Remote, Serializable {
 	
 	/**
 	 * Method to get a client's nickname

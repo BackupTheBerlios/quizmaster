@@ -44,11 +44,10 @@ public class QuizServer {
 		
 		f=null;
 		
-		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
+		System.setProperty("java.rmi.server.codebase", "http://192.168.2.10/classes/");
 		
 		//Installing the security manager
 		System.setProperty("java.security.policy", "java.policy");
-		
 		System.setSecurityManager (new RMISecurityManager());
 		
 		try{

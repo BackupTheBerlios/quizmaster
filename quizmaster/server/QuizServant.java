@@ -26,6 +26,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	
 	private StateChecker checker;
 	private volatile String filename;
+	private volatile Vector messages;
 	
 	/**
 	 * Standard constructor
@@ -37,6 +38,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.connectedClients = new Vector();
 		this.quizClients = new Vector();
 		this.answers = new Vector();
+		this.messages = new Vector();
 		this.activeQuiz = false;
 		this.filename = filename;
 		
@@ -85,12 +87,18 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void takeMessage(ChatMessage msg)  throws RemoteException 
 	{
-		for(int i=0; i<this.connectedClients.size(); i++)
-		{
-			System.out.println("Sending message to client #" + i + "...");
-			QuizClientServices client = (QuizClientServices) this.connectedClients.elementAt(i);
-			client.display(msg);
-		}
+		this.messages.add(msg);
+//		for(int i=0; i<this.connectedClients.size(); i++)
+//		{
+//			System.out.println("Sending message to client #" + i + "...");
+//			QuizClientServices client = (QuizClientServices) this.connectedClients.elementAt(i);
+//			try{
+//				client.display(msg);
+//			} catch(RemoteException e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
 		
 	}
 	
@@ -323,14 +331,37 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	/**
 	 * @return Returns the filename of the quizdata
 	 */
-	public String getFilename() {
+	public String getFilename() 
+	{
 		return filename;
 	}
 	
 	/**
 	 * @param filename The filename of the quizdata to set.
 	 */
-	public void setFilename(String filename) {
+	public void setFilename(String filename) 
+	{
 		this.filename = filename;
+	}
+	
+	/**
+	 * @return Returns the messages.
+	 */
+	public Vector getMessages() 
+	{
+		return messages;
+	}
+	
+	/**
+	 * @param messages The messages to set.
+	 */
+	public void setMessages(Vector messages) 
+	{
+		this.messages = messages;
+	}
+	
+	public void resetMessages()
+	{
+		this.messages.removeAllElements();
 	}
 }

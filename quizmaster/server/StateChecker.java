@@ -4,6 +4,11 @@
  */
 package server;
 
+import java.rmi.RemoteException;
+
+import messaging.ChatMessage;
+import client.QuizClientServices;
+
 /**
  * @author reinhard
  *
@@ -49,7 +54,29 @@ public class StateChecker extends Thread
 			{
 				game.setQuit(true);
 				this.servant.stopGame();
-			}				
+			}
+			
+			if(this.servant.getMessages().size()>0)
+			{
+				for(int j=0; j<this.servant.getMessages().size(); j++)
+				{
+					ChatMessage msg = (ChatMessage) this.servant.getMessages().elementAt(j);
+					
+					for(int i=0; i<this.servant.getConnectedClients().size(); i++)
+					{
+						System.out.println("Sending message to client #" + i + "...");
+						QuizClientServices client = (QuizClientServices) this.servant.getConnectedClients().elementAt(i);
+						try{
+							client.display(msg);
+						} catch(RemoteException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				this.servant.resetMessages();
+			}
 		}
 		
 		System.out.println("Servant StateChecker quitting");

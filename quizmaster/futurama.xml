@@ -149,4 +149,28 @@
 		<answer>40 episodes</answer>
 		<answer>83 episodes, plus 3 unaired episodes</answer>
 	</question>
+	<question id="25" text="What time was it when Fry stopped playing the videogame in 'Spacepilot 3000'" points="35">
+		<answer correct="true">11:35pm</answer>
+		<answer>11:40pm</answer>
+		<answer>11:45pm</answer>
+		<answer>11:55pm</answer>
+	</question>
+	<question id="26" text="Who's shadow appears right when Fry falls out of the chair?" points="30">
+		<answer correct="true">Nibbler</answer>
+		<answer>Bender</answer>
+		<answer>Leela</answer>
+		<answer>Lrrr</answer>
+	</question>
+	<question id="27" text="How many times do the aliens destroy New York?" points="20">
+		<answer correct="true">Twice</answer>
+		<answer>Once</answer>
+		<answer>Thrice</answer>
+		<answer>Zero times</answer>
+	</question>
+	<question id="28" text="What's the last sign visible during the opening theme?" points="25">
+		<answer correct="true">Robot Wash</answer>
+		<answer>Bachelor Chow</answer>
+		<answer>Slurm</answer>
+		<answer>Applied Cryogenics</answer>
+	</question>
 </quiz>

@@ -75,5 +75,4 @@ public interface QuizServices extends Remote {
 	 * @throws RemoteException
 	 */
 	public boolean isActiveQuiz() throws RemoteException;
-
 }

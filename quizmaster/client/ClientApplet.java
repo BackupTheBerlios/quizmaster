@@ -229,8 +229,12 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	/**
 	 * Invokes the text of a ChatMessage to be displayed in the chat area.
 	 */
-	public void display(ChatMessage msg){
-		try {
+	public void display(ChatMessage msg) throws RemoteException
+	{
+		System.out.println(msg.getBody());
+		System.err.println(msg.getBody());
+		try 
+		{
 			chatArea.append("\n<" + msg.getSender().getNickname() + "> " + msg.getBody());
 			chatArea.setCaretPosition(chatArea.getDocument().getLength());
 		} catch (RemoteException e) {
