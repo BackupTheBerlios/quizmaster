@@ -2,7 +2,7 @@
 
 <config>
 	<!-- The Quizfile to read answers from -->
-	<param name="quizfile" value="futurama.xml"></param>
+	<param name="quizfile" value="quizfiles/futurama.xml"></param>
 	
 	<!-- Should the server start the registry? -->
 	<param name="startregistry" value="true"></param>
