@@ -96,5 +96,11 @@ public interface QuizClientServices extends Remote, Serializable {
 	 * @throws RemoteException
 	 */
 	public void gameEnded() throws RemoteException;
+	
+	/**
+	 * Remotely sets the RemoteButton's state
+	 * @throws RemoteException
+	 */
+	public void setJoinButtonActive(boolean b) throws RemoteException;
 
 }

@@ -314,12 +314,14 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	/**
 	 * Remove a client from a quiz
 	 * @param client The client to remove
+	 * @return FALSE, if the client isn't in the quiz anymore, TRUE if it still is
 	 */
 	public boolean requestLeaveGame(QuizClientServices client)
 	{
 		if(this.checker.isAlive())
 		{
 			this.checker.getGame().removeClient(client);
+			this.leaveGame(client);
 			return false;
 		}
 		return true;
@@ -327,18 +329,11 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	
 	/**
 	 * Clients call this method if they want to leave a quiz game
-	 * @param client The caller
-	 * @return Returns if leaving the quiz was successful
+	 * @param client The client to remove from the game
 	 */
-	public boolean leaveGame(QuizClientServices client) 
+	public void leaveGame(QuizClientServices client) 
 	{	
-		if(this.checker.isAlive())
-		{
-			this.quizClients.removeElement(client);
-			return true;
-		}
-		
-		return false;
+		this.quizClients.removeElement(client);
 	}
 	
 	/**

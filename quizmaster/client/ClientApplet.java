@@ -133,21 +133,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			}
 		}
 
-//		//Quit
-//		if (e.getSource() == connectButton) 
-//		{
-//			//if we're connected, disconnect
-//			if(this.connected){
-//				this.connectButton.setText("Connect");
-//				disconnect();
-//			}
-//			//otherwise, re-init applet
-//			else
-//			{
-//				init();
-//			}
-//		}
-		
 		//user clicks join game button
 		if(e.getSource() == startGame)
 		{
@@ -164,6 +149,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			}
 			else
 			{
+				this.startGame.setEnabled(false);
 				// If client is in quizmode, we're requesting to leave the game now
 				try{
 					this.setQuizMode(this.server.requestLeaveGame(this));			
@@ -356,10 +342,8 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		JPanel menu = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		menu.setPreferredSize(new Dimension(TOTAL_INNER_WIDTH, 35));
 		
-//		connectButton = new JButton("Disconnect");
-//		connectButton.addActionListener(this);
-//		menu.add(connectButton);
 		startGame = new JButton("Join game");
+		startGame.setPreferredSize(new Dimension(120, 30));
 		startGame.addActionListener(this);
 		menu.add(startGame);		
 		
@@ -484,5 +468,12 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 */
 	public int getScore() throws RemoteException {
 		return this.score;
+	}
+	/* (non-Javadoc)
+	 * @see client.QuizClientServices#setJoinButtonActive(boolean)
+	 */
+	public void setJoinButtonActive(boolean b) throws RemoteException 
+	{
+		this.startGame.setEnabled(b);
 	}
 }

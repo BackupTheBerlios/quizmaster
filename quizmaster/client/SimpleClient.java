@@ -422,4 +422,10 @@ public class SimpleClient implements QuizClientServices{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	/* (non-Javadoc)
+	 * @see client.QuizClientServices#setJoinButtonActive(boolean)
+	 */
+	public void setJoinButtonActive(boolean b) throws RemoteException {
+		// empty
+	}
 }

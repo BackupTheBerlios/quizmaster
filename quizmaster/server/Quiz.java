@@ -28,6 +28,7 @@ public class Quiz extends Thread {
 	private Vector questions;
 	private int questionCounter;
 	private int questionCycle;
+	private QuizClientServices tmpclient;
 
 	/**
 	 * Constructor
@@ -39,6 +40,7 @@ public class Quiz extends Thread {
 		this.questionCounter = 0;
 		this.setName("Quiz");
 		this.questionCycle = questionCycle;
+		this.tmpclient=null;
 	}
 	
 	/*
@@ -52,6 +54,8 @@ public class Quiz extends Thread {
 		this.runGame();
 		
 		// Doing some cleanup before exiting
+		System.out.println("Quiz thread terminating");
+		
 		for(int i=0; i< this.clients.size(); i++)
 		{
 			QuizClientServices client = (QuizClientServices) this.clients.elementAt(i);
@@ -66,8 +70,8 @@ public class Quiz extends Thread {
 		}
 		
 		this.servant.setActiveQuiz(false);
+		this.clients.removeAllElements();
 			
-		System.out.println("Quiz thread terminating");
 		return;
 	}
 	
@@ -112,7 +116,15 @@ public class Quiz extends Thread {
 
 			// Checking all answers
 			this.checkAnswers(question);
-
+			
+			if(this.tmpclient==null) continue;
+			
+			try {
+				this.tmpclient.setJoinButtonActive(true);
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
+			}
+			this.tmpclient=null;
 		}
 	}
 	
@@ -288,8 +300,8 @@ public class Quiz extends Thread {
 	 */
 	public void removeClient(QuizClientServices client)
 	{
+		this.tmpclient = client;
 		this.clients.remove(client);
-		this.servant.leaveGame(client);
 	}
 
 	/**
@@ -305,5 +317,11 @@ public class Quiz extends Thread {
 	 */
 	public void setQuestions(Vector questions) {
 		this.questions = questions;
+	}
+	/**
+	 * @param tmpclient The tmpclient to set.
+	 */
+	public void setTmpclient(QuizClientServices tmpclient) {
+		this.tmpclient = tmpclient;
 	}
 }
