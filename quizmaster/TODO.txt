@@ -10,3 +10,4 @@
 5. Systemmeldungen z.b. "reinhard has left..." (Hannes?)
 6. Userliste mit Punkten
 7. Userliste funktioniert nicht richtig
+8. Modulabhängige Highscorelisten?
