@@ -81,6 +81,8 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private JTextField input;
 
 	private JList clientList;
+	
+	private boolean quizMode;
 
 	/**
 	 * Initialization method.
@@ -130,7 +132,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		if (e.getSource() == input) {
 			if (!"".equals(input.getText())) {
 				ChatMessage message = new ChatMessage(input.getText());
-				message.setSender(nickname);
+				message.setSender(this);
 				try {
 					server.takeMessage(message);
 				} catch (Exception re) {
@@ -361,5 +363,10 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 */
 	private String getCurrentQuestion() {
 		return "What is Fry's full name?";
+	}
+	
+	public void gameEnded()
+	{
+		this.quizMode=false;
 	}
 }
