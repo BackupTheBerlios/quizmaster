@@ -221,7 +221,7 @@ public class Quiz extends Thread {
 	
 	/**
 	 * Method to fetch a question for the quiz
-	 * @return
+	 * @return Next question to be displayed
 	 */
 	public QuizQuestion fetchQuestion()
 	{	

@@ -114,7 +114,6 @@ public class SimpleClient implements QuizClientServices{
 	
 	/**
 	 * Method for reading the answer from the user
-	 * @param questionid ID of the corresponding question
 	 * @return Answer object
 	 */
 	public QuizAnswer readAnswer()
@@ -166,7 +165,7 @@ public class SimpleClient implements QuizClientServices{
 	
 	/**
 	 * Read a message from the standard input
-	 * @return
+	 * @return New ChatMessage
 	 */
 	public ChatMessage readMessage()
 	{

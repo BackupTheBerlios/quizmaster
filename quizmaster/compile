@@ -32,6 +32,7 @@ echo "all - compile all sources"
 echo "server - compile server sources"
 echo "client - compile client sources"
 echo "messaging - compile messaging sources"
+echo "xml - compile xml sources"
 echo ""
 exit -1
 fi
@@ -69,7 +70,11 @@ echo "Compiling applet..."
 javac client/ClientApplet.java
 rmic client.ClientApplet
 cp client/ClientApplet_Stub.class /Library/WebServer/Documents/classes/
-/Library/Java/home/bin/appletviewer applet.php &
+fi
+
+if [ $1 = "all" ] || [ $1 = "xml" ]; then
+echo "Compiling xml sources..."
+javac xml/*.java
 fi
 
 echo "Finished..."

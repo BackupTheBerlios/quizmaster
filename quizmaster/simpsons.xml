@@ -5,4 +5,10 @@
 		<answer>George W. Fry</answer>
 		<answer>Gerhard Fry</answer>
 	</question>
+	<question id="1" text="Which of these persons does not belong to the Simpsons family?" points="5">
+		<answer correct="true">Apu</answer>
+		<answer>Abe</answer>
+		<answer>Bart</answer>
+		<answer>Maggie</answer>
+	</question>
 </quiz>

@@ -41,7 +41,7 @@ public interface QuizServices extends Remote {
 	
 	/**
 	 * Method to get the nicknames of all connected clients
-	 * @return
+	 * @return Client names
 	 * @throws RemoteException
 	 */
 	public String[] getClientNames() throws RemoteException;
@@ -71,7 +71,7 @@ public interface QuizServices extends Remote {
 	
 	/**
 	 * Method for checking if a quiz is running at the moment
-	 * @return
+	 * @return True if a quiz is running, false if not
 	 * @throws RemoteException
 	 */
 	public boolean isActiveQuiz() throws RemoteException;

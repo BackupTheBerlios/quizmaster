@@ -1,17 +1,17 @@
 <quiz>
 	<question id="0" text="Who is Zapp Brannigan's sidekick?" points="10">
-		<answer correct="true">Kif</answer>
-		<answer>Zif</answer>
 		<answer>Pif</answer>
+		<answer>Zif</answer>
+		<answer correct="true">Kif</answer>
 		<answer>Mif</answer>
 	</question>
-	<question id="1" text=" In 'Hell is Other Robots,' what group's heads perform a concert?" points="10">
+	<question id="1" text="In 'Hell is Other Robots', what group's heads perform a concert?" points="10">
 		<answer correct="true">Beastie Boys</answer>
 		<answer>The Eagles</answer>
 		<answer>Backstreet Boys</answer>
 		<answer>Jefferson Starship</answer>
 	</question>
-	<question id="2" text="Who does Fry spend Valentine's Day with in 'Put Your Head on My Shoulder?'" points="10">
+	<question id="2" text="Who does Fry spend Valentine's Day with in 'Put Your Head on My Shoulder?'" points="15">
 		<answer correct="true">Amy</answer>
 		<answer>Leela</answer>
 		<answer>Bender</answer>
@@ -41,18 +41,112 @@
 		<answer>The A-Team</answer>
 		<answer>The Ropers</answer>
 	</question>
-	
 	<question id="7" text="What is Fry's full name?" points="5">
 		<answer>Fry Farnsworth</answer>
 		<answer>Glen Fry</answer>
 		<answer correct="true">Philip J. Fry</answer>
 		<answer>French Fry</answer>
 	</question>
-	
 	<question id="8" text="Which career was Fry orignally assigned to after being unfrozen?" points="10">
 		<answer>Space pilot</answer>
 		<answer>Science officer</answer>
 		<answer>Vice chairman of Planet Express</answer>
 		<answer correct="true">Delivery boy</answer>
+	</question>
+	<question id="9" text="What gas does Flexo use to play a trick on Fry in 'The Lesser of Two Evils'?" points="40">
+		<answer correct="true">Chlorine</answer>
+		<answer>Carbon Dioxde</answer>
+		<answer>Tear Gas</answer>
+		<answer>Sarin</answer>
+	</question>
+	<question id="10" text="Which of these Fighters did Bender NOT fight in the ring?" points="30">
+		<answer>The Chain Smoker</answer>
+		<answer correct="true">The Masked Unit</answer>
+		<answer>Destructor</answer>
+		<answer>The Incredible Hulk</answer>
+	</question>
+	<question id="11" text="Who is Fry related to?" points="5">
+		<answer correct="true">Professor Farnsworth</answer>
+		<answer>Amy Wong</answer>
+		<answer>Zapp Brannigan</answer>
+		<answer>President McNeal</answer>
+	</question>
+	<question id="12" text="What celebration was going on when Fry fell into the cryogenic chamber?" points="5">
+		<answer correct="true">New Year's Eve</answer>
+		<answer>Halloween</answer>
+		<answer>Easter</answer>
+		<answer>Christmas</answer>
+	</question>
+	<question id="13" text="Fry is his own grandfather. Which episode tells this story?" points="20">
+		<answer correct="true">Roswell that Ends Well</answer>
+		<answer>Spanish Fry</answer>
+		<answer>The Lesser of two Evils</answer>
+		<answer>A clone of my own</answer>
+	</question>
+	<question id="14" text="What's one of Professor Farnsworth inventions?" points="15">
+		<answer correct="true">The Mutant Atomic Supermen</answer>
+		<answer>The Harlem Globetrotters</answer>
+		<answer>Swan boats</answer>
+		<answer>The Republican Party</answer>
+	</question>
+	<question id="15" text="How old is Bender?" points="20">
+		<answer correct="true">1057 years (head), 4 years (body)</answer>
+		<answer>Nobody knows, he won't tell</answer>
+		<answer>7 years</answer>
+		<answer>15 years</answer>
+	</question>
+	<question id="16" text="What is Benders full name?" points="5">
+		<answer correct="true">Bender Bending Rodriguez</answer>
+		<answer>Dan Bender</answer>
+		<answer>Flexo Bender</answer>
+		<answer>Bender</answer>
+	</question>
+	<question id="17" text="What's a well known tradition on Nibblers homeworld?" points="10">
+		<answer correct="true">The Feast of a thousand hams</answer>
+		<answer>The great brain bashing</answer>
+		<answer>Dark matter party</answer>
+		<answer>The puppy feast</answer>
+	</question>
+	<question id="18" text="How many stars is Zapp Brannigan decorated with?" points="15">
+		<answer correct="true">25</answer>
+		<answer>Not even one</answer>
+		<answer>18</answer>
+		<answer>3</answer>
+	</question>
+	<question id="19" text="Which role does Morbo have in Futurama?" points="10">
+		<answer correct="true">Newsreader</answer>
+		<answer>Alien invader</answer>
+		<answer>Vice-President of the Earth</answer>
+		<answer>Santa Claus</answer>
+	</question>
+	<question id="20" text="What's Scruffy's regular phrase?" points="15">
+		<answer correct="true">I'm Scruffy... The Janitor</answer>
+		<answer>Whoaa! My hand is huge!</answer>
+		<answer>He's picking his nose, get him!</answer>
+		<answer>Awwwww, baby!</answer>
+	</question>
+	<question id="21" text="What's Fry's birthyear?" points="25">
+		<answer correct="true">1974</answer>
+		<answer>2610</answer>
+		<answer>1983</answer>
+		<answer>Unknown</answer>
+	</question>
+	<question id="22" text="Who's iHawk?" points="40">
+		<answer correct="true">A human-sized blue robot who works for the DOOP army</answer>
+		<answer>Not a Futurama character</answer>
+		<answer>Planet Express Janitor</answer>
+		<answer>An invention by Professor Farnsworth</answer>
+	</question>
+	<question id="23" text="When did Futurama first air?" points="20">
+		<answer correct="true">28th March 1999</answer>
+		<answer>31st December 1999</answer>
+		<answer>4th May 2000</answer>
+		<answer>17th August 1998</answer>
+	</question>
+	<question id="24" text="How many Futurama episodes are there?" points="20">
+		<answer correct="true">72 episodes</answer>
+		<answer>153 episodes</answer>
+		<answer>40 episodes</answer>
+		<answer>83 episodes, plus 3 unaired episodes</answer>
 	</question>
 </quiz>

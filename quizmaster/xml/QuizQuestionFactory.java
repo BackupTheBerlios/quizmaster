@@ -134,7 +134,7 @@ public class QuizQuestionFactory {
 	/**
 	 * Class method which takes a vector of questions and shuffles it
 	 * @param q
-	 * @return
+	 * @return Newly sorted vector
 	 */
 	public static Vector mixQuestions(Vector q)
 	{
@@ -178,16 +178,6 @@ public class QuizQuestionFactory {
 		}
 		
 		return array;
-	}
-
-	/**
-	 * Method for accessing a specific quiz question
-	 * @param number
-	 * @return
-	 */
-	public QuizQuestion getQuestionNr(int number)
-	{
-		return (QuizQuestion) this.questions.elementAt(number);
 	}
 
 	/**

@@ -133,7 +133,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 * Method checks for unique nicknames and modifies it, if necessary
 	 * @param nick The nickname to check
 	 * @param nr The number to add in case of not unique nickname
-	 * @return
+	 * @return Checked nickname
 	 */
 	private String checkNickname(String nick, int nr) 
 	{

@@ -2,7 +2,7 @@
 #
 # Project: Quizmaster
 # Date: January 6th, 2005
-# Last Modified: Januar 9th, 2005
+# Last Modified: Januar 17th, 2005
 #
 # --
 # This script is used to start the server application
@@ -19,20 +19,25 @@ if [ $# -gt 2 ]; then
 echo "Usage: start <option>";
 echo "Available options:"
 echo "server - starts the server application"
-echo "client - starts the client applicaton"
+echo "client - starts the cli-client"
+echo "applet - starts the client applet"
+echo "xml <filename>- starts xml filebuilder"
 echo ""
 exit -1
 fi
 
 if [ $1 = "server" ]; then
-java server.QuizServer
+java server.QuizServer $2
 fi
 
 if [ $1 = "client" ]; then
 java client.SimpleClient
-#java client.QuizClient
+fi
+
+if [ $1 = "xml" ]; then
+java xml.FileBuilder $2
 fi
 
 if [ $1 = "applet" ]; then
-/Library/Java/home/bin/appletviewer applet.php &
+/Library/Java/home/bin/appletviewer applet.html &
 fi
