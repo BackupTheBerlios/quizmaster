@@ -43,7 +43,10 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	private HighScore highscore;
 	
 	/**
-	 * Standard constructor
+	 * Constructor
+	 * @param filename The filename to read questions from
+	 * @param questionCycle The time to show each question
+	 * @param useHighscore Use the highscore feature?
 	 * @throws RemoteException
 	 */
 	public QuizServant(String filename, int questionCycle, boolean useHighscore) throws RemoteException
@@ -121,16 +124,20 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.quizClients.removeAllElements();
 	}
 	
-	/* (non-Javadoc)
-	 * @see server.QuizServices#takeMessage(null)
+	/**
+	 * Takes a ChatMessage from a client
+	 * @param msg The ChatMessage of the client
+	 * @throws RemoteException
 	 */
 	public void takeMessage(ChatMessage msg)  throws RemoteException 
 	{
 		this.messages.add(msg);
 	}
 	
-	/* (non-Javadoc)
-	 * @see server.QuizServices#register(java.lang.String)
+	/**
+	 * Registers a client with the servant
+	 * @param client The client to register
+	 * @throws RemoteException
 	 */
 	public void register(QuizClientServices client) throws RemoteException {
 		System.out.println("Trying to register client with username "+client.getNickname() + "...");
@@ -150,8 +157,10 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		client.display(msg);
 	}
 	
-	/* (non-Javadoc)
-	 * @see server.QuizServices#unregister(client.QuizClientServices)
+	/**
+	 * Unregister a client
+	 * @param client The client to unregister
+	 * @throws RemoteException
 	 */
 	public void unregister(QuizClientServices client) throws RemoteException 
 	{
@@ -202,9 +211,9 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		return nick;
 	}
 	
-	/*
-	 *  (non-Javadoc)
-	 * @see server.QuizServices#getClientNames()
+	/**
+	 * Access the client names
+	 * @throws RemoteException
 	 */
 	public String[] getClientNames() throws RemoteException
 	{
@@ -228,6 +237,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Access connected clients
 	 * @return Returns the connectedClients.
 	 */
 	public Vector getConnectedClients() 
@@ -236,14 +246,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * @param connectedClients The connectedClients to set.
-	 */
-	public void setConnectedClients(Vector connectedClients) 
-	{
-		this.connectedClients = connectedClients;
-	}
-	
-	/**
+	 * Access clients participating in the quiz
 	 * @return Returns the quizClients.
 	 */
 	public Vector getQuizClients() 
@@ -252,14 +255,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * @param quizClients The quizClients to set.
-	 */
-	public void setQuizClients(Vector quizClients) 
-	{
-		this.quizClients = quizClients;
-	}
-	
-	/**
+	 * Get the number of quiz clients
 	 * @return The number of clients currently in a quiz game
 	 */
 	public int getNumQuizClients()
@@ -268,6 +264,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Get number of connected clients
 	 * @return The number of currently connected clients
 	 */
 	public int getNumConnectedClients()
@@ -276,6 +273,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Checks if a quiz is active
 	 * @return Returns true if a quiz is running, false if not
 	 */
 	public boolean isActiveQuiz() {
@@ -283,15 +281,16 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Sets if a quiz is active
 	 * @param activeQuiz Set if a quiz is running
 	 */
 	public void setActiveQuiz(boolean activeQuiz) {
 		this.activeQuiz = activeQuiz;
 	}
 	
-	/*
-	 *  (non-Javadoc)
-	 * @see server.QuizServices#joinGame(client.QuizClientServices)
+	/**
+	 * Add a client to a quiz
+	 * @param client The client to add
 	 */
 	public boolean joinGame(QuizClientServices client)
 	{
@@ -303,9 +302,9 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		return false;
 	}
 
-	/*
-	 *  (non-Javadoc)
-	 * @see server.QuizServices#requestLeaveGame(client.QuizClientServices)
+	/**
+	 * Remove a client from a quiz
+	 * @param client The client to remove
 	 */
 	public boolean requestLeaveGame(QuizClientServices client)
 	{
@@ -342,9 +341,9 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		return false;
 	}
 	
-	/*
-	 *  (non-Javadoc)
-	 * @see server.QuizServices#addAnswer(messaging.QuizAnswer)
+	/**
+	 * Add a quizanswer
+	 * @param answer The answer to add
 	 */
 	public void addAnswer(QuizAnswer answer)
 	{
@@ -364,6 +363,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Access answers for current question
 	 * @return Quiz answers for the current question
 	 */
 	public Vector getAnswers()
@@ -372,14 +372,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * @return Returns the filename of the quizdata
-	 */
-	public String getFilename() 
-	{
-		return filename;
-	}
-	
-	/**
+	 * Set the quiz filename
 	 * @param filename The filename of the quizdata to set.
 	 */
 	public void setFilename(String filename) 
@@ -388,6 +381,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Access messages vector
 	 * @return Returns the messages.
 	 */
 	public Vector getMessages() 
@@ -396,24 +390,24 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
-	 * @param messages The messages to set.
+	 * Reset messages vector (after sending)
+	 *
 	 */
-	public void setMessages(Vector messages) 
-	{
-		this.messages = messages;
-	}
-	
 	public void resetMessages()
 	{
 		this.messages.removeAllElements();
 	}
+	
 	/**
+	 * Access quiz questions
 	 * @return Returns the questions.
 	 */
 	public Vector getQuestions() {
 		return questions;
 	}
+	
 	/**
+	 * Access questionCycle
 	 * @return Returns the questionCycle.
 	 */
 	public int getQuestionCycle() {
@@ -421,6 +415,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Access useHighscore
 	 * @return Returns the useHighscore.
 	 */
 	private boolean isUseHighscore() {
@@ -428,6 +423,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 
 	/**
+	 * Set the database name to use
 	 * @param dbname The dbname to set.
 	 */
 	public void setDbname(String dbname) {
@@ -435,6 +431,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Set the database table to use
 	 * @param dbtable The dbtable to set.
 	 */
 	public void setDbtable(String dbtable) {
@@ -442,6 +439,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Set the database password to use
 	 * @param dbpass The dbpass to set.
 	 */
 	public void setDbpass(String dbpass) {
@@ -449,6 +447,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Set the database user to use
 	 * @param dbuser The dbuser to set.
 	 */
 	public void setDbuser(String dbuser) {
@@ -456,6 +455,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Set the database host to use
 	 * @param dbhost The dbhost to set.
 	 */
 	public void setDbhost(String dbhost) {
@@ -463,6 +463,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	}
 	
 	/**
+	 * Access the quiz description
 	 * @return Returns the quizDesc.
 	 */
 	public String getQuizDesc() {

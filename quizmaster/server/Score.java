@@ -7,7 +7,7 @@ package server;
 /**
  * @author reinhard
  *
- *
+ * A class for use with the highscore feature
  */
 public class Score
 {
@@ -45,6 +45,7 @@ public class Score
 	}
 
 	/**
+	 * Access score id
 	 * @return Returns the id.
 	 */
 	public int getId() {
@@ -52,6 +53,7 @@ public class Score
 	}
 	
 	/**
+	 * Set score id
 	 * @param id The id to set.
 	 */
 	public void setId(int id) {
@@ -59,6 +61,7 @@ public class Score
 	}
 	
 	/**
+	 * Access nickname of score object
 	 * @return Returns the nick.
 	 */
 	public String getNick() {
@@ -66,6 +69,7 @@ public class Score
 	}
 	
 	/**
+	 * Set nickname of score object
 	 * @param nick The nick to set.
 	 */
 	public void setNick(String nick) {
@@ -73,6 +77,7 @@ public class Score
 	}
 	
 	/**
+	 * Access the score value
 	 * @return Returns the score.
 	 */
 	public int getScore() {
@@ -80,6 +85,7 @@ public class Score
 	}
 	
 	/**
+	 * Set the score value
 	 * @param score The score to set.
 	 */
 	public void setScore(int score) {

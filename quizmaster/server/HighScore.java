@@ -28,6 +28,11 @@ public class HighScore
 	
 	/**
 	 * Constructor
+	 * @param dbhost Network adress of the database
+	 * @param dbname Database name
+	 * @param dbtable Database table
+	 * @param dbuser Database login
+	 * @param dbpass Databae password
 	 * @throws Exception
 	 */
 	public HighScore(String dbhost, String dbname, String dbtable, String dbuser, String dbpass) throws Exception
@@ -49,12 +54,14 @@ public class HighScore
 	}
 	
 	/**
-	 * Checks if a users score qualifies for a highscore 
+	 * Checks if a users score qualifies for a highscore
+	 * @param nick Nickname of the user
+	 * @param points Score of the user
 	 * @return TRUE, if new Highscore, FALSE if not
 	 */
 	public boolean processScore(String nick, int points)
 	{
-		if(points>=this.getLowestscore())
+		if(points>=this.lowestscore)
 		{
 			this.addEntry(nick, points);
 		}
@@ -64,8 +71,8 @@ public class HighScore
 	
 	/**
 	 * Add an entry to the highscore, removing the lowest present entry
-	 * @param nick
-	 * @param points
+	 * @param nick Nickname of the user
+	 * @param points Score of the user
 	 */
 	private void addEntry(String nick, int points)
 	{
@@ -105,7 +112,7 @@ public class HighScore
 	
 	/**
 	 * Method for saving Highscore data to the database
-	 *
+	 * @throws SQLException
 	 */
 	public void saveHighscore() throws SQLException
 	{
@@ -125,6 +132,7 @@ public class HighScore
 	/**
 	 * Method for loading Highscore data from the database
 	 *
+	 * @throws SQLException
 	 */
 	private void loadHighscore() throws SQLException
 	{
@@ -140,12 +148,7 @@ public class HighScore
 		this.setLowestscore();
 	}
 	
-	/**
-	 * @return Returns the lowestscore.
-	 */
-	private int getLowestscore() {
-		return lowestscore;
-	}
+
 	/**
 	 * Set the lowest score in the highscore
 	 */

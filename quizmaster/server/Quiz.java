@@ -27,18 +27,16 @@ public class Quiz extends Thread {
 	private volatile Vector clients;
 	private Vector questions;
 	private int questionCounter;
-	private volatile String filename;
 	private int questionCycle;
 
 	/**
 	 * Constructor
-	 * @param filename The filename from which we want to read the questions
+	 * @param questionCycle Time to show each question
 	 */
-	public Quiz(String filename, int questionCycle)
+	public Quiz(int questionCycle)
 	{
 		this.quit = false;
 		this.questionCounter = 0;
-		this.filename = filename;
 		this.setName("Quiz");
 		this.questionCycle = questionCycle;
 	}
@@ -239,13 +237,7 @@ public class Quiz extends Thread {
 	}
 	
 	/**
-	 * @return Returns the servant.
-	 */
-	public QuizServant getServant() {
-		return servant;
-	}
-	
-	/**
+	 * Associates the servant object
 	 * @param servant The servant to set.
 	 */
 	public void setServant(QuizServant servant) {
@@ -253,7 +245,7 @@ public class Quiz extends Thread {
 	}
 	
 	/**
-	 * Method which tells the Quizthread to stop running
+	 * Method which tells the quiz thread to stop running
 	 * @param b
 	 */
 	public void setQuit(boolean b)
@@ -262,6 +254,7 @@ public class Quiz extends Thread {
 	}
 
 	/**
+	 * Accesses the clients vector
 	 * @return Returns the clients.
 	 */
 	public Vector getClients() {
@@ -269,6 +262,7 @@ public class Quiz extends Thread {
 	}
 	
 	/**
+	 * Sets the clients vector
 	 * @param clients The clients to set.
 	 */
 	public void setClients(Vector clients) {
@@ -295,32 +289,13 @@ public class Quiz extends Thread {
 	}
 
 	/**
-	 * @return Returns the questionCounter.
-	 */
-	public int getQuestionCounter() {
-		return questionCounter;
-	}
-	
-	/**
+	 * Sets the question counter
 	 * @param questionCounter The questionCounter to set.
 	 */
 	public void setQuestionCounter(int questionCounter) {
 		this.questionCounter = questionCounter;
 	}
 	
-	/**
-	 * @return Returns the filename.
-	 */
-	public String getFilename() {
-		return filename;
-	}
-	
-	/**
-	 * @param filename The filename to set.
-	 */
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
 	/**
 	 * @param questions The questions to set.
 	 */

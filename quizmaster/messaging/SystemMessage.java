@@ -21,6 +21,7 @@ public class SystemMessage extends Message {
 	private String body;
 	
 	/**
+	 * Access the body of the message
 	 * @return Returns the body.
 	 */
 	public String getBody() {
@@ -28,6 +29,7 @@ public class SystemMessage extends Message {
 	}
 	
 	/**
+	 * Set the body of the message
 	 * @param body The body to set.
 	 */
 	public void setBody(String body) {
@@ -35,6 +37,7 @@ public class SystemMessage extends Message {
 	}
 	
 	/**
+	 * Access the opCode of the message
 	 * @return Returns the opCode.
 	 */
 	public int getOpCode() {
@@ -42,6 +45,7 @@ public class SystemMessage extends Message {
 	}
 	
 	/**
+	 * Set the opCode of the message
 	 * @param opCode The opCode to set.
 	 */
 	public void setOpCode(int opCode) {

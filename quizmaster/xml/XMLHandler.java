@@ -26,7 +26,7 @@ import org.w3c.dom.Document;
 /**
  * @author reinhard
  *
- * A class for managing loading and saving Document data from and to files
+ * A class for managing loading and saving Document data from and to xml files
  */
 public class XMLHandler 
 {
@@ -124,8 +124,8 @@ public class XMLHandler
 	/**
 	 * Append XML data for latter writing to file
 	 * HACK: That's only for getting started!
-	 * TODO: Find out how to construct Node's from input, appending them to a Document object
 	 * @param s The string to add
+	 * TODO: Find out how to construct Node's from input, appending them to a Document object
 	 */
 	public void appendForSaving(String s)
 	{
