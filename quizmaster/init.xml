@@ -2,11 +2,11 @@
 
 <config>
 	<!-- The Quizfile to read answers from -->
-	<param name="file" value="futurama.xml"></param>
+	<param name="quizfile" value="futurama.xml"></param>
 	
 	<!-- Should the server start the registry? -->
-	<param name="registry" value="true"></param>
+	<param name="startregistry" value="true"></param>
 	
 	<!-- The Quizfile to read answers from -->
-	<param name="cycle" value="8000"></param>
+	<param name="cycletime" value="8000"></param>
 </config>

@@ -30,9 +30,9 @@ public class QuizServer {
 		if(IniFileReader.isConfigFileExisting("init.xml"))
 		{
 			IniFileReader reader = new IniFileReader("init.xml");
-			filename = reader.getStringValue("file");
-			startRegistry = reader.getBooleanValue("registry");
-			questionCycle = reader.getIntValue("cycle");
+			filename = reader.getStringValue("quizfile");
+			startRegistry = reader.getBooleanValue("startregistry");
+			questionCycle = reader.getIntValue("cycletime");
 			
 			reader=null;
 		}
@@ -42,9 +42,9 @@ public class QuizServer {
 		{
 			CliParamParser parser = new CliParamParser(args, ":");
 			
-			if(parser.existsParam("-file")) filename = parser.getStringValue("-file");
-			if(parser.existsParam("-registry")) startRegistry = parser.getBooleanValue("-registry");
-			if(parser.existsParam("-cycle")) questionCycle = parser.getIntValue("-cycle");
+			if(parser.existsParam("-quizfile")) filename = parser.getStringValue("-quizfile");
+			if(parser.existsParam("-startregistry")) startRegistry = parser.getBooleanValue("-startregistry");
+			if(parser.existsParam("-cycletime")) questionCycle = parser.getIntValue("-cycletime");
 			
 			parser = null;
 		}
