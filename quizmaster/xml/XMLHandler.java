@@ -125,7 +125,7 @@ public class XMLHandler
 	 * Append XML data for latter writing to file
 	 * HACK: That's only for getting started!
 	 * TODO: Find out how to construct Node's from input, appending them to a Document object
-	 * @param nodeAsString
+	 * @param s The string to add
 	 */
 	public void appendForSaving(String s)
 	{
@@ -135,12 +135,10 @@ public class XMLHandler
 	/**
 	 * Save the gathered information held by the object to file
 	 * @param filename
-	 * @return
+	 * @return TRUE if everything worked fine, FALSE if not
 	 */
 	public boolean saveFile(String filename)
 	{
-		File f = new File(filename);
-		
 		FileWriter fileout=null;
 
 		try {

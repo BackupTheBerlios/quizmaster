@@ -25,6 +25,7 @@ public class QuizServer {
 		String filename = null;
 		boolean startRegistry = true;
 		int questionCycle = 7500;
+		boolean useHighscore = false;
 		
 		// Process configuration file first
 		if(IniFileReader.isConfigFileExisting("init.xml"))
@@ -33,6 +34,7 @@ public class QuizServer {
 			filename = reader.getStringValue("quizfile");
 			startRegistry = reader.getBooleanValue("startregistry");
 			questionCycle = reader.getIntValue("cycletime");
+			useHighscore = reader.getBooleanValue("highscore");
 			
 			reader=null;
 		}
@@ -46,13 +48,14 @@ public class QuizServer {
 			if(parser.existsParam("-quizfile")) filename = parser.getStringValue("-quizfile");
 			if(parser.existsParam("-startregistry")) startRegistry = parser.getBooleanValue("-startregistry");
 			if(parser.existsParam("-cycletime")) questionCycle = parser.getIntValue("-cycletime");
+			if(parser.existsParam("-highscore")) useHighscore = parser.getBooleanValue("-highscore");
 			
 			parser = null;
 		}
 		
+		// Quizfile error handling
 		File f = new File(filename);
 		
-		// Error handling
 		if(!f.exists())
 		{
 			System.out.println("The specified file <"+filename+"> does not exist!\n");
@@ -61,6 +64,7 @@ public class QuizServer {
 		
 		f=null;
 		
+		// Setting up RMI...
 		System.setProperty("java.rmi.server.codebase", "http://192.168.2.10/classes/");
 		
 		//Installing the security manager
@@ -73,7 +77,7 @@ public class QuizServer {
 				// Create RMI-registry, we assume there's none running yet...
 				System.out.println("Creating local rmiregistry");
 				LocateRegistry.createRegistry(1099);
-				servant = new QuizServant(filename, questionCycle);
+				servant = new QuizServant(filename, questionCycle, useHighscore);
 			}
 			catch(RemoteException re)
 			{

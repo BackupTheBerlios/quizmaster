@@ -84,6 +84,13 @@ public interface QuizClientServices extends Remote, Serializable {
 	public void updateScore(int points) throws RemoteException;
 	
 	/**
+	 * Method to receive a clients current score
+	 * @return
+	 * @throws RemoteException
+	 */
+	public int getScore() throws RemoteException;
+	
+	/**
 	 * Tells the client that the quiz has been ended
 	 * @throws RemoteException
 	 */

@@ -22,22 +22,23 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	
 	private Vector connectedClients;
 	private Vector quizClients;
-	private boolean activeQuiz;
 	private Vector answers;
-	
-	private StateChecker checker;
-	private volatile String filename;
-	private volatile Vector messages;
 	private Vector questions;
+	private volatile Vector messages;
+	private boolean activeQuiz;
+	private boolean useHighscore;
+	private volatile String filename;	
 	private int questionCycle;
-	
+
+	private StateChecker checker;
 	private QuizQuestionFactory quizquestionfactory;
+	private HighScore highscore;
 	
 	/**
 	 * Standard constructor
 	 * @throws RemoteException
 	 */
-	public QuizServant(String filename, int questionCycle) throws RemoteException
+	public QuizServant(String filename, int questionCycle, boolean useHighscore) throws RemoteException
 	{
 		super();
 		this.connectedClients = new Vector();
@@ -47,6 +48,11 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.activeQuiz = false;
 		this.filename = filename;
 		this.questionCycle = questionCycle;
+		this.useHighscore=useHighscore;
+		if(this.isUseHighscore())
+		{
+			this.highscore = new HighScore();
+		}
 		
 		this.quizquestionfactory = new QuizQuestionFactory(this.filename);
 		this.quizquestionfactory.readQuestions();
@@ -276,6 +282,15 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	{
 		if(this.checker.isAlive())
 		{
+			if(this.isUseHighscore())
+			{
+				try {
+					this.highscore.processScore(client.getNickname(), client.getScore());
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+			
 			this.checker.getGame().removeClient(client);
 			return false;
 		}
@@ -375,4 +390,12 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	public int getQuestionCycle() {
 		return questionCycle;
 	}
+	
+	/**
+	 * @return Returns the useHighscore.
+	 */
+	private boolean isUseHighscore() {
+		return useHighscore;
+	}
+
 }

@@ -415,4 +415,11 @@ public class SimpleClient implements QuizClientServices{
 		this.quizMode=false;
 	}
 
+	/* (non-Javadoc)
+	 * @see client.QuizClientServices#getScore()
+	 */
+	public int getScore() throws RemoteException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

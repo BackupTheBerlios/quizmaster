@@ -9,4 +9,7 @@
 	
 	<!-- The Quizfile to read answers from -->
 	<param name="cycletime" value="8000"></param>
+	
+	<!-- Use Highscore feature, requires database -->
+	<param name="highscore" value="false"></param>
 </config>

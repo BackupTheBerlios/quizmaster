@@ -472,7 +472,16 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			e.printStackTrace();
 		} catch (RemoteException e) 
 		{
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		} catch(Exception e)
+		{
+			// empty
+		} 
+	}
+	/* (non-Javadoc)
+	 * @see client.QuizClientServices#getScore()
+	 */
+	public int getScore() throws RemoteException {
+		return this.score;
 	}
 }

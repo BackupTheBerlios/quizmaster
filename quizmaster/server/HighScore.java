@@ -4,14 +4,7 @@
  */
 package server;
 
-import java.io.File;
 import java.util.Vector;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import xml.XMLHandler;
 
 /**
  * @author reinhard
@@ -23,7 +16,6 @@ public class HighScore
 	private Vector highscore;
 	private final int MAXENTRIES = 10;
 	private int lowestScore;
-	private String filename;
 	
 	/**
 	 * Constructor
@@ -33,6 +25,7 @@ public class HighScore
 	{
 		this.highscore = new Vector( MAXENTRIES );
 		this.lowestScore = 0;
+		this.loadHighscore();
 	}
 	
 	/**
@@ -87,6 +80,8 @@ public class HighScore
 		
 		// Update lowest score
 		this.setLowestScore( ((Integer) this.highscore.elementAt(this.highscore.size()-1)).intValue() );
+		
+		this.saveHighscore();
 	}
 	
 	/**
@@ -102,33 +97,9 @@ public class HighScore
 	 * Method for loading Highscore data
 	 *
 	 */
-	public void loadHighscore()
+	private void loadHighscore()
 	{
-		File f = new File(this.filename);
-		
-		Document doc = XMLHandler.readDocFromFile(f);
-		
-		if(doc==null)
-		{
-			System.err.println("No Document constructed from XML-File");
-			System.err.println("File: "+ this.filename);
-		}
-		
-		// Iterate over param elements
-		NodeList scores = doc.getElementsByTagName("score");
-		
-		int i=0;
-		for(i=0; i<scores.getLength(); i++)
-		{
-			Node param = scores.item(i);
-			String nick = param.getAttributes().getNamedItem("nick").getNodeValue();
-			String points = param.getAttributes().getNamedItem("points").getNodeValue();
-			
-			// Add the entry to the Highscore object
-			this.addEntry(nick, Integer.parseInt(points));
-		}
-		
-		f = null;
+		// empty
 	}
 
 
