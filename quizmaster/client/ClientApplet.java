@@ -34,7 +34,7 @@ import server.QuizServices;
 /**
  * @author hannes
  * 
- * Swing-based GUI client applet for Quizmaster, a client-server quiz game application. 
+ * Swing-based GUI client applet for Quizmaster
  */
 public class ClientApplet extends JApplet implements QuizClientServices,
 		ActionListener {
@@ -78,6 +78,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		
 		nickname = getParameter("nickname");
 		
+		// Just to be sure...
 		if(nickname==null)
 		{
 			nickname="testuser";
@@ -101,7 +102,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.applet.Applet#destroy()
 	 */
 	public void destroy() {
@@ -110,7 +110,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	}
 
 	/**
-	 * Handles all events.
+	 * Handles all events produced by the applet
 	 */
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -162,6 +162,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			}
 			else
 			{
+				// If client is in quizmode, we're requesting to leave the game now
 				try{
 					this.setQuizMode(this.server.requestLeaveGame(this));			
 				} catch(RemoteException e1)
@@ -235,7 +236,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see client.QuizClientServices#notify(messaging.QuizQuestion)
 	 */
 	public void display(QuizQuestion msg) throws RemoteException 
@@ -258,7 +258,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	}
 
 	/**
-	 * Handles system messages. 
+	 * Handles system messages from the server. 
 	 */
 	public void display(SystemMessage msg) throws RemoteException 
 	{
@@ -276,7 +276,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	}
 
 	/**
-	 * Setter for nickname.
+	 * Setter method for nickname.
 	 */
 	public void setNickname(String nickname) throws RemoteException {
 		this.nickname = nickname;
@@ -284,17 +284,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see client.QuizClientServices#readAnswer()
-	 */
-	public QuizAnswer readAnswer() throws RemoteException {
-		System.out.println("readAnswer on " + this.getNickname() + " invoked.");
-		return this.currentAnswer;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see client.QuizClientServices#isQuizMode()
 	 */
 	public boolean isQuizMode() throws RemoteException {
@@ -303,7 +292,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see client.QuizClientServices#setQuizMode(boolean)
 	 */
 	public void setQuizMode(boolean b) throws RemoteException {
@@ -312,7 +300,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see client.QuizClientServices#updateScore(int)
 	 */
 	public void updateScore(int points) throws RemoteException {
@@ -320,8 +307,9 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		this.pointsLabel.setText(this.score + " points");
 	}
 
-	/**
-	 * Displays list of connected clients in client list combo box.
+	/*
+	 *  (non-Javadoc)
+	 * @see client.QuizClientServices#updateClientList(java.lang.String[])
 	 */
 	public void updateClientList(String[] clients) throws RemoteException 
 	{
@@ -341,23 +329,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			e.printStackTrace();
 		}
 		this.quizMode=false;
-		//Quiz has ended. Make join game button clickable again. 
-		this.startGame.setEnabled(true);
-	}
-
-	
-	/**
-	 * @return Returns the score.
-	 */
-	public int getScore() {
-		return score;
-	}
-	
-	/**
-	 * @param score The score to set.
-	 */
-	public void setScore(int score) {
-		this.score = score;
 	}
 	
 	/**
@@ -461,8 +432,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	}
 
 	/**
-	 * Connection method.
-	 * 
+	 * Method to connect to the RMI server application
 	 * @param hostname
 	 */
 	private void connect(String hostname) 

@@ -1,6 +1,7 @@
 /* SimpleClient.java
- * 
+ *  
  * Created on 06.01.2005
+ * 
  */
 package client;
 
@@ -23,16 +24,13 @@ import server.QuizServices;
 /**
  * @author reinhard
  *
- * A Debug class for testing server features
+ * A client class mainly for testing server features
  */
 public class SimpleClient implements QuizClientServices{
 	
 	private static QuizServices server=null;
 	private boolean quizMode=false;
-	
-	private int score;
 	private String nickname;
-	
 	private boolean questionToAnswer;
 	private QuizQuestion currentQuestion;
 
@@ -51,10 +49,10 @@ public class SimpleClient implements QuizClientServices{
 			e.printStackTrace();
 		}
 		
-		this.setScore(0);
-		this.setNickname("reini");
+		this.setNickname("cli-client");
 		this.setQuizMode(false);
 	}
+	
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#notify(messaging.Message)
 	 */
@@ -64,9 +62,9 @@ public class SimpleClient implements QuizClientServices{
 		System.out.println(msg.getBody());
 	}
 	
-	/**
-	 * Method for displaying a quizquestion the servant sent
-	 * 
+	/*
+	 *  (non-Javadoc)
+	 * @see client.QuizClientServices#display(messaging.QuizQuestion)
 	 */
 	public void display(QuizQuestion question) 
 	{
@@ -109,10 +107,11 @@ public class SimpleClient implements QuizClientServices{
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#display(messaging.SystemMessage)
 	 */
-	public void display(SystemMessage msg) throws RemoteException {
-		// TODO Auto-generated method stub
-
+	public void display(SystemMessage msg) throws RemoteException 
+	{
+		// empty, we don't need that in the testing client
 	}
+	
 	/**
 	 * Method for reading the answer from the user
 	 * @param questionid ID of the corresponding question
@@ -155,13 +154,14 @@ public class SimpleClient implements QuizClientServices{
 		return new QuizAnswer(answer-1, this.currentQuestion.getId(), this);
 	}
 	
-	/**
-	 * Method to update the client's score
-	 * @param points These get added to the current client's score
+
+	/*
+	 *  (non-Javadoc)
+	 * @see client.QuizClientServices#updateScore(int)
 	 */
 	public void updateScore(int points) throws RemoteException
 	{
-		this.setScore(this.getScore()+points);
+		// empty, no score managment in testing client
 	}
 	
 	/**
@@ -285,6 +285,7 @@ public class SimpleClient implements QuizClientServices{
 							System.err.println("NoSuchObjectException in SimpleClient.main()");
 							System.err.println(e.getMessage());
 							e.printStackTrace();
+							System.exit(0);
 						}
 						
 						
@@ -301,8 +302,8 @@ public class SimpleClient implements QuizClientServices{
 	}
 	
 	/**
-	 * Connection method
-	 * @param hostname
+	 * Method for connecting to the rmi server application
+	 * @param hostname The host on which the server is running
 	 */
 	private void connect(String hostname)
 	{
@@ -327,16 +328,10 @@ public class SimpleClient implements QuizClientServices{
 		System.out.println("Successfully connected to " + hostname);
 		System.out.println("");
 	}
-	/**
-	 * @return Returns the server.
-	 */
-	public QuizServices getServer() {
-		return server;
-	}
 	
 	/**
 	 * The user interface of the testing client
-	 * @return
+	 * @return User input
 	 */
 	public char gui()
 	{
@@ -363,6 +358,7 @@ public class SimpleClient implements QuizClientServices{
 		}
 		return option;
 	}
+	
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#getNickname()
 	 */
@@ -370,6 +366,7 @@ public class SimpleClient implements QuizClientServices{
 	{
 		return this.nickname;
 	}
+	
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#setNickname(java.lang.String)
 	 */
@@ -377,6 +374,7 @@ public class SimpleClient implements QuizClientServices{
 	{
 		this.nickname = nickname;
 	}
+	
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#getNrOfGamesWon()
 	 */
@@ -385,32 +383,20 @@ public class SimpleClient implements QuizClientServices{
 		return null;
 	}
 
-
-	/**
-	 * @return Returns the quizMode.
+	/*
+	 *  (non-Javadoc)
+	 * @see client.QuizClientServices#isQuizMode()
 	 */
 	public boolean isQuizMode() {
 		return quizMode;
 	}
-	/**
-	 * @param b The quizMode to set.
+	
+	/*
+	 *  (non-Javadoc)
+	 * @see client.QuizClientServices#setQuizMode(boolean)
 	 */
 	public void setQuizMode(boolean b) {
 		this.quizMode = b;
-	}
-	
-	/**
-	 * @return Returns the score.
-	 */
-	public int getScore() {
-		return score;
-	}
-	
-	/**
-	 * @param score The score to set.
-	 */
-	public void setScore(int score) {
-		this.score = score;
 	}
 
 	/* (non-Javadoc)
@@ -421,18 +407,13 @@ public class SimpleClient implements QuizClientServices{
 
 	}
 	
-	/**
-	 * 
+	/*
+	 *  (non-Javadoc)
+	 * @see client.QuizClientServices#gameEnded()
 	 */
 	public void gameEnded() throws RemoteException
 	{
 		this.quizMode=false;
 	}
-	
-	/**
-	 * @return Returns the questionToAnswer.
-	 */
-	public boolean isQuestionToAnswer() {
-		return questionToAnswer;
-	}
+
 }
