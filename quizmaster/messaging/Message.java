@@ -6,6 +6,8 @@ package messaging;
 
 import java.io.Serializable;
 
+import client.QuizClientServices;
+
 /**
  * @author reinhard
  *
@@ -15,7 +17,7 @@ import java.io.Serializable;
 public abstract class Message implements Serializable {
 
 	private int id;
-	private String sender;
+	private QuizClientServices sender;
 	
 	/**
 	 * @return Returns the id.
@@ -30,16 +32,17 @@ public abstract class Message implements Serializable {
 		this.id = id;
 	}
 
+
 	/**
 	 * @return Returns the sender.
 	 */
-	public String getSender() {
+	public QuizClientServices getSender() {
 		return sender;
 	}
 	/**
 	 * @param sender The sender to set.
 	 */
-	public void setSender(String sender) {
+	public void setSender(QuizClientServices sender) {
 		this.sender = sender;
 	}
 }

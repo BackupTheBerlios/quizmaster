@@ -8,7 +8,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import messaging.ChatMessage;
-import messaging.QuizQuestion;
+import messaging.QuizAnswer;
 import client.QuizClientServices;
 
 /**
@@ -41,30 +41,35 @@ public interface QuizServices extends Remote {
 	
 	/**
 	 * 
-	 * @param answer
-	 */
-	public void takeAnswer() throws RemoteException;
-	
-	/**
-	 * 
-	 * @param numberOfQuestions
-	 * @throws RemoteException
-	 */
-	public void startGame(int numQuestions) throws RemoteException;
-	
-	/**
-	 * 
 	 * @return
 	 * @throws RemoteException
 	 */
-	public QuizQuestion getActiveQuestion() throws RemoteException;
-	
-	/**
-	 * Method for checking if a quiz is currently running
-	 * @return
-	 * @throws RemoteException
-	 */
-	public boolean quizIsActive() throws RemoteException;
-	
 	public String[] getClientNames() throws RemoteException;
+	
+	/**
+	 * 
+	 * @param client
+	 * @throws RemoteException
+	 * @return False if client could not join game
+	 */
+	public boolean joinGame(QuizClientServices client) throws RemoteException;
+	
+	/**
+	 * 
+	 * @param client
+	 * @return
+	 * @throws RemoteException
+	 */
+	public boolean requestLeaveGame(QuizClientServices client) throws RemoteException;
+	
+	/**
+	 * 
+	 * @param answer
+	 * @throws RemoteException
+	 */
+	public void addAnswer(QuizAnswer answer) throws RemoteException;
+	
+	
+	// DEBUG
+	public void killCheckerThread() throws RemoteException;
 }

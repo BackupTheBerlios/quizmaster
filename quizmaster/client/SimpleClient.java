@@ -30,6 +30,10 @@ public class SimpleClient implements QuizClientServices{
 	private boolean quizMode=false;
 	
 	private int score;
+	private String nickname;
+	
+	private boolean questionToAnswer;
+	private QuizQuestion currentQuestion;
 
 	/**
 	 * Default Constructor
@@ -47,6 +51,8 @@ public class SimpleClient implements QuizClientServices{
 		}
 		
 		this.setScore(0);
+		this.setNickname("reini");
+		this.setQuizMode(false);
 	}
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#notify(messaging.Message)
@@ -63,6 +69,9 @@ public class SimpleClient implements QuizClientServices{
 	 */
 	public void display(QuizQuestion question) 
 	{
+		this.questionToAnswer=true;
+		this.currentQuestion = question;
+		
 		System.out.println("About to display QuizQuestion...");
 		
 		System.out.println();
@@ -71,6 +80,28 @@ public class SimpleClient implements QuizClientServices{
 		for(int i=0; i<question.getAnswers().size(); i++)
 		{
 			System.out.println((i+1)+". " +question.getAnswers().elementAt(i));
+		}
+		
+		QuizAnswer answer = this.readAnswer();
+		
+		if(answer==null)
+		{
+			try {
+				this.setQuizMode(server.requestLeaveGame(this));
+			} catch(RemoteException e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		else {
+			try {
+				server.addAnswer(answer);
+			} catch(RemoteException e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -98,28 +129,21 @@ public class SimpleClient implements QuizClientServices{
 			e.printStackTrace();
 		}
 		
-		if(message.equals("exit"))
+		int answer = -1;
+		try {
+			answer = Integer.parseInt(message);
+		} catch(NumberFormatException e)
 		{
-			return null;
-		}
-		else
-		{
-		
-			int questionid=0;
-			
-			try {
-				questionid = server.getActiveQuestion().getId();
-			} catch(RemoteException e)
+			if(message.equals("exit"))
 			{
-				System.err.println("RemoteException in SimpleClient.readAnswer()");
-				System.err.println(e.getMessage());
-				e.printStackTrace();
+				return null;
 			}
 			
-			QuizAnswer answer = new QuizAnswer(Integer.parseInt(message), questionid);
-			
-			return answer;
+			System.out.println("Invalid answer, only numbers allowed");
+			return new QuizAnswer(0, this.currentQuestion.getId(), this);
 		}
+		
+		return new QuizAnswer(answer, this.currentQuestion.getId(), this);
 	}
 	
 	/**
@@ -155,7 +179,7 @@ public class SimpleClient implements QuizClientServices{
 		}
 		
 		ChatMessage chatmsg = new ChatMessage(message);
-		chatmsg.setSender("SimpleClient");
+		chatmsg.setSender(this);
 		return chatmsg;
 	}
 	
@@ -194,83 +218,83 @@ public class SimpleClient implements QuizClientServices{
 		
 		do
 		{
-			switch(client.gui())
+			if(!client.isQuizMode())
 			{
-				case '1':
-					
-					ChatMessage message = client.readMessage();
-					try {
-						server.takeMessage(message);
-					} catch(RemoteException e)
-					{
-						System.err.println("RemoteException in SimpleClient.main()");
-						System.err.println(e.getMessage());
-						e.printStackTrace();
-					}
-					break;
-					
-				case '2':
-					
-					client.setQuizMode(true);
-					
-					try {
-						server.startGame(3);
-					} catch (RemoteException e)
-					{
-						System.err.println("RemoteException in SimpleClient.main()");
-						System.err.println(e.getMessage());
-						e.printStackTrace();
-					}
-
-					boolean activeQuiz=false;
-					
-					try {
-						activeQuiz = server.quizIsActive();
-					} catch(RemoteException e)
-					{
-						System.err.println("RemoteException in SimpleClient.main()");
-						System.err.println(e.getMessage());
-						e.printStackTrace();
-					}
-					
-					do
-					{
+				switch(client.gui())
+				{
+					case '1':
 						
-					} while(activeQuiz && client.isQuizMode());
-					
-					client.setQuizMode(false);
-					break;
+						ChatMessage message = client.readMessage();
+						try {
+							server.takeMessage(message);
+						} catch(RemoteException e)
+						{
+							System.err.println("RemoteException in SimpleClient.main()");
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
+						break;
+						
+					case '2':
+						
+						try {
+							client.setQuizMode(server.joinGame(client));
+						} catch(RemoteException e)
+						{
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
+						
+						break;
+						
+					case '3':
+						
+						
 			
-				case '0':
+		
+						break;
+						
+					case 'k':
+						try
+						{
+							server.killCheckerThread();
+						} catch (RemoteException e)
+						{
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
+						break;
 				
-				
-					
-					try {
-						server.unregister((QuizClientServices) client);
-					} catch(RemoteException e)
-					{
-						System.err.println("RemoteException in SimpleClient.main():");
-						System.err.println(e.getMessage());
-						e.printStackTrace();
-					}
-					
-					try {
-						UnicastRemoteObject.unexportObject(client, true);
-					} catch(NoSuchObjectException e)
-					{
-						System.err.println("NoSuchObjectException in SimpleClient.main()");
-						System.err.println(e.getMessage());
-						e.printStackTrace();
-					}
-					
-					
-					System.exit(0);
-					break;
-					
-				default:
-					System.out.println("Invalid option!");
-					break;
+					case '0':
+						
+						try {
+							server.unregister((QuizClientServices) client);
+						} catch(RemoteException e)
+						{
+							System.err.println("RemoteException in SimpleClient.main():");
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
+						
+						try {
+							UnicastRemoteObject.unexportObject(client, true);
+						} catch(NoSuchObjectException e)
+						{
+							System.err.println("NoSuchObjectException in SimpleClient.main()");
+							System.err.println(e.getMessage());
+							e.printStackTrace();
+						}
+						
+						
+						System.exit(0);
+						break;
+						
+					default:
+						System.out.println("Invalid option!");
+						break;
+				}
 			}
+						
 		} while(true);
 	}
 	
@@ -319,7 +343,8 @@ public class SimpleClient implements QuizClientServices{
 		System.out.println("SimpleClient Server testing");
 		System.out.println();
 		System.out.println("1. Send Message to all");
-		System.out.println("2. Quizmode");
+		System.out.println("2. Join Quiz");
+		System.out.println("3. Leave Quiz");
 		System.out.println("0. Exit");
 		System.out.print  (">  ");
 		
@@ -340,16 +365,16 @@ public class SimpleClient implements QuizClientServices{
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#getNickname()
 	 */
-	public String getNickname() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNickname() throws RemoteException 
+	{
+		return this.nickname;
 	}
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#setNickname(java.lang.String)
 	 */
-	public void setNickname(String nickname) throws RemoteException {
-		// TODO Auto-generated method stub
-
+	public void setNickname(String nickname) throws RemoteException 
+	{
+		this.nickname = nickname;
 	}
 	/* (non-Javadoc)
 	 * @see client.QuizClientServices#getNrOfGamesWon()
@@ -394,5 +419,19 @@ public class SimpleClient implements QuizClientServices{
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * 
+	 */
+	public void gameEnded() throws RemoteException
+	{
+		this.quizMode=false;
+	}
+	
+	/**
+	 * @return Returns the questionToAnswer.
+	 */
+	public boolean isQuestionToAnswer() {
+		return questionToAnswer;
+	}
 }

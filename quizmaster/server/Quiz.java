@@ -4,8 +4,10 @@
  */
 package server;
 
+import java.rmi.RemoteException;
 import java.util.Vector;
 
+import messaging.QuizAnswer;
 import messaging.QuizQuestion;
 import client.QuizClientServices;
 
@@ -17,10 +19,10 @@ import client.QuizClientServices;
 public class Quiz extends Thread {
 
 	private QuizServant servant;
-	private QuizClientServices client;
 	private int numQuestions;
 	private volatile boolean quit;
-	private Vector clientgames;
+	private volatile Vector clients;
+
 
 	/**
 	 * Default constructor, by not stating a number of questions, we're entering trivia mode
@@ -30,7 +32,6 @@ public class Quiz extends Thread {
 	{
 		this.numQuestions = -1;
 		this.quit = false;
-		clientgames = new Vector();
 	}
 	
 	/**
@@ -41,60 +42,157 @@ public class Quiz extends Thread {
 	{
 		this.numQuestions = numQuestions;
 		this.quit = false;
-		clientgames = new Vector();
 	}	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	public void run()
+	public synchronized void run()
 	{
+		int counter=0;
 		
-		System.out.println(Thread.activeCount()+" threads running");
-		ThreadGroup group = this.getThreadGroup();
+		System.out.println("Quiz thread running");
 		
-		System.out.println("Threadgroup's name: "+group.getName());
-		
-		Thread[] t=new Thread[4];
-		
-		group.enumerate(t);
-		
-		for(int i=0; i<t.length; i++)
+		while(!quit)
 		{
-			System.out.println(t[i].getName());
-		}
-		
-		System.out.println("Quiz.run()");
-		
-		if(this.quit == true)
-		{
-			for(int i=0; i<clientgames.size(); i++)
+			// Only counting if there's a limit, thus preventing apotential overflow
+			if(numQuestions>0) counter+=1;	
+			
+			// Get a new question
+			QuizQuestion question = this.fetchQuestion();
+			
+			// Send the question to all clients
+			if(this.sendQuestion(question)==0)
 			{
-				System.out.println("Terminating client quiz thread");
-				ClientGameLogic cgl = (ClientGameLogic) clientgames.elementAt(i);
-				cgl.setQuit(true);
+				this.quit=true;
+				continue;
 			}
 			
-			this.clientgames = null;
-			this.numQuestions = 0;
-			
-			System.out.println("Server thread terminated");
-			return;
-		}
-		
-		System.out.println("Running quiz-thread...");
-		
-		if(this.numQuestions != -1 && this.numQuestions > 0)
-		{
-			for(int i=0; i<this.numQuestions; i++)
+			// Now wait for client answers
+			try {
+				Thread.sleep(5000);
+			} catch(InterruptedException e)
 			{
-				servant.sendQuizQuestion();
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+
+			// Now we are checking all answers
+			this.checkAnswers(question);
+
+			if(numQuestions>0 && counter>=this.numQuestions)
+			{
+				this.quit = true;
 			}
 		}
-		else
+		
+		// Doing some cleanup before exiting
+		for(int i=0; i< this.clients.size(); i++)
 		{
-			// TODO: Implement trivia mode here
+			QuizClientServices client = (QuizClientServices) this.clients.elementAt(i);
+			try {
+				client.setQuizMode(false);
+				this.servant.leaveGame(client);
+			} catch(RemoteException e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
 		}
+		
+		System.out.println("Quiz thread terminating");
+		return;
+	}
+	
+	/**
+	 * Send a question to all clients of the quiz
+	 * @param question The question to send
+	 * @return Number of sent Questions
+	 * @throws RemoteException
+	 */
+	public int sendQuestion(QuizQuestion question) 
+	{
+		int i=0;
+		
+		System.out.println("Sending question to all clients in the game");
+		for(i=0; i<this.clients.size(); i++)
+		{
+			QuizClientServices client = (QuizClientServices) this.clients.elementAt(i);
+			
+			try {
+				client.display(question);
+			} catch(RemoteException e)
+			{
+				System.err.println("RemoteException in Quiz.sendQuestion");
+				System.err.println("i="+i);
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		return i;
+	}
+	
+	/**
+	 * Method checks all answers to a question
+	 * @param question
+	 * @return
+	 */
+	private int checkAnswers(QuizQuestion question)
+	{
+		int correctAnswers=0;
+		Vector answers = this.servant.getAnswers();
+		
+		System.out.println("Correct answer would be #"+question.getCorrectAnswer());
+		System.out.println("There are "+answers.size()+" answers to be checked");
+		
+		for(int i=0; i<answers.size(); i++)
+		{
+			QuizAnswer answer = (QuizAnswer) answers.elementAt(i);
+			
+			String nick=null;
+			
+			try {
+				nick = answer.getSender().getNickname();
+			} catch (RemoteException e)
+			{
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+			
+			if(answer.getQuestionId()!=question.getId())
+			{
+				System.out.println("Answer from client "+ nick +" is not related to the current question");
+				
+				continue;
+			}
+			
+			System.out.println(nick+" answered: #"+answer.getAnswer());
+			
+			if(answer.getAnswer() == question.getCorrectAnswer())
+			{
+				QuizClientServices client = (QuizClientServices) answer.getSender();
+				try {
+					client.updateScore(question.getPoints());
+				} catch(RemoteException e)
+				{
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				}
+				
+				System.out.println("Correct answer from " +nick+". "+question.getPoints()+" points added.");
+				correctAnswers+=1;
+			}
+		}
+		
+		if(correctAnswers == 0)
+		{
+			System.out.println("No correct answer");
+		}
+		
+		this.servant.clearAnswers();
+		
+		return correctAnswers;
 	}
 	
 	/**
@@ -133,20 +231,6 @@ public class Quiz extends Thread {
 	}
 	
 	/**
-	 * @return Returns the client.
-	 */
-	public QuizClientServices getClient() {
-		return client;
-	}
-	
-	/**
-	 * @param client The client to set.
-	 */
-	public void setClient(QuizClientServices client) {
-		this.client = client;
-	}
-	
-	/**
 	 * @return Returns the servant.
 	 */
 	public QuizServant getServant() {
@@ -178,20 +262,42 @@ public class Quiz extends Thread {
 	 * Method which tells the Quizthread to stop running
 	 * @param b
 	 */
-	public synchronized void setQuit(boolean b)
+	public void setQuit(boolean b)
 	{
 		this.quit=b;
 	}
+
 	/**
-	 * @return Returns the clientgames.
+	 * @return Returns the clients.
 	 */
-	public Vector getClientgames() {
-		return clientgames;
+	public Vector getClients() {
+		return clients;
 	}
+	
 	/**
-	 * @param clientgames The clientgames to set.
+	 * @param clients The clients to set.
 	 */
-	public void setClientgames(Vector clientgames) {
-		this.clientgames = clientgames;
+	public void setClients(Vector clients) {
+		this.clients = clients;
 	}
+	
+	/**
+	 * Add a client to the quiz
+	 * @param client
+	 */
+	public void addClient(QuizClientServices client)
+	{
+		this.clients.add(client);
+	}
+	
+	/**
+	 * Remove a client from the running quiz
+	 * @param client
+	 */
+	public void removeClient(QuizClientServices client)
+	{
+		this.clients.remove(client);
+		this.servant.leaveGame(client);
+	}
+
 }

@@ -4,6 +4,8 @@
  */
 package messaging;
 
+import client.QuizClientServices;
+
 /**
  * @author reinhard
  *
@@ -14,10 +16,11 @@ public class QuizAnswer extends Message {
 	private int answer;
 	private int questionid;
 	
-	public QuizAnswer(int answer, int questionid)
+	public QuizAnswer(int answer, int questionid, QuizClientServices client)
 	{
 		this.answer = answer;
 		this.questionid = questionid;
+		this.setSender(client);
 	}
 
 	/**
@@ -31,5 +34,14 @@ public class QuizAnswer extends Message {
 	 */
 	public void setAnswer(int answer) {
 		this.answer = answer;
+	}
+	
+	/**
+	 * 
+	 * @return The id of the question the answer is related to
+	 */
+	public int getQuestionId()
+	{
+		return this.questionid;
 	}
 }
