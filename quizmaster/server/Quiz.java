@@ -122,7 +122,7 @@ public class Quiz extends Thread {
 			try {
 				this.tmpclient.setJoinButtonActive(true);
 			} catch (RemoteException e1) {
-				e1.printStackTrace();
+				// empty
 			}
 			this.tmpclient=null;
 		}
@@ -179,7 +179,7 @@ public class Quiz extends Thread {
 			String nick=null;
 			
 			try {
-				nick = answer.getSender().getNickname();
+				if(answer.getSender()!=null) nick = answer.getSender().getNickname();
 			} catch (RemoteException e)
 			{
 				System.err.println(e.getMessage());
