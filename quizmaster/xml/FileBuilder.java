@@ -16,6 +16,7 @@ import messaging.QuizQuestion;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -132,28 +133,17 @@ public class FileBuilder {
 
 		parser = null;
 		
+		XMLReader xmlhandler = new XMLReader();
+		
 		int id=0;
 		
 		recentQuestions = new Vector();
 		checkAndBackup();
 		
-		FileWriter fileout=null;
-
-		try {
-			fileout = new FileWriter(filename);
-		} catch (IOException e1) {
-			System.err.println(e1.getMessage());
-			e1.printStackTrace();
-		}
-
-		BufferedWriter out = new BufferedWriter(fileout);
 		String tmp=null;
 		
-		try {
-			out.write("<quiz>\n");
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		xmlhandler.setDocType("1.0", "UTF-8", "quiz", "quiz.dtd"); 
+		xmlhandler.appendForSaving("<quiz>");
 		
 		if(recentQuestions.size()>0)
 		{
@@ -162,13 +152,9 @@ public class FileBuilder {
 				QuizQuestion theQuestion = (QuizQuestion) recentQuestions.elementAt(i);
 				String question="\t<question id=\""+theQuestion.getId()+
 								"\" text=\""+theQuestion.getQuestion()+"\" points=\""+
-								theQuestion.getPoints()+"\">\n";
+								theQuestion.getPoints()+"\">";
 			
-				try {
-					out.write(question);
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
+				xmlhandler.appendForSaving(question);
 				
 				for(int j=0; j < theQuestion.getAnswers().size(); j++)
 				{
@@ -177,20 +163,12 @@ public class FileBuilder {
 					{
 						answer+=" correct=\"true\"";
 					}
-					answer=answer+">"+(String) theQuestion.getAnswers().elementAt(j)+"</answer>\n";
+					answer=answer+">"+(String) theQuestion.getAnswers().elementAt(j)+"</answer>";
 					
-					try {
-						out.write(answer);
-					} catch (IOException e4) {
-						e4.printStackTrace();
-					}
+					xmlhandler.appendForSaving(answer);
 				}
 				
-				try {
-					out.write("\t</question>\n");
-				} catch (IOException e4) {
-					e4.printStackTrace();
-				}
+				xmlhandler.appendForSaving("\t</question>");
 				
 				id+=1;
 			}
@@ -209,7 +187,7 @@ public class FileBuilder {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-
+		
 		while(tmp.equals("y")) {
 			System.out.print("\nPoints for this question: ");
 			String question=null;
@@ -218,6 +196,7 @@ public class FileBuilder {
 			
 			try {
 				tmp = buf_in.readLine();
+				
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
 				e.printStackTrace();
@@ -235,12 +214,7 @@ public class FileBuilder {
 			}
 			question="\t<question id=\""+id+"\" text=\""+tmp+"\" points=\""+points+"\">";
 			
-			try {
-				out.write(question+"\n");
-			} catch (IOException e2) {
-				System.err.println(e2.getMessage());
-				e2.printStackTrace();
-			}
+			xmlhandler.appendForSaving(question);
 
 			System.out.println();
 			System.out.println("Please enter the correct solution first!");
@@ -257,28 +231,18 @@ public class FileBuilder {
 				
 				if(i==0)
 				{
-					answer="\t\t<answer correct=\"true\">"+tmp+"</answer>\n";
+					answer="\t\t<answer correct=\"true\">"+tmp+"</answer>";
 				}
 				else
 				{
-					answer="\t\t<answer>"+tmp+"</answer>\n";
+					answer="\t\t<answer>"+tmp+"</answer>";
 				}
 				
-				try {
-					out.write(answer);
-				} catch (IOException e2) {
-					System.err.println(e2.getMessage());
-					e2.printStackTrace();
-				}
+				xmlhandler.appendForSaving(answer);
 
 			}
 			
-			try {
-				out.write("\t</question>\n");
-			} catch (IOException e2) {
-				System.err.println(e2.getMessage());
-				e2.printStackTrace();
-			}
+			xmlhandler.appendForSaving("\t</question>");
 			
 			id+=1;
 			
@@ -292,18 +256,9 @@ public class FileBuilder {
 			}
 		};
 		
-		try {
-			out.write("</quiz>\n");
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		xmlhandler.appendForSaving("</quiz>");
 		
-		try {
-			out.close();
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
+		xmlhandler.saveFile(filename);
 	
 		System.out.println();
 		
