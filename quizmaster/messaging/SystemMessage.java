@@ -5,9 +5,9 @@
 package messaging;
 
 /**
- * @author hannes
- *
  * A simple class for SystemMessages from the server
+ *
+ * @author yvonne
  */
 public class SystemMessage extends Message {
 	

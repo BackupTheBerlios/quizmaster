@@ -9,10 +9,10 @@ import java.io.Serializable;
 import client.QuizClientServices;
 
 /**
- * @author reinhard
- *
  * All data which is passed between the clients and the server
  * has to be derived from this class
+ *
+ *  @author yvonne
  */
 public abstract class Message implements Serializable {
 

@@ -15,9 +15,8 @@ import xml.QuizQuestionFactory;
 import client.QuizClientServices;
 
 /**
- * @author reinhard
- *
  * The Servant class provides the server functionality
+ * @author reinhard
  */
 public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	

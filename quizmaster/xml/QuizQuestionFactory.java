@@ -14,6 +14,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * Class for reading quiz questions
+ * 
+ * @author hannes
+ */
 public class QuizQuestionFactory {
 	
 	private Vector questions;

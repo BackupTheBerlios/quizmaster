@@ -6,9 +6,9 @@
 package messaging;
 
 /**
- * @author reinhard
- *
  * A simple class for chat-messages
+ * 
+ * @author yvonne
  */
 public class ChatMessage extends Message {
 	

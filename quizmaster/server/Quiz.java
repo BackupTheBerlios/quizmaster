@@ -16,9 +16,9 @@ import messaging.SystemMessage;
 import client.QuizClientServices;
 
 /**
- * @author reinhard
- *
  * The Quiz class manages all quiz tasks
+ * 
+ * @author reinhard
  */
 public class Quiz extends Thread {
 

@@ -14,9 +14,10 @@ import messaging.SystemMessage;
 
 
 /**
- * @author reinhard
- *
  * The client interface is used for RMI callbacks
+ * 
+ * @author yvonne
+ *
  */
 public interface QuizClientServices extends Remote, Serializable {
 	
@@ -85,7 +86,7 @@ public interface QuizClientServices extends Remote, Serializable {
 	
 	/**
 	 * Method to receive a clients current score
-	 * @return
+	 * @return The score of a client
 	 * @throws RemoteException
 	 */
 	public int getScore() throws RemoteException;

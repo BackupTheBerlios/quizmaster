@@ -12,9 +12,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * @author reinhard
- *
  * Class for reading an XML configuration file
+ * 
+ * @author reinhard
  */
 public class IniFileReader 
 {
@@ -69,7 +69,7 @@ public class IniFileReader
 	}
 	
 	/**
-	 * Get the associated flaot value of a param
+	 * Get the associated float value of a param
 	 * @param param The parameter to get a value for
 	 */
 	public float getFloatValue(String param) throws NumberFormatException

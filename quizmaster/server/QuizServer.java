@@ -13,9 +13,9 @@ import java.rmi.registry.LocateRegistry;
 import xml.IniFileReader;
 
 /**
- * @author reinhard
- *
  * The server class starts the server
+ * 
+ * @author reinhard
  */
 public class QuizServer {
 	

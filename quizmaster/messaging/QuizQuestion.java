@@ -7,9 +7,9 @@ package messaging;
 import java.util.Vector;
 
 /**
- * @author reinhard
- *
  * A simple class for QuizQuestions
+ * 
+ * @author yvonne
  */
 public class QuizQuestion extends Message {
 	

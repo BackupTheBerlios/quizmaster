@@ -24,9 +24,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 
 /**
- * @author reinhard
- *
  * A class for managing loading and saving Document data from and to xml files
+ * 
+ * @author reinhard
  */
 public class XMLHandler 
 {

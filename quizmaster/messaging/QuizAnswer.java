@@ -7,9 +7,9 @@ package messaging;
 import client.QuizClientServices;
 
 /**
- * @author reinhard
- *
  * A simple class for an answer to a quiz-question
+ * 
+ * @author yvonne
  */
 public class QuizAnswer extends Message {
 	

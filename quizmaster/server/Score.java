@@ -5,9 +5,9 @@
 package server;
 
 /**
- * @author reinhard
- *
  * A class for use with the highscore feature
+ * 
+ * @author reinhard
  */
 public class Score
 {

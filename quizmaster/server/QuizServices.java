@@ -12,9 +12,9 @@ import messaging.QuizAnswer;
 import client.QuizClientServices;
 
 /**
- * @author reinhard
- *
  * The QuizServices interface is used to let the clients talk to the server
+ * 
+ * @author yvonne
  */
 public interface QuizServices extends Remote {
 	

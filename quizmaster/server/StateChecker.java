@@ -10,10 +10,10 @@ import messaging.ChatMessage;
 import client.QuizClientServices;
 
 /**
- * @author reinhard
- *
  * The StateChecker regulary checks the servant and initiates the requested
  * application features
+ * 
+ * @author reinhard
  */
 public class StateChecker extends Thread 
 {

@@ -23,9 +23,9 @@ import server.CliParamParser;
 import server.QuizServices;
 
 /**
- * @author reinhard
- *
  * A client class mainly for testing server features
+ * 
+ * @author reinhard
  */
 public class SimpleClient implements QuizClientServices{
 	

@@ -12,9 +12,9 @@ import java.sql.Statement;
 import java.util.Vector;
 
 /**
- * @author reinhard
- *
  * A class for calculating Highscores
+ * 
+ * @author reinhard
  */
 public class HighScore 
 {
@@ -24,7 +24,7 @@ public class HighScore
 	
 	// For the database
 	private String dbtable;
-	private Connection con;
+	private Connection connection;
 	
 	/**
 	 * Constructor
@@ -43,7 +43,7 @@ public class HighScore
 		String dbUri="jdbc:mysql://" + dbhost + "/" + dbname + "?user=" + dbuser + "&password=" + dbpass;
 		
 		Class.forName("org.gjt.mm.mysql.Driver");
-		con = DriverManager.getConnection(dbUri);
+		connection = DriverManager.getConnection(dbUri);
 		
 		try{
 			this.loadHighscore();
@@ -57,7 +57,7 @@ public class HighScore
 	 * Checks if a users score qualifies for a highscore
 	 * @param nick Nickname of the user
 	 * @param points Score of the user
-	 * @return TRUE, if new Highscore, FALSE if not
+	 * @return TRUE, if new highscore entry, FALSE if not
 	 */
 	public boolean processScore(String nick, int points)
 	{
@@ -116,7 +116,7 @@ public class HighScore
 	 */
 	public void saveHighscore() throws SQLException
 	{
-		Statement s = con.createStatement();
+		Statement s = connection.createStatement();
 
 		// Deleting all data from the database, all logic done by this class
 		s.executeUpdate("delete from "+this.dbtable);
@@ -136,7 +136,7 @@ public class HighScore
 	 */
 	private void loadHighscore() throws SQLException
 	{
-		Statement s = con.createStatement();
+		Statement s = connection.createStatement();
 		ResultSet rs = s.executeQuery("select id, nick, score from "+this.dbtable+" order by score desc");
 		
 		while(rs.next())

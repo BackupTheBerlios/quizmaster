@@ -20,9 +20,8 @@ import org.w3c.dom.NodeList;
 import server.CliParamParser;
 
 /**
- * @author reinhard
- *
  * A simple tool to generate quiz xml files
+ * @author hannes
  */
 public class FileBuilder {
 	

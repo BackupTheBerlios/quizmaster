@@ -36,9 +36,9 @@ import messaging.SystemMessage;
 import server.QuizServices;
 
 /**
- * @author hannes
- * 
  * Swing-based GUI client applet for Quizmaster
+ * 
+ * @author hannes
  */
 public class ClientApplet extends JApplet implements QuizClientServices,
 		ActionListener {

@@ -7,9 +7,9 @@ package server;
 import java.util.StringTokenizer;
 
 /**
- * @author reinhard
+ *A helper class for parsing commandline arguments
  *
- * A helper class for parsing commandline arguments
+ * @author reinhard
  */
 public class CliParamParser 
 {
