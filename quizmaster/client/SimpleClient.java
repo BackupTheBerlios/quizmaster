@@ -247,13 +247,6 @@ public class SimpleClient implements QuizClientServices{
 						
 						break;
 						
-					case '3':
-						
-						
-			
-		
-						break;
-						
 					case 'k':
 						try
 						{
@@ -344,7 +337,6 @@ public class SimpleClient implements QuizClientServices{
 		System.out.println();
 		System.out.println("1. Send Message to all");
 		System.out.println("2. Join Quiz");
-		System.out.println("3. Leave Quiz");
 		System.out.println("0. Exit");
 		System.out.print  (">  ");
 		
