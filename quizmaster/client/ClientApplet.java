@@ -77,6 +77,7 @@ public class ClientApplet extends JApplet implements QuizClientServices, ActionL
 //		 Set the codebase for this application
 //		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
 		
+		
 		connect(getParameter("host"));
 //		 Register the client with the server
 		try {
