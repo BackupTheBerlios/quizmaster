@@ -1,14 +1,26 @@
 <quiz>
-	<question id="0" text="What's Frys full name?" points="10">
-		<answer correct="true">Philip J. Fry</answer>
-		<answer>French Fry</answer>
-		<answer>George W. Fry</answer>
-		<answer>Gerhard Fry</answer>
+	<question id="0" text="What was the value of the bank note that Mr. Burns stole?" points="10">
+		<answer correct="true">1 trillian dollars</answer>
+		<answer>1 million dollars</answer>
+		<answer>1 thousand dollars</answer>
+		<answer>1 dollar</answer>
 	</question>
-	<question id="1" text="Which of these persons does not belong to the Simpsons family?" points="5">
-		<answer correct="true">Apu</answer>
-		<answer>Abe</answer>
+	<question id="1" text="What tells Ralph to burn things?" points="20">
+		<answer correct="true">A Leprachaun</answer>
+		<answer>A Clown</answer>
 		<answer>Bart</answer>
-		<answer>Maggie</answer>
+		<answer>Blinky</answer>
+	</question>
+	<question id="2" text="What is Bart's childhood toy named?" points="15">
+		<answer correct="true">Mr. Honeybunny</answer>
+		<answer>Colonel Sneakers</answer>
+		<answer>Winney the Poop</answer>
+		<answer>A rubber ducky</answer>
+	</question>
+	<question id="3" text="In a halloween episode, Homer accidently makes a time machine while trying to fix:" points="20">
+		<answer correct="true">A Toaster</answer>
+		<answer>A Camera</answer>
+		<answer>A washing machine</answer>
+		<answer>A microwave</answer>
 	</question>
 </quiz>

@@ -51,7 +51,7 @@ public class QuizQuestion extends Message {
 	
 	/**
 	 * Return the answers to this question as a string array
-	 * @return
+	 * @return The questions answers as an array
 	 */
 	public String[] getAnswersAsArray()
 	{
@@ -112,7 +112,7 @@ public class QuizQuestion extends Message {
 	
 	/**
 	 * Get the correct answer text
-	 * @return
+	 * @return The text of the correct answer to this question
 	 */
 	public String getCorrectAnswerText()
 	{
