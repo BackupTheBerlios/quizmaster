@@ -145,6 +145,7 @@ public class QuizQuestionFactory {
 	}
 	
 	/**
+	 * Access the questions
 	 * @return Returns the questions.
 	 */
 	public Vector getQuestions() {
@@ -152,6 +153,7 @@ public class QuizQuestionFactory {
 	}
 	
 	/**
+	 * Set the questions
 	 * @param questions The questions to set.
 	 */
 	public void setQuestions(Vector questions) {
@@ -159,6 +161,7 @@ public class QuizQuestionFactory {
 	}
 	
 	/**
+	 * Access the description of the Quiz
 	 * @return Returns the quizDesc.
 	 */
 	public String getQuizDesc() {
@@ -223,7 +226,8 @@ public class QuizQuestionFactory {
 	
 	/**
 	 * Method to shuffle an array
-	 * @param array
+	 * @param array The Array to shuffle
+	 * @return The shuffled array
 	 */
 	private static Object[] shuffle(Object[] array) 
 	{

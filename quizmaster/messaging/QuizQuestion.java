@@ -67,7 +67,7 @@ public class QuizQuestion extends Message {
 	
 	/**
 	 * Set a questions answer from a string array
-	 * @param array
+	 * @param array The Array to set the answers from
 	 */
 	public void setAnswersFromArray(String[] array)
 	{
