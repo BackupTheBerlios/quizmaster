@@ -28,33 +28,26 @@ public class Quiz extends Thread {
 	private QuizQuestionFactory quizfactory;
 	private Vector questions;
 	private int questionCounter;
+	private volatile String filename;
 
 
 	/**
 	 * Default constructor, by not stating a number of questions, we're entering trivia mode
 	 *
 	 */
-	public Quiz()
+	public Quiz(String filename)
 	{
 		this.numQuestions = -1;
 		this.quit = false;
 		this.questionCounter = 0;
+		this.filename = filename;
 		
-		this.quizfactory = new QuizQuestionFactory();
+		System.out.println("Using: "+this.filename);
+		this.quizfactory = new QuizQuestionFactory(this.filename);
 		this.quizfactory.readQuestions();
 		this.questions = this.quizfactory.getQuestions();
 		this.quizfactory = null;
 	}
-	
-	/**
-	 * Constructor which takes the number of questions, which is going to be asked
-	 * @param numQuestions
-	 */
-	public Quiz(int numQuestions)
-	{
-		this();
-		this.numQuestions = numQuestions;
-	}	
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -321,5 +314,19 @@ public class Quiz extends Thread {
 	 */
 	public void setQuestionCounter(int questionCounter) {
 		this.questionCounter = questionCounter;
+	}
+	
+	/**
+	 * @return Returns the filename.
+	 */
+	public String getFilename() {
+		return filename;
+	}
+	
+	/**
+	 * @param filename The filename to set.
+	 */
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 }

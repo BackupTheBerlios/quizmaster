@@ -4,6 +4,7 @@
  */
 package server;
 
+import java.io.File;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -18,6 +19,24 @@ public class QuizServer {
 	public static void main(String args[])
 	{
 		QuizServant servant = null;
+		String filename = null;
+		
+		if(args.length!=1)
+		{
+			filename = "futurama.xml";
+		}
+		else
+		{
+			filename = args[0];
+		}
+		
+		File f = new File(filename);
+		if(!f.exists())
+		{
+			System.out.println("The specified file <"+filename+"> does not exist!\n");
+			System.exit(-1);
+		}
+		f=null;
 		
 		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
 		
@@ -25,7 +44,7 @@ public class QuizServer {
 			// Create RMI-registry, we assume there's none running yet...
 			System.out.println("Creating local rmiregistry...");
 			LocateRegistry.createRegistry(1099);
-			servant = new QuizServant();
+			servant = new QuizServant(filename);
 		}
 		catch(RemoteException re)
 		{

@@ -24,17 +24,6 @@ public class QuizQuestionFactory {
 	private Vector questions;
 	private String filename;
 	
-	
-	/**
-	 * Default constructor
-	 *
-	 */
-	public QuizQuestionFactory()
-	{
-		this.questions = new Vector();
-		this.filename = "futurama.xml";
-	}
-	
 	/**
 	 * Constructor which takes the filename to use as an argument
 	 * @param filename
@@ -48,7 +37,8 @@ public class QuizQuestionFactory {
 		}
 		else
 		{
-			this.filename = "futurama.xml";
+			System.out.println("QuizQuestionFactory: No filename specified for reading questions!\n");
+			System.exit(-1);
 		}
 	}
 	
@@ -132,8 +122,6 @@ public class QuizQuestionFactory {
 				
 			}	
 			q.setAnswers(a);
-			
-			QuizQuestionFactory.printOutReadQuestion(q);
 			
 			this.questions.add(q);
 		}

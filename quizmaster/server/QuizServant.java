@@ -25,19 +25,20 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	private Vector answers;
 	
 	private StateChecker checker;
-	
+	private volatile String filename;
 	
 	/**
 	 * Standard constructor
 	 * @throws RemoteException
 	 */
-	public QuizServant() throws RemoteException
+	public QuizServant(String filename) throws RemoteException
 	{
 		super();
 		this.connectedClients = new Vector();
 		this.quizClients = new Vector();
 		this.answers = new Vector();
 		this.activeQuiz = false;
+		this.filename = filename;
 		
 		checker = new StateChecker();
 		checker.setServant(this);
@@ -313,5 +314,19 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	public Vector getAnswers()
 	{
 		return this.answers;
+	}
+	
+	/**
+	 * @return Returns the filename.
+	 */
+	public String getFilename() {
+		return filename;
+	}
+	
+	/**
+	 * @param filename The filename to set.
+	 */
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 }

@@ -38,9 +38,9 @@ public class StateChecker extends Thread
 			{
 				System.out.println("StateChecker: Starting a new quiz");
 				this.servant.setActiveQuiz(true);
-				game = new Quiz();	// 3 questions for testing
-				game.setServant(servant);
-				game.setClients(servant.getQuizClients());
+				game = new Quiz(this.servant.getFilename());
+				game.setServant(this.servant);
+				game.setClients(this.servant.getQuizClients());
 				game.start();
 			}
 			
