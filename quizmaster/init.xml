@@ -1,7 +1,7 @@
 <!-- Configuration file for the QuizMaster application -->
 
 <config>
-	<param name="file" value="simpsons.xml"></param>
+	<param name="file" value="futurama.xml"></param>
 	<param name="registry" value="true"></param>
 	<param name="cycle" value="8000"></param>
 </config>
