@@ -1,0 +1,9 @@
+<!ELEMENT quiz(question*)>
+
+<!ELEMENT question(answer*)>
+<!ATTLIST question 	id CDATA 
+					text CDATA #REQUIRED
+					points CDATA>
+					
+<!ELEMENT answer(#PCDATA)>
+<!ATTLIST answer	correct CDATA>
