@@ -59,7 +59,7 @@ public class QuizQuestionFactory {
 			System.err.println("File: "+ this.filename);
 		}
 		
-		// QUICK HACK! Get quiz description
+		// Get quiz description
 		NodeList quiz = doc.getElementsByTagName("quiz");
 		this.quizDesc = quiz.item(0).getAttributes().getNamedItem("description").getNodeValue();
 		quiz=null;
@@ -125,10 +125,44 @@ public class QuizQuestionFactory {
 			qs.add(q);
 		}
     		
-    		// We want a different question order each game, so once again, we're shuffling
-    		this.questions = QuizQuestionFactory.mixQuestions(qs);
-		
+    		this.questions=QuizQuestionFactory.mixQuestions(qs);
+    		
 		System.out.println(i+" questions read from file");
+	}
+	
+	/**
+	 * @return Returns the filename.
+	 */
+	public String getFilename() {
+		return filename;
+	}
+	
+	/**
+	 * @param filename The filename to set.
+	 */
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
+	/**
+	 * @return Returns the questions.
+	 */
+	public Vector getQuestions() {
+		return questions;
+	}
+	
+	/**
+	 * @param questions The questions to set.
+	 */
+	public void setQuestions(Vector questions) {
+		this.questions = questions;
+	}
+	
+	/**
+	 * @return Returns the quizDesc.
+	 */
+	public String getQuizDesc() {
+		return quizDesc;
 	}
 	
 	/**
@@ -204,40 +238,5 @@ public class QuizQuestionFactory {
 		}
 		
 		return array;
-	}
-
-	/**
-	 * @return Returns the filename.
-	 */
-	public String getFilename() {
-		return filename;
-	}
-	
-	/**
-	 * @param filename The filename to set.
-	 */
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-	
-	/**
-	 * @return Returns the questions.
-	 */
-	public Vector getQuestions() {
-		return questions;
-	}
-	
-	/**
-	 * @param questions The questions to set.
-	 */
-	public void setQuestions(Vector questions) {
-		this.questions = questions;
-	}
-	
-	/**
-	 * @return Returns the quizDesc.
-	 */
-	public String getQuizDesc() {
-		return quizDesc;
 	}
 }

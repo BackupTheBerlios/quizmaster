@@ -78,6 +78,7 @@ public class HighScore
 	 */
 	private void addEntry(String nick, int points)
 	{
+		System.out.println("New highscore entry for "+nick+" with "+points+" points");
 		Score sc = new Score(nick, points);
 		
 		if(this.highscore.isEmpty())
@@ -121,6 +122,7 @@ public class HighScore
 	 */
 	public void saveHighscore() throws SQLException
 	{
+		System.out.println("Updating highscore database");
 		Statement s = connection.createStatement();
 
 		// Deleting all data from the database, all logic done by this class
@@ -129,7 +131,8 @@ public class HighScore
 		for(int i=0; i<this.highscore.size(); i++)
 		{
 			Score sc = (Score) this.highscore.elementAt(i);
-			s.executeUpdate("insert into "+this.dbtable+" values('', '"+sc.getNick()+"', "+sc.getScore()+")");
+			String query = "insert into "+this.dbtable+" values('', '"+sc.getNick()+"', "+sc.getScore()+", '"+sc.getDate()+"')";
+			s.executeUpdate(query);
 		}
 	}
 	
@@ -140,12 +143,13 @@ public class HighScore
 	 */
 	private void loadHighscore() throws SQLException
 	{
+		System.out.println("Reading highscore database");
 		Statement s = connection.createStatement();
-		ResultSet rs = s.executeQuery("select id, nick, score from "+this.dbtable+" order by score desc");
+		ResultSet rs = s.executeQuery("select id, nick, score, date from "+this.dbtable+" order by score desc");
 		
 		while(rs.next())
 		{
-			Score sc = new Score(rs.getInt("id"), rs.getString("nick"), rs.getInt("score"));
+			Score sc = new Score(rs.getInt("id"), rs.getString("nick"), rs.getInt("score"), rs.getDate("date"));
 			this.highscore.add(sc);
 		}
 		

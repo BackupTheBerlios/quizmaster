@@ -4,6 +4,8 @@
  */
 package server;
 
+import java.sql.Date;
+
 /**
  * A class for use with the highscore feature
  * 
@@ -14,6 +16,7 @@ public class Score
 	private int id;
 	private String nick;
 	private int score;
+	private java.sql.Date date;
 	private static int counter;
 	
 	/**
@@ -26,6 +29,8 @@ public class Score
 		this.id = Score.counter;
 		this.nick = nick;
 		this.score = score;
+		long millis = ( new java.util.Date()).getTime();
+		this.date=new Date(millis);
 		
 		Score.counter++;
 	}
@@ -36,12 +41,13 @@ public class Score
 	 * @param nick Nickname of this score
 	 * @param score score of this score
 	 */
-	public Score(int id, String nick, int score)
+	public Score(int id, String nick, int score, Date date)
 	{
 		this.id=id;
 		Score.counter++;
 		this.nick=nick;
 		this.score=score;
+		this.date=date;
 	}
 
 	/**
@@ -90,5 +96,13 @@ public class Score
 	 */
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	/**
+	 * Sets the date value
+	 * @return Returns the date.
+	 */
+	public String getDate() {
+		return this.date.toString();
 	}
 }

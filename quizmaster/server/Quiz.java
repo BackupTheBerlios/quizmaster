@@ -77,6 +77,10 @@ public class Quiz extends Thread {
 	 */
 	private synchronized void runGame()
 	{
+		// Initially mix the available questions
+		this.questions = QuizQuestionFactory.mixQuestions(this.questions);
+		
+		
 		while(!quit)
 		{
 			// If no more clients want to play the quiz
@@ -221,7 +225,7 @@ public class Quiz extends Thread {
 		System.out.println("Fetching a new quiz question");
 		
 		// If the quiz is just beginning or all question have been answered, begin again
-		if(this.questionCounter==0 || this.questionCounter>=this.questions.size())
+		if(this.questionCounter>=this.questions.size())
 		{
 			this.questionCounter=0;
 			

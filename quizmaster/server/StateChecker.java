@@ -105,6 +105,7 @@ public class StateChecker extends Thread
 	public boolean isQuit() {
 		return quit;
 	}
+	
 	/**
 	 * Setter method for the quit variable, which indicates that the thread will be quitting soon
 	 * @param quit The quit to set.
@@ -112,13 +113,7 @@ public class StateChecker extends Thread
 	public void setQuit(boolean quit) {
 		this.quit = quit;
 	}
-	/**
-	 * Sets the servant, the statechecker is watching
-	 * @return Returns the servant.
-	 */
-	public QuizServant getServant() {
-		return servant;
-	}
+
 	/**
 	 * Gets the servant the statechecker is watching
 	 * @param servant The servant to set.

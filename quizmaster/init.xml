@@ -8,7 +8,7 @@
 	<param name="startregistry" value="true"></param>
 	
 	<!-- The time a user has for answering a question -->
-	<param name="cycletime" value="10000"></param>
+	<param name="cycletime" value="4000"></param>
 	
 	<!-- Use Highscore feature, requires database -->
 	<param name="highscore" value="true"></param>
