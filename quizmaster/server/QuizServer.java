@@ -28,6 +28,8 @@ public class QuizServer {
 		filename = parser.getStringArgument("-file");
 		startRegistry = parser.getBooleanArgument("-registry");
 		
+		parser = null;
+		
 		if(filename == null)
 		{
 			// That's our standard quiz file

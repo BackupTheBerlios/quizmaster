@@ -22,6 +22,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import server.CliParamParser;
+
 /**
  * @author reinhard
  *
@@ -123,9 +125,12 @@ public class FileBuilder {
 	 * The main method does all the work
 	 * @param args
 	 */
-	public static void main(String[] args) {
-	
-		if(args.length!=1)
+	public static void main(String[] args) 
+	{
+		// Reading commandline arguments
+		CliParamParser parser = new CliParamParser(args, ":");
+		
+		if(parser.paramCount()!=1)
 		{
 			System.out.println("Usage:");
 			System.out.println("FileBuilder <newfile>");
@@ -133,7 +138,9 @@ public class FileBuilder {
 			return;
 		}
 		
-		filename = args[0];
+		filename = parser.getStringArgument("-file");
+		
+		parser = null;
 		
 		int id=0;
 		

@@ -209,6 +209,8 @@ public class SimpleClient implements QuizClientServices{
 			host = "localhost";
 		}
 		
+		parser = null;
+		
 		// Set the codebase for this application
 		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
 		
