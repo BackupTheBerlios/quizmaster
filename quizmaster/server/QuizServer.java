@@ -49,12 +49,6 @@ public class QuizServer {
 			parser = null;
 		}
 		
-		if(filename == null)
-		{
-			// That's our standard quiz file
-			filename = "futurama.xml";
-		}
-		
 		File f = new File(filename);
 		
 		// Error handling
