@@ -1,0 +1,15 @@
+<questions>
+	<question text="Katey Sagal starred on what show prior to Futurama?">
+		<answer correct="true">Married with Children</answer>
+		<answer>Cheers</answer>
+		<answer>The A-Team</answer>
+		<answer>The Ropers</answer>
+	</question>
+	
+	<question text="What is Fry's full name?">
+		<answer>Fry Farnsworth</answer>
+		<answer>Glen Fry</answer>
+		<answer correct="true">Philip J. Fry</answer>
+		<answer>French Fry</answer>
+	</question>
+</questions>

@@ -1,0 +1,77 @@
+#!/bin/sh
+#
+# Project: Quizmaster
+# Date: January 6th, 2005
+# Last Modified: Januar 9th, 2005
+#
+# --
+# This script is used to compile the project sources,
+# generate the RMI-Stubs, and copy the latter to the
+# network location where they are expected by the
+# Quizmaster application.
+#
+# --
+# Usage:
+# If you are part of the project and you need to use 
+# this script, create an ssh-keypair and send the 
+# public key to prechtl.reinhard@fhtw-berlin.de
+#
+# compile <option>
+# Available options:
+#	all - compile all sources
+#	server - only compile server sources
+#	client - only compile client sources
+#	messaging - only compile messaging sources
+#
+
+# Check for correct usage
+if [ $# -ne 1 ]; then
+echo "Usage: compile <option>"
+echo "Available options:"
+echo "all - compile all sources"
+echo "server - compile server sources"
+echo "client - compile client sources"
+echo "messaging - compile messaging sources"
+echo ""
+exit -1
+fi
+
+# Compile the sources
+if [ $1 = "all" ] || [ $1 = "server" ]; then
+echo "Compiling server sources..."
+javac server/*.java
+echo "Generateing server stub..."
+rmic server.QuizServant
+echo "Transfering server stub..."
+#scp server/QuizServant_Stub.class s0503919@uranus.f4.fhtw-berlin.de:public_html/classes/
+cp server/QuizServant_Stub.class /Library/WebServer/Documents/classes/
+fi
+
+if [ $1 = "all" ] || [ $1 = "client" ]; then
+echo "Compiling client sources..."
+javac client/*.java
+echo "Generating client stub..."
+rmic client.SimpleClient
+#rmic client.QuizClient
+echo "Transfering client stub..".
+#scp client/SimpleClient_Stub.class s0503919@uranus.f4.fhtw-berlin.de:public_html/classes/
+#scp client/QuizClient_Stub.class s0503919@uranus.f4.fhtw-berlin.de:public_html/classes/
+cp client/SimpleClient_Stub.class /Library/WebServer/Documents/classes/
+fi
+
+if [ $1 = "all" ] || [ $1 = "messaging" ]; then
+echo "Compiling messaging sources..."
+javac messaging/*.java
+fi
+
+if [ $1 = "applet" ]; then
+echo "Compiling applet..."
+javac client/ClientApplet.java
+rmic client.ClientApplet
+cp client/ClientApplet_Stub.class /Library/WebServer/Documents/classes/
+/Library/Java/home/bin/appletviewer file://localhost/Users/hannes/fhtw/semester6/vsys/quizmaster/Quizmaster/index.html &
+fi
+
+echo "Finished..."
+echo ""
+
