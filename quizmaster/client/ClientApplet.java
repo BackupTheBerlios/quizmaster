@@ -182,7 +182,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		if(answerNo != -1 && currentQuestion != null)
 		{
 			//set current answer so that server can fetch it later
-			this.currentAnswer = new QuizAnswer(answerNo-1, currentQuestion.getId(), this);
+			this.currentAnswer = new QuizAnswer(answerNo, currentQuestion.getId(), this);
 			try {
 				server.addAnswer(this.currentAnswer);
 			} catch (RemoteException e1) {

@@ -97,7 +97,7 @@ public class QuizQuestionFactory {
 				anArray[k]=answers.item(k);
 			}
 			
-			this.shuffle(anArray);
+			anArray = this.shuffle(anArray);
 			
 			int points = Integer.parseInt(question.getAttributes().getNamedItem("points").getNodeValue());
 			
@@ -132,25 +132,48 @@ public class QuizQuestionFactory {
 				
 			}	
 			q.setAnswers(a);
+			
+			QuizQuestionFactory.printOutReadQuestion(q);
+			
 			this.questions.add(q);
 		}
         
 		System.out.println(i+" questions read from file");
 	}
 	
+	/*
+	 * Debug method for testing the results of the shuffle method...
+	 */
+	public static void printOutReadQuestion(QuizQuestion q)
+	{
+		System.out.println(q.getQuestion());
+		
+		for(int i=0; i<4; i++)
+		{
+			System.out.println((String)q.getAnswers().elementAt(i));
+		}
+		
+		System.out.println("Correct Answer: #"+q.getCorrectAnswer());
+		System.out.println();
+	}
+	
 	/**
 	 * Method to shuffle an array
 	 * @param array
 	 */
-	private void shuffle(Object[] array) {
-		for (int lastPlace = array.length-1; lastPlace > 0; lastPlace--) {
+	private Node[] shuffle(Node[] array) 
+	{
+		for (int lastPlace = array.length-1; lastPlace > 0; lastPlace--) 
+		{
 			// Choose a random location from among 0,1,...,lastPlace.
 			int randLoc = (int)(Math.random()*(lastPlace+1));
 			// Swap items in locations randLoc and lastPlace.
-			Object temp = array[randLoc];
+			Node temp = array[randLoc];
 			array[randLoc] = array[lastPlace];
 			array[lastPlace] = temp;
 		}
+		
+		return array;
 	}
 
 	

@@ -292,7 +292,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	public void addAnswer(QuizAnswer answer)
 	{
 		System.out.println("Adding an answer");
-		answer.setAnswer(answer.getAnswer());
+		answer.setAnswer(answer.getAnswer()+1);
 		
 		this.answers.add(answer);
 	}

@@ -108,11 +108,14 @@ public class FileBuilder {
 				if(correct)
 				{
 					// HACK
-					q.setCorrectAnswer(j+1);
+					q.setCorrectAnswer(j);
 				}
 				
 			}	
 			q.setAnswers(a);
+			
+			QuizQuestionFactory.printOutReadQuestion(q);
+			
 			recentQuestions.add(q);
 		}
 	}
@@ -193,19 +196,30 @@ public class FileBuilder {
 				} catch (IOException e4) {
 					e4.printStackTrace();
 				}
+				
+				id+=1;
 			}
 		}
+		
+		// We need an InputStreamReader for reading user input
+		InputStreamReader reader = new InputStreamReader(System.in);
+		// Wrap the reader with a buffered reader.
+		BufferedReader buf_in = new BufferedReader (reader);
+		
+		System.out.print("More questions? [y/n]: ");
+		try {
+			tmp = buf_in.readLine();
+		} catch (IOException e) {
+			System.err.println("Client IOException in SimpleClient.sendMessage()");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 
-		do {
-			System.out.print("Points for this question: ");
+		while(tmp.equals("y")) {
+			System.out.print("\nPoints for this question: ");
 			String question=null;
 			String answer=null;
 			String points=null;
-			
-			// We need an InputStreamReader for reading user input
-			InputStreamReader reader = new InputStreamReader(System.in);
-			// Wrap the reader with a buffered reader.
-			BufferedReader buf_in = new BufferedReader (reader);
 			
 			try {
 				tmp = buf_in.readLine();
@@ -273,7 +287,7 @@ public class FileBuilder {
 			
 			id+=1;
 			
-			System.out.print("More questions? [y/n] ");
+			System.out.print("More questions? [y/n]: ");
 			try {
 				tmp = buf_in.readLine();
 			} catch (IOException e) {
@@ -281,8 +295,7 @@ public class FileBuilder {
 				System.err.println(e.getMessage());
 				e.printStackTrace();
 			}
-						
-		} while(tmp.equals("y"));
+		};
 		
 		try {
 			out.write("</quiz>\n");
