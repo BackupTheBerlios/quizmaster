@@ -99,12 +99,13 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	public void init() 
 	{
 		super.init();
+		
 		nickname = getParameter("nickname");
 		score = 0;
 
-		connect(getParameter("host"));
-		
 		// Register the client with the server
+		connect(getCodeBase().getHost());
+
 		try {
 			UnicastRemoteObject.exportObject(this);
 			server.register((QuizClientServices) this);
@@ -445,7 +446,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private void connect(String hostname) 
 	{
 		try {
-			String name = "//" + hostname + "/Quizmaster";
+			String name = "rmi://" + hostname + "/Quizmaster";
 			this.server = (QuizServices) Naming.lookup(name);
 		} catch (RemoteException e) {
 			System.err.println("Client RemoteException in connect(): ");

@@ -6,6 +6,7 @@ package server;
 
 import java.io.File;
 import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
@@ -40,6 +41,11 @@ public class QuizServer {
 		
 		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
 		
+		//Installing the security manager
+		System.setProperty("java.security.policy", "java.policy");
+		
+		System.setSecurityManager (new RMISecurityManager());
+		
 		try{
 			// Create RMI-registry, we assume there's none running yet...
 			System.out.println("Creating local rmiregistry...");
@@ -55,7 +61,7 @@ public class QuizServer {
 		
 		try{
 			System.out.println("trying to bind...");
-			Naming.rebind("Quizmaster", servant);
+			Naming.rebind("rmi://localhost/Quizmaster", servant);
 			System.out.println("Binding successful. ");
 			
 		}
