@@ -89,7 +89,7 @@ public class Quiz extends Thread {
 			
 			// Now wait for client answers
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(7500);
 			} catch(InterruptedException e)
 			{
 				System.err.println(e.getMessage());
