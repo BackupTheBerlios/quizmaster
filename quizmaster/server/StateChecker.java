@@ -7,6 +7,7 @@ package server;
 import java.rmi.RemoteException;
 
 import messaging.ChatMessage;
+import tools.Console;
 import client.QuizClientServices;
 
 /**
@@ -51,7 +52,7 @@ public class StateChecker extends Thread
 			// Checking if we have to start a new quiz
 			if(this.servant.getNumQuizClients() > 0 && !this.servant.isActiveQuiz())
 			{
-				System.out.println("StateChecker: Starting a new quiz");
+				Console.println("StateChecker: Starting a new quiz", Console.MSG_DEBUG);
 				this.servant.setActiveQuiz(true);
 				game = new Quiz(this.servant.getQuestionCycle());
 				game.setServant(this.servant);
@@ -79,7 +80,7 @@ public class StateChecker extends Thread
 					
 					for(int i=0; i<this.servant.getConnectedClients().size(); i++)
 					{
-						System.out.println("Sending message to client #" + i + "...");
+						Console.println("Sending message to client #" + i + "...", Console.MSG_DEBUG);
 						QuizClientServices client = (QuizClientServices) this.servant.getConnectedClients().elementAt(i);
 						try{
 							client.display(newMsg);
@@ -94,7 +95,7 @@ public class StateChecker extends Thread
 			}
 		}
 		
-		System.out.println("Servant StateChecker quitting");
+		Console.println("Servant StateChecker quitting", Console.MSG_DEBUG);
 		return;
 	}
 	

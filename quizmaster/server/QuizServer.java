@@ -10,7 +10,8 @@ import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
-import xml.IniFileReader;
+import tools.Console;
+import tools.IniFileReader;
 
 /**
  * The server class starts the server
@@ -26,6 +27,7 @@ public class QuizServer {
 		boolean startRegistry = true;
 		int questionCycle = 7500;
 		boolean useHighscore = false;
+		Console.setOutputMode(Console.MODE_ALL);
 		String dbname="";
 		String dbtable="";
 		String dbuser="";
@@ -40,6 +42,7 @@ public class QuizServer {
 			startRegistry = reader.getBooleanValue("startregistry");
 			questionCycle = reader.getIntValue("cycletime");
 			useHighscore = reader.getBooleanValue("highscore");
+			Console.setOutputModeByString( reader.getStringValue("gossip") );
 			
 			if(useHighscore)
 			{
@@ -62,6 +65,7 @@ public class QuizServer {
 			if(parser.existsParam("-quizfile")) filename = parser.getStringValue("-quizfile");
 			if(parser.existsParam("-startregistry")) startRegistry = parser.getBooleanValue("-startregistry");
 			if(parser.existsParam("-cycletime")) questionCycle = parser.getIntValue("-cycletime");
+			if(parser.existsParam("-gossip")) Console.setOutputModeByString( parser.getStringValue("-gossip"));
 			
 			parser = null;
 		}
@@ -71,7 +75,7 @@ public class QuizServer {
 		
 		if(!f.exists())
 		{
-			System.out.println("The specified file <"+filename+"> does not exist!\n");
+			Console.println("The specified file <"+filename+"> does not exist!\n", Console.MSG_NORMAL);
 			System.exit(-1);
 		}
 		
@@ -88,7 +92,8 @@ public class QuizServer {
 		{
 			try{
 				// Create RMI-registry, we assume there's none running yet...
-				System.out.println("Creating local rmiregistry");
+				//System.out.println("Creating local rmiregistry");
+				Console.println("Creating local rmiregistry", Console.MSG_NORMAL);
 				LocateRegistry.createRegistry(1099);
 				servant = new QuizServant(filename, questionCycle, useHighscore);
 				if(useHighscore)
@@ -112,9 +117,9 @@ public class QuizServer {
 		
 		try{
 			// Bind the servant to the rmi naming service
-			System.out.println("Trying to bind");
+			Console.println("Trying to bind", Console.MSG_NORMAL);
 			Naming.rebind("//localhost/Quizmaster", servant);
-			System.out.println("Binding successful. ");
+			Console.println("Binding successful.", Console.MSG_NORMAL);
 		}
 		catch(Exception e){
 			System.err.println("Exception in QuizServer.main(): ");

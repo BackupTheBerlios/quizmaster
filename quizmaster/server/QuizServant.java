@@ -11,7 +11,8 @@ import java.util.Vector;
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
 import messaging.SystemMessage;
-import xml.QuizQuestionFactory;
+import tools.Console;
+import tools.QuizQuestionFactory;
 import client.QuizClientServices;
 
 /**
@@ -20,25 +21,74 @@ import client.QuizClientServices;
  */
 public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	
+	/**
+	 * Vector of connected clients
+	 */
 	private Vector connectedClients;
+	/**
+	 * Vector of clients participating in the quiz
+	 */
 	private Vector quizClients;
+	/**
+	 * Vector of answers sent by quizclients
+	 */
 	private Vector answers;
+	/**
+	 * Vector of quiz questions
+	 */
 	private Vector questions;
+	/**
+	 * Vector of chat messages sent by clients
+	 */
 	private volatile Vector messages;
+	/**
+	 * Indicates if a quiz is active
+	 */
 	private boolean activeQuiz;
+	/**
+	 * Indicates if the server uses the highscore feature
+	 */
 	private boolean useHighscore;
-	private volatile String filename;	
+	/**
+	 * The filename of the quizfile
+	 */
+	private volatile String filename;
+	/**
+	 * The time between to questions in the quiz
+	 */
 	private int questionCycle;
+	/**
+	 * The description of the quiz
+	 */
 	private String quizDesc;
 	
+	/**
+	 * The database name for the highscore table
+	 */
 	private String dbname;
+	/**
+	 * the database table name for the highscore
+	 */
 	private String dbtable;
+	/**
+	 * The database username for the highscore
+	 */
 	private String dbuser;
+	/**
+	 * The database password for the highscore
+	 */
 	private String dbpass;
+	/**
+	 * The database host for the highscore
+	 */
 	private String dbhost;
-
+	/**
+	 * Reference to the StateChecker object
+	 */
 	private StateChecker checker;
-	private QuizQuestionFactory quizquestionfactory;
+	/**
+	 * Reference to the Highscore object
+	 */
 	private HighScore highscore;
 	
 	/**
@@ -60,11 +110,11 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.questionCycle = questionCycle;
 		this.useHighscore=useHighscore;
 		
-		this.quizquestionfactory = new QuizQuestionFactory(this.filename);
-		this.quizquestionfactory.readQuestions();
-		this.questions = this.quizquestionfactory.getQuestions();
-		this.quizDesc = this.quizquestionfactory.getQuizDesc();
-		this.quizquestionfactory = null;
+		QuizQuestionFactory quizquestionfactory = new QuizQuestionFactory(this.filename);
+		quizquestionfactory.readQuestions();
+		this.questions = quizquestionfactory.getQuestions();
+		this.quizDesc = quizquestionfactory.getQuizDesc();
+		quizquestionfactory = null;
 		
 		checker = new StateChecker();
 		checker.setServant(this);
@@ -94,7 +144,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public synchronized void stopGame()
 	{
-		System.out.println("Stopping server quiz thread");
+		Console.println("Stopping server quiz thread", Console.MSG_DEBUG);
 		this.setActiveQuiz(false);
 		
 		try {
@@ -112,7 +162,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void gameCleanUp() throws RemoteException
 	{
-		System.out.println("Cleaning up...");
+		Console.println("Cleaning up...", Console.MSG_DEBUG);
 		
 		for(int i=0; i<this.quizClients.size(); i++)
 		{
@@ -139,7 +189,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 * @throws RemoteException
 	 */
 	public void register(QuizClientServices client) throws RemoteException {
-		System.out.println("Trying to register client with username "+client.getNickname() + "...");
+		Console.println("Trying to register client with username "+client.getNickname() + "...", Console.MSG_NORMAL);
 		String nick = checkNickname(client.getNickname(), 0);
 		client.setNickname(nick);
 		
@@ -174,7 +224,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		}
 		
 		// Unregistering
-		System.out.println("Trying to unregister client...");
+		Console.println("Trying to unregister client...", Console.MSG_NORMAL);
 		
 		if(this.quizClients.contains(client))
 		{
@@ -183,7 +233,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		}
 		
 		this.connectedClients.removeElement(client);
-		System.out.println(this.connectedClients.size() + " client(s) registered");
+		Console.println(this.connectedClients.size() + " client(s) registered", Console.MSG_DEBUG);
 		
 		//send updated client list to all clients
 		sendClientList();
@@ -342,7 +392,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void addAnswer(QuizAnswer answer)
 	{
-		System.out.println("Adding an answer");
+		Console.println("Adding an answer", Console.MSG_DEBUG);
 		answer.setAnswer(answer.getAnswer());
 		
 		this.answers.add(answer);

@@ -7,13 +7,20 @@ package server;
 import java.util.StringTokenizer;
 
 /**
- *A helper class for parsing commandline arguments
- *
+ * A helper class for parsing commandline arguments
+ * Format: -name:value
+ * 
  * @author reinhard
  */
 public class CliParamParser 
 {
+	/**
+	 * Array which holds the commandline arguments
+	 */
 	private String[] args;
+	/**
+	 * The seperator between the name and the value of an option
+	 */
 	private String separator;
 	
 	/**

@@ -2,7 +2,7 @@
  * 
  * Created on 12.01.2005
  */
-package xml;
+package tools;
 
 import java.io.File;
 import java.util.Vector;
@@ -21,8 +21,17 @@ import org.w3c.dom.NodeList;
  */
 public class QuizQuestionFactory {
 	
+	/**
+	 * Vector to store question
+	 */
 	private Vector questions;
+	/**
+	 * Description of the quiz
+	 */
 	private String quizDesc;
+	/**
+	 * Filename to read questions from
+	 */
 	private String filename;
 	
 	/**
@@ -38,7 +47,7 @@ public class QuizQuestionFactory {
 		}
 		else
 		{
-			System.out.println("QuizQuestionFactory: No filename specified for reading questions!\n");
+			Console.println("QuizQuestionFactory: No filename specified for reading questions!\n", Console.MSG_NORMAL);
 			System.exit(-1);
 		}
 	}
@@ -127,10 +136,11 @@ public class QuizQuestionFactory {
     		
     		this.questions=QuizQuestionFactory.mixQuestions(qs);
     		
-		System.out.println(i+" questions read from file");
+		Console.println(i+" questions read from file", Console.MSG_DEBUG);
 	}
 	
 	/**
+	 * Access the filename the object is working on
 	 * @return Returns the filename.
 	 */
 	public String getFilename() {

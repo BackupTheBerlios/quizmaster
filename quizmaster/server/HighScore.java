@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import tools.Console;
+
 /**
  * A class for calculating Highscores
  * 
@@ -18,12 +20,25 @@ import java.util.Vector;
  */
 public class HighScore 
 {
+	/**
+	 * Vector to store highscores at runtime
+	 */
 	private Vector highscore;
+	/**
+	 * Maximum highscore entries
+	 */
 	private final int MAXENTRIES = 10;
+	/**
+	 * The lowest score in the highscores
+	 */
 	private int lowestscore = Integer.MAX_VALUE;
-	
-	// For the database
+	/**
+	 * The database table name
+	 */
 	private String dbtable;
+	/**
+	 * Database connection reference
+	 */
 	private Connection connection;
 	
 	/**
@@ -78,7 +93,7 @@ public class HighScore
 	 */
 	private void addEntry(String nick, int points)
 	{
-		System.out.println("New highscore entry for "+nick+" with "+points+" points");
+		Console.println("New highscore entry for "+nick+" with "+points+" points", Console.MSG_DEBUG);
 		Score sc = new Score(nick, points);
 		
 		if(this.highscore.isEmpty())
@@ -122,7 +137,7 @@ public class HighScore
 	 */
 	public void saveHighscore() throws SQLException
 	{
-		System.out.println("Updating highscore database");
+		Console.println("Updating highscore database", Console.MSG_DEBUG);
 		Statement s = connection.createStatement();
 
 		// Deleting all data from the database, all logic done by this class
@@ -143,7 +158,7 @@ public class HighScore
 	 */
 	private void loadHighscore() throws SQLException
 	{
-		System.out.println("Reading highscore database");
+		Console.println("Reading highscore database", Console.MSG_DEBUG);
 		Statement s = connection.createStatement();
 		ResultSet rs = s.executeQuery("select id, nick, score, date from "+this.dbtable+" order by score desc");
 		

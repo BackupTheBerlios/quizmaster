@@ -2,7 +2,7 @@
 #
 # Project: Quizmaster
 # Date: January 6th, 2005
-# Last Modified: Januar 19th, 2005
+# Last Modified: February 1st, 2005
 #
 # --
 # This script is used to compile the project sources,
@@ -19,6 +19,7 @@
 #	server - only compile server sources
 #	client - only compile client sources
 #	messaging - only compile messaging sources
+#	tools - only compile tools sources
 #
 
 # Check for correct usage
@@ -29,7 +30,7 @@ echo "all - compile all sources"
 echo "server - compile server sources"
 echo "client - compile client sources"
 echo "messaging - compile messaging sources"
-echo "xml - compile xml sources"
+echo "tools - compile tools sources"
 echo ""
 exit -1
 fi
@@ -43,9 +44,9 @@ cp messaging/*.class ~/Sites/messaging/
 fi
 
 # Compile the xml sources
-if [ $1 = "all" ] || [ $1 = "xml" ]; then
+if [ $1 = "all" ] || [ $1 = "tools" ]; then
 echo "Compiling xml sources..."
-javac xml/*.java
+javac tools/*.java
 fi
 
 # Compile the server sources

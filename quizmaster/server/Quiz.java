@@ -8,11 +8,11 @@ package server;
 import java.rmi.RemoteException;
 import java.util.Vector;
 
-import xml.QuizQuestionFactory;
-
 import messaging.QuizAnswer;
 import messaging.QuizQuestion;
 import messaging.SystemMessage;
+import tools.Console;
+import tools.QuizQuestionFactory;
 import client.QuizClientServices;
 
 /**
@@ -22,12 +22,33 @@ import client.QuizClientServices;
  */
 public class Quiz extends Thread {
 
+	/**
+	 * Reference to the servant object
+	 */
 	private QuizServant servant;
+	/**
+	 * Indicates if the quiz thread has to quit
+	 */
 	private volatile boolean quit;
+	/**
+	 * Vector of clients participating in the quiz
+	 */
 	private volatile Vector clients;
+	/**
+	 * Vector of quiz questions
+	 */
 	private Vector questions;
+	/**
+	 * Counts asked questions
+	 */
 	private int questionCounter;
+	/**
+	 * Indicates the time for answering a question
+	 */
 	private int questionCycle;
+	/**
+	 * Temporary holds a reference to a client which left the quiz
+	 */
 	private QuizClientServices tmpclient;
 
 	/**
@@ -43,18 +64,17 @@ public class Quiz extends Thread {
 		this.tmpclient=null;
 	}
 	
-	/*
-	 *  (non-Javadoc)
-	 * @see java.lang.Runnable#run()
+	/**
+	 * The threads run method
 	 */
 	public void run()
 	{
-		System.out.println("Quiz thread running");
+		Console.println("Quiz thread running", Console.MSG_DEBUG);
 		
 		this.runGame();
 		
 		// Doing some cleanup before exiting
-		System.out.println("Quiz thread terminating");
+		Console.println("Quiz thread terminating", Console.MSG_DEBUG);
 		
 		for(int i=0; i< this.clients.size(); i++)
 		{
@@ -138,7 +158,7 @@ public class Quiz extends Thread {
 	{
 		int i=0;
 		
-		System.out.println("Sending question to all clients in the game");
+		Console.println("Sending question to all clients in the game", Console.MSG_NORMAL);
 		for(i=0; i<this.clients.size(); i++)
 		{
 			QuizClientServices client = (QuizClientServices) this.clients.elementAt(i);
@@ -167,9 +187,9 @@ public class Quiz extends Thread {
 		int correctAnswers=0;
 		Vector answers = this.servant.getAnswers();
 		
-		System.out.println("Current question: " + question.getId());
-		System.out.println("Correct answer: #"+question.getCorrectAnswer());
-		System.out.println("There are "+answers.size()+" answers to be checked");
+		Console.println("Current question: " + question.getId(), Console.MSG_DEBUG);
+		Console.println("Correct answer: #"+question.getCorrectAnswer(), Console.MSG_DEBUG);
+		Console.println("There are "+answers.size()+" answers to be checked", Console.MSG_DEBUG);
 		
 		// Iterating over the available answers
 		for(int i=0; i<answers.size(); i++)
@@ -189,11 +209,11 @@ public class Quiz extends Thread {
 			// Just to be sure that the current answer is related to the current question (SimpleClient)
 			if(answer.getQuestionId()!=question.getId())
 			{
-				System.out.println("Answer from client "+ nick +" is not related to the current question");
+				Console.println("Answer from client "+ nick +" is not related to the current question", Console.MSG_NORMAL);
 				continue;
 			}
 			
-			System.out.println(nick+" answered: #"+answer.getAnswer());
+			Console.println(nick+" answered: #"+answer.getAnswer(), Console.MSG_DEBUG);
 			
 			// Check if the answer is correct
 			if(answer.getAnswer() == question.getCorrectAnswer())
@@ -212,14 +232,14 @@ public class Quiz extends Thread {
 					e.printStackTrace();
 				}
 				
-				System.out.println("Correct answer from " +nick+". "+question.getPoints()+" points added.");
+				Console.println("Correct answer from " +nick+". "+question.getPoints()+" points added.", Console.MSG_DEBUG);
 				correctAnswers+=1;
 			}
 		}
 		
 		if(correctAnswers == 0)
 		{
-			System.out.println("No correct answer");
+			Console.println("No correct answer", Console.MSG_DEBUG);
 		}
 		
 		// Reset the servant's answer vector
@@ -234,7 +254,7 @@ public class Quiz extends Thread {
 	 */
 	public QuizQuestion fetchQuestion()
 	{	
-		System.out.println("Fetching a new quiz question");
+		Console.println("Fetching a new quiz question", Console.MSG_NORMAL);
 		
 		// If the quiz is just beginning or all question have been answered, begin again
 		if(this.questionCounter>=this.questions.size())

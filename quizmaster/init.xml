@@ -20,4 +20,7 @@
 	<param name="dbuser" value="quizmaster"></param>
 	<param name="dbpass" value="quizpass"></param>
 	
+	<!-- How much information should the server send to the commandline? -->
+	<param name="gossip" value="MODE_NO_DEBUG"></param>
+	
 </config>

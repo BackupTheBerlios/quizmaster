@@ -2,12 +2,9 @@
  * 
  * Created on 16.01.2005
  */
-package xml;
+package tools;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Vector;
 
 import messaging.QuizQuestion;
@@ -25,8 +22,17 @@ import server.CliParamParser;
  */
 public class FileBuilder {
 	
+	/**
+	 * Buffer to read existing questions into
+	 */
 	private static Vector recentQuestions;
+	/**
+	 * Name of the quizfile to work with
+	 */
 	private static String filename="";
+	/**
+	 * Description of the quiz
+	 */
 	private static String quizdesc="";
 	
 	/**
@@ -141,25 +147,13 @@ public class FileBuilder {
 		recentQuestions = new Vector();
 		checkAndBackup();
 		
-		// We need an InputStreamReader for reading user input
-		InputStreamReader reader = new InputStreamReader(System.in);
-		// Wrap the reader with a buffered reader.
-		BufferedReader buf_in = new BufferedReader (reader);
-		
 		String tmp=null;
 		
 		xmlhandler.setDocType("1.0", "UTF-8", "quiz", "quiz.dtd"); 
 		
 		if(recentQuestions.size()==0)
 		{
-			System.out.print("Please enter a short description for this quiz: ");
-			try {
-				quizdesc = buf_in.readLine();
-			} catch (IOException e) {
-				System.err.println("Client IOException in SimpleClient.sendMessage()");
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
+			quizdesc = Console.readLine("Please enter a short description for this quiz: ");
 		}
 		
 		xmlhandler.appendForSaving("<quiz description=\""+quizdesc+"\">");
@@ -195,55 +189,26 @@ public class FileBuilder {
 		
 
 		// Reading more questions.... or not...
-		System.out.print("More questions? [y/n]: ");
-		try {
-			tmp = buf_in.readLine();
-		} catch (IOException e) {
-			System.err.println("Client IOException in SimpleClient.sendMessage()");
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
+		tmp = Console.readLine("More questions? [y/n]: ");
 		
 		while(tmp.equals("y")) {
-			System.out.print("\nPoints for this question: ");
+
 			String question=null;
 			String answer=null;
 			String points=null;
 			
-			try {
-				tmp = buf_in.readLine();
-				
-			} catch (IOException e) {
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
-			
+			tmp = Console.readLine("\nPoints for this question: ");
 			points = tmp;
+			tmp = Console.readLine("Enter question: ");
 			
-			System.out.print("Enter question: ");
-			try {
-				tmp = buf_in.readLine();
-			} catch (IOException e) {
-				System.err.println("Client IOException in SimpleClient.sendMessage()");
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
 			question="\t<question id=\""+id+"\" text=\""+tmp+"\" points=\""+points+"\">";
 			
 			xmlhandler.appendForSaving(question);
 
-			System.out.println();
-			System.out.println("Please enter the correct solution first!");
+			Console.println("\nPlease enter the correct solution first!", Console.MSG_ALWAYS);
 			for(int i=0; i<4; i++)
 			{
-				System.out.print("Answer #"+(i+1)+": ");
-				try {
-					tmp = buf_in.readLine();
-				} catch (IOException e) {
-					System.err.println("Client IOException in SimpleClient.sendMessage()");
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				}
+				tmp = Console.readLine("Answer #"+(i+1)+": ");
 				
 				if(i==0)
 				{
@@ -262,21 +227,13 @@ public class FileBuilder {
 			
 			id+=1;
 			
-			System.out.print("More questions? [y/n]: ");
-			try {
-				tmp = buf_in.readLine();
-			} catch (IOException e) {
-				System.err.println("Client IOException in SimpleClient.sendMessage()");
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
+			tmp=Console.readLine("More questions? [y/n]: ");
 		};
 		
 		xmlhandler.appendForSaving("</quiz>");
-		
 		xmlhandler.saveFile(filename);
 	
-		System.out.println();
+		Console.println("", Console.MSG_ALWAYS);
 		
 	}
 }

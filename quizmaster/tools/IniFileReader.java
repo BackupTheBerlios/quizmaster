@@ -2,7 +2,7 @@
  * 
  * Created on 20.01.2005
  */
-package xml;
+package tools;
 
 import java.io.File;
 import java.util.Hashtable;
@@ -18,20 +18,19 @@ import org.w3c.dom.NodeList;
  */
 public class IniFileReader 
 {
-	private String filename;
+	/**
+	 * Hashtable to store parameters
+	 */
 	private Hashtable params;
-	private File iniFile;
-	
+
 	/**
 	 * Constructor
 	 * @param filename
 	 */
 	public IniFileReader(String filename)
 	{
-		this.filename = filename;
 		this.params = new Hashtable();
-		this.openFile();
-		this.readParams();
+		this.readParams(filename);
 	}
 	
 	/**
@@ -97,49 +96,17 @@ public class IniFileReader
 	}
 	
 	/**
-	 * Method for opening an initialization file
-	 * @return TRUE if opening was successful, FALSE if not
-	 */
-	private boolean openFile()
-	{
-		this.iniFile = new File(this.filename);
-		
-		if(this.iniFile!=null)
-		{
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Close an initialization file
-	 * @return TRUE if successful, FALSE if initialization file hasn't been opened before
-	 */
-	private boolean closeFile()
-	{
-		if(this.iniFile==null)
-		{
-			return false;
-		}
-		
-		this.iniFile=null;
-		
-		return true;
-	}
-	
-	/**
 	 * Read all parameters from the configuration file
 	 *
 	 */
-	private void readParams()
+	private void readParams(String filename)
 	{
-		Document doc = XMLHandler.readDocFromFile(this.iniFile);
+		Document doc = XMLHandler.readDocFromFile(new File(filename));
 		
 		if(doc==null)
 		{
 			System.err.println("No Document constructed from XML-File");
-			System.err.println("File: "+ this.iniFile);
+			System.err.println("File: "+ filename);
 		}
 		
 		// Iterate over param elements
@@ -154,10 +121,6 @@ public class IniFileReader
 			
 			this.params.put(name, value);
 		}
-		
-		this.closeFile();
-		
-		System.out.println("#"+i+" parameters read from configuration file");
 	}
 	
 	/**

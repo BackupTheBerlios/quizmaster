@@ -2,7 +2,7 @@
  * 
  * Created on 22.01.2005
  */
-package xml;
+package tools;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,8 +30,15 @@ import org.w3c.dom.Document;
  */
 public class XMLHandler 
 {
+	/**
+	 * XML formatted string, is written to file upon saving
+	 */
 	private String xmlString;	
 	
+	/**
+	 * Constructor
+	 *
+	 */
 	public XMLHandler()
 	{
 		this.xmlString="";
@@ -45,7 +52,7 @@ public class XMLHandler
 	 */
 	public static boolean saveDocToFile(String filename, Document document)
 	{
-		System.out.println("Saving xml file "+filename);
+		Console.println("Saving xml file "+filename, Console.MSG_DEBUG);
 		
 		// Setting file object to save to
 		File xmlout = new File(filename);
@@ -87,7 +94,7 @@ public class XMLHandler
 			e2.printStackTrace();
 		}
 		
-		System.out.println("XML file saved");
+		Console.println("XML file saved", Console.MSG_DEBUG);
 		
 		return true;
 	}
@@ -123,18 +130,20 @@ public class XMLHandler
 	
 	/**
 	 * Append XML data for latter writing to file
-	 * HACK: That's only for getting started!
 	 * @param s The string to add
-	 * TODO: Find out how to construct Node's from input, appending them to a Document object
 	 */
 	public void appendForSaving(String s)
 	{
+		/*
+		 * HACK: That's only for getting started!
+		 * TODO: Find out how to construct Node's from input, appending them to a Document object
+		 */
 		this.xmlString+=s+"\n";
 	}
 	
 	/**
 	 * Save the gathered information held by the object to file
-	 * @param filename
+	 * @param filename The filename to save to
 	 * @return TRUE if everything worked fine, FALSE if not
 	 */
 	public boolean saveFile(String filename)
