@@ -2,7 +2,7 @@ grant {
     permission java.net.SocketPermission "*:1024-65535", "connect, listen, accept, resolve";
     permission java.net.SocketPermission "127.0.0.1:1024-65535", "connect, accept, listen, resolve";
     permission java.net.SocketPermission "192.168.255.255:1024-65535", "connect, accept, listen, resolve";
-    permission java.net.SocketPermission "*:80", "connect, accept, listen, resolve";
+    permission java.net.SocketPermission "192.168.2.10:80", "connect, accept, listen, resolve";
     permission java.util.PropertyPermission "user.dir", "read, write";
     permission java.util.PropertyPermission "file.encoding", "read, write";
 };

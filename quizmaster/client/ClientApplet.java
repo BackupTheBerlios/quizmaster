@@ -90,12 +90,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		this.quizMode=false;
 
 		// Register the client with the server
-		String host = getCodeBase().getHost();
-		if(host==null){
-//			host="localhost";
-		}
-		
-		connect(host);
+		connect("192.168.2.10");
 		
 		try {
 			UnicastRemoteObject.exportObject(this);
