@@ -28,7 +28,7 @@ public class CliParamParser
 	}
 	
 	/**
-	 * Parses a stringarray for the specified argument
+	 * Parses a string array for the specified argument
 	 * @param arg The argument to look for
 	 * @return Value of the specified argument, null if argument not found
 	 */
@@ -54,7 +54,7 @@ public class CliParamParser
 	}
 	
 	/**
-	 * Parses a stringarray for the specified argument
+	 * Parses a string array for the specified argument
 	 * @param arg The argument to look for
 	 * @return Value of the specified argument, null if argument not found
 	 */
