@@ -101,7 +101,7 @@
 		<answer>Do The Bartman Boy</answer>
 		<answer>Do It Again Sam Boy</answer>
 	</question>
-	<question id="17" text="He was a child actor" points="What was Moe's childhood claim to fame?">
+	<question id="17" text="What was Moe's childhood claim to fame?" points="25">
 		<answer correct="true">He was a child actor</answer>
 		<answer>He invented Duff beer</answer>
 		<answer>He was Americas youngest bartender</answer>
