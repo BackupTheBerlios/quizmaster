@@ -6,6 +6,7 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import messaging.ChatMessage;
@@ -51,7 +52,12 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		this.useHighscore=useHighscore;
 		if(this.isUseHighscore())
 		{
-			this.highscore = new HighScore();
+			try {
+				this.highscore = new HighScore();
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
 		}
 		
 		this.quizquestionfactory = new QuizQuestionFactory(this.filename);

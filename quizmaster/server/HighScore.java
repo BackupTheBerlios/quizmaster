@@ -32,7 +32,7 @@ public class HighScore
 	
 	/**
 	 * Constructor
-	 *
+	 * @throws Exception
 	 */
 	public HighScore() throws Exception
 	{
