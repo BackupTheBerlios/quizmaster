@@ -1,0 +1,14 @@
+<quiz>
+	<question id="0" text="Which of the following was made possible by computers?" points="10">
+		<answer correct="true">Brain scans</answer>
+		<answer>Vaccines</answer>
+		<answer>Heart surgery</answer>
+		<answer>X-Rays</answer>
+	</question>
+	<question id="1" text="What small, hand-held device is used to move the cursor to a specific location on the screen?" points="10">
+		<answer correct="true">A Mouse</answer>
+		<answer>A Frog</answer>
+		<answer>A Keypad</answer>
+		<answer>A Message Pad</answer>
+	</question>
+</quiz>

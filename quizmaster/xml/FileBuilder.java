@@ -129,7 +129,7 @@ public class FileBuilder {
 		// Reading commandline arguments
 		CliParamParser parser = new CliParamParser(args, ":");	
 	
-		if(parser.existsParam("-file") || parser.paramCount()!=1)
+		if(!parser.existsParam("-file") || parser.paramCount()<1)
 		{
 			System.out.println("Usage:");
 			System.out.println("FileBuilder -file:<newfile>");
