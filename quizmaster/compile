@@ -35,13 +35,11 @@ exit -1
 fi
 
 # Compile the server sources
-if [ $1 = "all" ] || [ $1 = "server" ]; then
-echo "Compiling server sources..."
-javac server/*.java
-echo "Generating server stub..."
-rmic server.QuizServant
-echo "Transfering server stub..."
-cp server/QuizServant_Stub.class /Library/WebServer/Documents/classes/
+if [ $1 = "all" ] || [ $1 = "messaging" ]; then
+echo "Compiling messaging sources..."
+javac messaging/*.java
+cp messaging/*.class /Library/WebServer/Documents/classes/
+cp messaging/*.class ~/Sites/messaging/
 fi
 
 # Compile the xml sources
@@ -51,19 +49,13 @@ javac xml/*.java
 fi
 
 # Compile the server sources
-if [ $1 = "all" ] || [ $1 = "messaging" ]; then
-echo "Compiling messaging sources..."
-javac messaging/*.java
-fi
-
-# Compile the testclient sources
-if [ $1 = "client" ]; then
-echo "Compiling client sources..."
-javac client/*.java
-echo "Generating client stub..."
-rmic client.SimpleClient
-echo "Transfering client stub.."
-cp client/SimpleClient_Stub.class /Library/WebServer/Documents/classes/
+if [ $1 = "all" ] || [ $1 = "server" ]; then
+echo "Compiling server sources..."
+javac server/*.java
+echo "Generating server stub..."
+rmic server.QuizServant
+echo "Transfering server stub..."
+cp server/QuizServant_Stub.class /Library/WebServer/Documents/classes/
 fi
 
 
@@ -77,6 +69,15 @@ echo "Transfering applet stub..."
 cp client/ClientApplet_Stub.class /Library/WebServer/Documents/classes/
 fi
 
+# Compile the testclient sources
+if [ $1 = "client" ]; then
+echo "Compiling client sources..."
+javac client/*.java
+echo "Generating client stub..."
+rmic client.SimpleClient
+echo "Transfering client stub.."
+cp client/SimpleClient_Stub.class /Library/WebServer/Documents/classes/
+fi
 
 echo "Finished..."
 echo ""
