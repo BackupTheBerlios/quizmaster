@@ -374,7 +374,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		top.add(menu);
 
 		//question
-		questionLabel = new JLabel();
+		questionLabel = new JLabel("", JLabel.CENTER);
 		questionLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		questionLabel.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
 		top.add(questionLabel);
