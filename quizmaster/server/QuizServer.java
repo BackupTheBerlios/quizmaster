@@ -61,12 +61,12 @@ public class QuizServer {
 		
 		try{
 			System.out.println("Trying to bind");
-			Naming.rebind("rmi://localhost/Quizmaster", servant);
+			Naming.rebind("//localhost/Quizmaster", servant);
 			System.out.println("Binding successful. ");
 			
 		}
 		catch(Exception e){
-			System.err.println("Exception in main: ");
+			System.err.println("Exception in QuizServer.main(): ");
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			

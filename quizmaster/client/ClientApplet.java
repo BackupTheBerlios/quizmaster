@@ -173,6 +173,31 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 				this.currentQuestion=null;
 				startGame.setText("Join game");
 			}
+			
+			// Disable the quiz UI-elements, if quiz has ended
+			if(!this.quizMode)
+			{
+				this.questionLabel.setVisible(false);
+				
+				for(int i=0; i<NR_OF_ANSWERS; i++)
+				{
+					this.answerButtons[i].setEnabled(false);
+					this.answerButtons[i].setVisible(false);
+				}
+			}
+			
+			// Disable the quiz UI-elements, if quiz has ended
+			if(this.quizMode)
+			{
+				this.questionLabel.setVisible(true);
+				
+				for(int i=0; i<NR_OF_ANSWERS; i++)
+				{
+					this.answerButtons[i].setEnabled(true);
+					this.answerButtons[i].setVisible(true);
+				}
+			}
+			
 		}
 		
 		//check if one of the answer buttons is pressed
@@ -382,9 +407,10 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		//answer buttons
 		answerButtons = new JButton[NR_OF_ANSWERS];
 		for (int i = 0; i < answerButtons.length; i++) {
-			answerButtons[i] = new JButton("Answer #" + i);
+			answerButtons[i] = new JButton("");
 			answerButtons[i].setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
 			answerButtons[i].addActionListener(this);
+			
 			//make buttons invisible at first
 			answerButtons[i].setVisible(false);
 			top.add(answerButtons[i]);

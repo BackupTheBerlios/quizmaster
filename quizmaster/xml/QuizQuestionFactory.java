@@ -68,8 +68,9 @@ public class QuizQuestionFactory {
         // Iterate over question elements
     		NodeList questions = doc.getElementsByTagName("question");
 		
+    		Vector qs = new Vector();
     		int i=0;
-		
+    		
     		for(i=0; i<questions.getLength(); i++)
 		{
 			Node question = questions.item(i);
@@ -87,14 +88,14 @@ public class QuizQuestionFactory {
 				anArray[k]=answers.item(k);
 			}
 			
-			anArray = this.shuffle(anArray);
+			anArray = (Node[]) QuizQuestionFactory.shuffle(anArray);
 			
 			int points = Integer.parseInt(question.getAttributes().getNamedItem("points").getNodeValue());
 			
 			QuizQuestion q = new QuizQuestion(questionText);
 			q.setId(questionID);
 			q.setPoints(points);
-			
+
 			Vector a = new Vector();	
 			String[] antworten = new String[4];
 			
@@ -116,17 +117,50 @@ public class QuizQuestionFactory {
 
 				if(correct)
 				{
-					// HACK
+					// QUICK HACK
 					q.setCorrectAnswer(j+1);
 				}
 				
 			}	
 			q.setAnswers(a);
 			
-			this.questions.add(q);
+			qs.add(q);
 		}
-        
+    		
+    		// We want a different question order each game, so once again, we're shuffling
+    		this.questions = QuizQuestionFactory.mixQuestions(qs);    		
+		
 		System.out.println(i+" questions read from file");
+	}
+	
+	/**
+	 * Class method which takes a vector of questions and shuffles it
+	 * @param q
+	 * @return
+	 */
+	public static Vector mixQuestions(Vector q)
+	{
+		int i=0;
+		
+		// We want a different question order each game, so once again, we're shuffling
+		QuizQuestion[] questionArray = new QuizQuestion[q.size()];
+		
+		for(i=0; i<q.size(); i++)
+		{
+			questionArray[i] = (QuizQuestion) q.elementAt(i);
+		}
+		
+		questionArray = (QuizQuestion[]) shuffle(questionArray);
+		
+		q = new Vector();
+		
+		// Now we're adding all read questions
+		for (i=0; i<questionArray.length; i++)
+		{
+			q.add(questionArray[i]);
+		}
+		
+		return q;
 	}
 	
 	/*
@@ -149,14 +183,14 @@ public class QuizQuestionFactory {
 	 * Method to shuffle an array
 	 * @param array
 	 */
-	private Node[] shuffle(Node[] array) 
+	private static Object[] shuffle(Object[] array) 
 	{
 		for (int lastPlace = array.length-1; lastPlace > 0; lastPlace--) 
 		{
 			// Choose a random location from among 0,1,...,lastPlace.
 			int randLoc = (int)(Math.random()*(lastPlace+1));
 			// Swap items in locations randLoc and lastPlace.
-			Node temp = array[randLoc];
+			Object temp = array[randLoc];
 			array[randLoc] = array[lastPlace];
 			array[lastPlace] = temp;
 		}

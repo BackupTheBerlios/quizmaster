@@ -222,7 +222,9 @@ public class Quiz extends Thread {
 		if(this.questionCounter>=this.questions.size())
 		{
 			this.questionCounter=0;
-			// TODO: Maybe mix the question vector to achieve a new question ordering
+			
+			// After one round mix questions
+			this.questions = QuizQuestionFactory.mixQuestions(this.questions);
 		}
 		
 		QuizQuestion question = (QuizQuestion) this.questions.elementAt(this.questionCounter);
