@@ -36,8 +36,7 @@ public class QuizServer {
 			
 			reader=null;
 		}
-		
-		
+
 		// Then parse the commandline arguments
 		if(CliParamParser.paramCount(args) > 1)
 		{

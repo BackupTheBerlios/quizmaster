@@ -1,7 +1,12 @@
 <!-- Configuration file for the QuizMaster application -->
 
 <config>
+	<!-- The Quizfile to read answers from -->
 	<param name="file" value="futurama.xml"></param>
+	
+	<!-- Should the server start the registry? -->
 	<param name="registry" value="true"></param>
+	
+	<!-- The Quizfile to read answers from -->
 	<param name="cycle" value="8000"></param>
 </config>
