@@ -77,10 +77,6 @@ public class CliParamParser
 					{
 						return false;
 					}
-					else
-					{
-						return true;
-					}
 				}
 			}
 		}

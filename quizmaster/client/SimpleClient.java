@@ -32,7 +32,6 @@ public class SimpleClient implements QuizClientServices{
 	private static QuizServices server=null;
 	private boolean quizMode=false;
 	private String nickname;
-	private boolean questionToAnswer;
 	private QuizQuestion currentQuestion;
 
 	/**
@@ -69,7 +68,6 @@ public class SimpleClient implements QuizClientServices{
 	 */
 	public void display(QuizQuestion question) 
 	{
-		this.questionToAnswer=true;
 		this.currentQuestion = question;
 		
 		System.out.println("About to display QuizQuestion...");
@@ -229,7 +227,7 @@ public class SimpleClient implements QuizClientServices{
 		
 		// Register the client with the server
 		try {
-			server.register((QuizClientServices) client);
+			server.register(client);
 		} catch(RemoteException e)
 		{
 			System.err.println("RemoteException in SimpleClient.main():");
@@ -271,7 +269,7 @@ public class SimpleClient implements QuizClientServices{
 					case '0':
 						
 						try {
-							server.unregister((QuizClientServices) client);
+							server.unregister(client);
 						} catch(RemoteException e)
 						{
 							System.err.println("RemoteException in SimpleClient.main():");

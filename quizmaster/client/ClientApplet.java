@@ -50,7 +50,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private static final int TOTAL_INNER_WIDTH = TOTAL_OUTER_WIDTH - 10;
 	private static final int BOTTOM_INNER_HEIGHT = 215;
 
-	private String[] answers;
 	private String nickname;
 	private Container pane;
 	private JPanel top;
@@ -66,7 +65,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private JList clientList;
 	
 	private QuizServices server;
-	private Vector clients;
 	private boolean quizMode;
 	private boolean connected;
 	private QuizQuestion currentQuestion;
@@ -96,7 +94,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 
 		try {
 			UnicastRemoteObject.exportObject(this);
-			server.register((QuizClientServices) this);
+			server.register(this);
 			initGUI();
 		} catch (RemoteException e) {
 			System.out.println(e.getMessage());
@@ -430,16 +428,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	}
 
 	/**
-	 * Sign the buttons with the quiz answers
-	 * @param v Vector of answers
-	 */
-	private void setAnswersToButtons(Vector v) {
-		for (int i = 0; i < v.size(); i++) {
-			answerButtons[i].setText((String) v.elementAt(i));
-		}
-	}
-
-	/**
 	 * Method to connect to the RMI server application
 	 * @param hostname
 	 */
@@ -472,7 +460,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private void disconnect()
 	{
 		try {
-			server.unregister((QuizClientServices) this);
+			server.unregister(this);
 			UnicastRemoteObject.unexportObject(this, true);
 			this.connected = false;
 		} catch (NoSuchObjectException e) 

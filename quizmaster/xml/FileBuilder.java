@@ -89,7 +89,6 @@ public class FileBuilder {
 			q.setPoints(points);
 			
 			Vector a = new Vector();	
-			String[] antworten = new String[4];
 			
 			//Iterate over answer elements
 			for(int j=0; j<anArray.length; j++)

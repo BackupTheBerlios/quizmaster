@@ -25,7 +25,6 @@ public class Quiz extends Thread {
 	private QuizServant servant;
 	private volatile boolean quit;
 	private volatile Vector clients;
-	private QuizQuestionFactory quizfactory;
 	private Vector questions;
 	private int questionCounter;
 	private volatile String filename;
@@ -41,11 +40,6 @@ public class Quiz extends Thread {
 		this.questionCounter = 0;
 		this.filename = filename;
 		this.setName("Quiz");
-
-//		this.quizfactory = new QuizQuestionFactory(this.filename);
-//		this.quizfactory.readQuestions();
-//		this.questions = this.quizfactory.getQuestions();
-//		this.quizfactory = null;
 	}
 	
 	/*
@@ -84,8 +78,6 @@ public class Quiz extends Thread {
 	 */
 	private synchronized void runGame()
 	{
-		int counter=0;
-		
 		while(!quit)
 		{
 			// If no more clients want to play the quiz
@@ -191,7 +183,7 @@ public class Quiz extends Thread {
 			// Check if the answer is correct
 			if(answer.getAnswer() == question.getCorrectAnswer())
 			{
-				QuizClientServices client = (QuizClientServices) answer.getSender();
+				QuizClientServices client = answer.getSender();
 				try {
 					// Updating client's score
 					client.updateScore(question.getPoints());
