@@ -54,7 +54,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	private Container pane;
 	private JPanel top;
 	private JPanel bottom;
-	private JLabel questionLabel;
+	private JTextArea questionLabel;
 	private JLabel pointsLabel;
 	private JButton[] answerButtons;
 	private JButton connectButton;
@@ -248,6 +248,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		this.currentAnswer = null;
 		//store current question in internal memory
 		this.currentQuestion = msg;
+		
 		//write question on label
 		questionLabel.setText(msg.getQuestion());
 		//write answers on buttons
@@ -260,6 +261,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			answerButtons[i].setEnabled(true);
 		}
 	}
+
 
 	/**
 	 * Handles system messages from the server. 
@@ -374,9 +376,12 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		top.add(menu);
 
 		//question
-		questionLabel = new JLabel("", JLabel.CENTER);
-		questionLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-		questionLabel.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 30));
+		questionLabel = new JTextArea();
+		questionLabel.setBackground(null);
+		questionLabel.setAlignmentX(JTextArea.CENTER_ALIGNMENT);
+		questionLabel.setLineWrap(true);
+		questionLabel.setWrapStyleWord(true);
+		questionLabel.setPreferredSize(new Dimension(LEFT_INNER_WIDTH, 45));
 		top.add(questionLabel);
 		
 		//answer buttons
