@@ -197,13 +197,18 @@ public class Quiz extends Thread {
 			QuizAnswer answer = (QuizAnswer) answers.elementAt(i);
 			
 			String nick=null;
+			QuizClientServices client=null;
 			
 			try {
-				if(answer.getSender()!=null) nick = answer.getSender().getNickname();
+				client = answer.getSender();
+				if(this.servant.getConnectedClients().contains(client)) nick = client.getNickname();
 			} catch (RemoteException e)
 			{
-				System.err.println(e.getMessage());
 				e.printStackTrace();
+			}
+			if(!this.servant.getConnectedClients().contains(client))
+			{
+				continue;
 			}
 			
 			// Just to be sure that the current answer is related to the current question (SimpleClient)
@@ -218,7 +223,7 @@ public class Quiz extends Thread {
 			// Check if the answer is correct
 			if(answer.getAnswer() == question.getCorrectAnswer())
 			{
-				QuizClientServices client = answer.getSender();
+
 				try {
 					// Updating client's score
 					client.updateScore(question.getPoints());

@@ -61,7 +61,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 * The description of the quiz
 	 */
 	private String quizDesc;
-	
 	/**
 	 * The database name for the highscore table
 	 */
@@ -189,7 +188,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 * @throws RemoteException
 	 */
 	public void register(QuizClientServices client) throws RemoteException {
-		Console.println("Trying to register client with username "+client.getNickname() + "...", Console.MSG_NORMAL);
+		Console.println("Registering client with username "+client.getNickname() + "...", Console.MSG_NORMAL);
 		String nick = checkNickname(client.getNickname(), 0);
 		client.setNickname(nick);
 		
@@ -198,9 +197,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		SystemMessage msg = new SystemMessage();
 		msg.setOpCode(SystemMessage.QUIZ_DESC);
 		msg.setBody(this.quizDesc);
-		
-		//send updated client list to all clients
-		sendClientList();
 		
 		// Send welcome message
 		client.display(msg);
@@ -224,7 +220,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		}
 		
 		// Unregistering
-		Console.println("Trying to unregister client...", Console.MSG_NORMAL);
+		Console.println("Unregistering client...", Console.MSG_NORMAL);
 		
 		if(this.quizClients.contains(client))
 		{
@@ -234,9 +230,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 		
 		this.connectedClients.removeElement(client);
 		Console.println(this.connectedClients.size() + " client(s) registered", Console.MSG_DEBUG);
-		
-		//send updated client list to all clients
-		sendClientList();
 	}
 	
 	/**
@@ -281,18 +274,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 			res[i] = ((QuizClientServices) this.connectedClients.elementAt(i)).getNickname();
 		}
 		return res;
-	}
-	
-	/**
-	 * Method for sending the list of currently connected clients
-	 * @throws RemoteException
-	 */
-	private void sendClientList() throws RemoteException
-	{
-		for(int i=0; i<connectedClients.size(); i++)
-		{
-			((QuizClientServices) connectedClients.elementAt(0)).updateClientList(this.getClientNames());
-		}
 	}
 	
 	/**

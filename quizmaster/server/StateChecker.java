@@ -21,6 +21,7 @@ public class StateChecker extends Thread
 	private volatile boolean quit=false;
 	private volatile Quiz game;
 	private QuizServant servant;
+	private int numConnectedClients;
 	
 	
 	/**
@@ -30,6 +31,7 @@ public class StateChecker extends Thread
 	public StateChecker()
 	{
 		this.setName("StateChecker");
+		this.numConnectedClients=0;
 	}
 	
 	/**
@@ -47,6 +49,21 @@ public class StateChecker extends Thread
 			{
 				System.err.println(e.getMessage());
 				e.printStackTrace();
+			}
+			
+			// Check if the list of connected clients changed
+			if(this.servant.getNumConnectedClients()!=this.numConnectedClients)
+			{
+				for(int i=0; i<this.servant.getNumConnectedClients(); i++)
+				{
+					QuizClientServices client = (QuizClientServices) this.servant.getConnectedClients().elementAt(i);
+					try {
+						client.updateClientList(this.servant.getClientNames());
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
+				}
+				this.numConnectedClients=this.servant.getNumConnectedClients();
 			}
 						
 			// Checking if we have to start a new quiz
@@ -75,12 +92,15 @@ public class StateChecker extends Thread
 				{
 					ChatMessage newMsg = (ChatMessage) this.servant.getMessages().elementAt(j);
 					
-					// DEBUG: Constructing a new message without sender, to see if that's the problem...
-					//ChatMessage msg =  new ChatMessage(newMsg.getBody());
-					
 					for(int i=0; i<this.servant.getConnectedClients().size(); i++)
 					{
-						Console.println("Sending message to client #" + i + "...", Console.MSG_DEBUG);
+						Console.println("Sending message", Console.MSG_NORMAL);
+						try {
+							Console.println("User " + ((QuizClientServices) this.servant.getConnectedClients().elementAt(i)).getNickname(), Console.MSG_DEBUG);
+						} catch (RemoteException e1) {
+							e1.printStackTrace();
+						}
+						Console.println("Message: "+newMsg.getBody(), Console.MSG_DEBUG);
 						QuizClientServices client = (QuizClientServices) this.servant.getConnectedClients().elementAt(i);
 						try{
 							client.display(newMsg);
@@ -129,5 +149,19 @@ public class StateChecker extends Thread
 	 */
 	public Quiz getGame() {
 		return game;
+	}
+	
+	/**
+	 * @return Returns the numConnectedClients.
+	 */
+	public int getNumConnectedClients() {
+		return numConnectedClients;
+	}
+	
+	/**
+	 * @param numConnectedClients The numConnectedClients to set.
+	 */
+	public void setNumConnectedClients(int numConnectedClients) {
+		this.numConnectedClients = numConnectedClients;
 	}
 }
