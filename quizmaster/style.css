@@ -1,0 +1,70 @@
+<style type="text/css">
+<!--
+body { padding: 0px; margin: 0px; }
+a:hover { text-decoration: underline}
+img {border: 0px solid #666666; border-color:" #FFFFFF ";} 
+div, td {font-family: Verdana, Arial, Helvetica, sans-serif;}
+a {  font-weight: bold; color: #000000; text-decoration: none}
+
+/* Generall Layout*/
+.maincolumn {padding: 5px;}
+.rightcolumn, .leftcolumn {width: 150px;}
+
+/* Alertbox */
+.alertboxarea { float:right;  margin:0 0 0 10px;}
+.alertbox {width:150px; border:1px solid; }
+.alertboxtitel {color: #FFF; font-size: 11px; font-weight: bold ; text-transform: uppercase; text-indent: 2px}
+
+/* Startseite*/
+.start_arthead {color: #000000; font-size: 12px; font-weight: bold}
+.start_pic {float:left; padding:5 20 10 0px;}
+.starttext {margin-left: 110px;}
+.spaltelinks {padding-right: 5px; vertical-align:top;}
+.spalterechts { padding-left: 5px; vertical-align:top; width: 66%;}
+
+/* UserProfile */ 
+.profile_pic {float:left; clear:right; padding:0 10 0 0px;}
+.formularbox {padding: 5px; font-size: 11px; line-height:25px;}
+
+/* Alles fuer Boxen mit Rand */
+.box {padding:0px; border:1px solid #666;}
+.boxtext {padding: 5px; font-size: 11px;}
+.boxheadl {margin: 0 0 5 0px; color: #FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold ; background-color: #666; text-transform: uppercase; text-indent: 2px}
+
+/* Alternierende Zeilenfarben */
+.darkcell {background-color:#DDD; padding:3px;}
+.lightcell {background-color:#FFF; padding:3px;}
+
+/* Links im unteren Bereich von Boxen */
+.link {text-align:right; color: #000; font-size: 11px; font-weight: bold; margin: 3px; }
+
+.phototableleft {margin-right: 20px; margin-bottom:5px; margin-top: 15px;}
+.phototableright {margin-left: 20px; margin-bottom:5px; margin-top: 15px;}
+.boxheadllight {font-size: 10px; font-weight: bold ; background-color: #999; text-transform: uppercase; text-indent: 2px}
+
+/* Navi */
+.navi {width: 150px; background-color: #FFF;}
+.naviboxlight {margin: 5 0 3 0px; color: #FFFFFF;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold ; background-color: #999; text-transform: uppercase; text-indent: 2px}
+.navilink {padding: 0 0 3 0px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; font-size: 11px; font-weight: bold;}
+.navitext {padding: 0 0 3 0px; font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; font-size: 11px;}
+
+/* Text und Format */
+.topleiste {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #FFFFFF; text-transform: uppercase}
+.topleisteleft { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 7pt; color: #FFFFFF}
+.body {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 11px; font-weight: normal; line-height: 14px;}
+.artheadl { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 16px; padding: 10 0 10 0px; font-weight: bold}
+.subheadl { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 11px; font-weight: bold }
+//.tableheader { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold ; background-color: #EEEEEE; text-transform: uppercase; text-indent: 0px}
+.artdetails { font-family: Verdana, Arial, Helvetica, sans-serif; color: #666; font-size: 10px; font-style: italic}
+.prevheadl { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 10px; font-weight: bold }
+.photo_caption { font-family: Verdana, Arial, Helvetica, sans-serif; color: #666; font-size: 11px; }
+
+.menulink { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 11px; font-weight: bold }
+.aeltere {  font-style: italic; text-align: right; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px}
+.intro { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 11px; font-weight: bold }
+.func {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #000; font-size: 6pt; font-weight: normal }
+.highlight { color: red}
+.boxhighlight {background-color: #DDDDDD}
+
+.ausgegraut {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #666666; font-size: 11px; font-weight: normal }
+ 	
