@@ -49,8 +49,7 @@ public class StateChecker extends Thread
 			{
 				game.setQuit(true);
 				this.servant.stopGame();
-			}
-				
+			}				
 		}
 		
 		System.out.println("Servant StateChecker quitting");

@@ -40,57 +40,33 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		ActionListener {
 
 	private static final int NR_OF_ANSWERS = 4;
-
 	private static final int LEFT_INNER_WIDTH = 580;
-
 	private static final int RIGHT_INNER_WIDTH = 190;
-
 	private static final int TOTAL_OUTER_WIDTH = 790;
-
 	private static final int TOTAL_INNER_WIDTH = TOTAL_OUTER_WIDTH - 10;
-
 	private static final int BOTTOM_INNER_HEIGHT = 215;
 
-	private QuizServices server;
-
-	private Vector clients;
-
 	private String[] answers;
-
 	private String nickname;
-
 	private Container pane;
-
 	private JPanel top;
-
 	private JPanel bottom;
-
 	private JLabel questionLabel;
-	
 	private JLabel pointsLabel;
-
 	private JButton[] answerButtons;
-
 	private JButton connectButton;
-	
 	private JButton startGame;
-
 	private JScrollPane clientListPane;
-
 	private JTextArea chatArea;
-
 	private JTextField input;
-
 	private JList clientList;
 	
+	private QuizServices server;
+	private Vector clients;
 	private boolean quizMode;
-	
 	private boolean connected;
-	
 	private QuizQuestion currentQuestion;
-	
 	private QuizAnswer currentAnswer;
-	
 	private int score;
 
 	/**
@@ -101,7 +77,14 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		super.init();
 		
 		nickname = getParameter("nickname");
+		
+		if(nickname==null)
+		{
+			nickname="testuser";
+		}
+		
 		score = 0;
+		this.quizMode=false;
 
 		// Register the client with the server
 		connect(getCodeBase().getHost());
@@ -140,11 +123,10 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 				try {
 					server.takeMessage(message);
 				} catch (Exception re) {
-					System.out.println("Exception caught in actionPerformed: "	+ re.getMessage());
+					System.err.println("Exception caught in actionPerformed: "	+ re.getMessage());
 					re.printStackTrace();
 				}
 				
-				//clear input line
 				input.setText("");
 			}
 		}
@@ -158,8 +140,8 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 				disconnect();
 			}
 			//otherwise, re-init applet
-			else{
-				System.out.println("initializing...");
+			else
+			{
 				init();
 			}
 		}
@@ -167,22 +149,39 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		//user clicks join game button
 		if(e.getSource() == startGame)
 		{
-			try{
-				server.joinGame(this);
-				pointsLabel.setVisible(true);
-				startGame.setEnabled(false);
-			}catch(RemoteException re){
-				System.err.println(re.getMessage());
-				re.printStackTrace();
+			if(!this.quizMode)
+			{
+				try{
+					this.quizMode = server.joinGame(this);
+					pointsLabel.setVisible(true);
+					startGame.setText("End game");
+				}catch(RemoteException re){
+					System.err.println(re.getMessage());
+					re.printStackTrace();
+				}
+			}
+			else
+			{
+				try{
+					this.setQuizMode(this.server.requestLeaveGame(this));			
+				} catch(RemoteException e1)
+				{
+					System.err.println(e1.getMessage());
+					e1.printStackTrace();
+				}
+				
+				this.currentQuestion=null;
+				startGame.setText("Join game");
 			}
 		}
 		
 		//check if one of the answer buttons is pressed
 		List buttons =  Arrays.asList(answerButtons);
 		int answerNo = buttons.indexOf(e.getSource());
-		if(answerNo != -1 && currentQuestion != null)
-		{
-			//set current answer so that server can fetch it later
+		
+		if(answerNo != -1 && currentQuestion!=null && this.quizMode==true)
+		{			
+			// Produce an answer
 			this.currentAnswer = new QuizAnswer(answerNo, currentQuestion.getId(), this);
 			try {
 				server.addAnswer(this.currentAnswer);
@@ -357,12 +356,9 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		connectButton = new JButton("Disconnect");
 		connectButton.addActionListener(this);
 		menu.add(connectButton);
-		startGame = new JButton("Start/Join Quiz");
+		startGame = new JButton("Join game");
 		startGame.addActionListener(this);
-		if(server.isActiveQuiz()){
-			startGame.setVisible(false);
-		}
-		menu.add(startGame);
+		menu.add(startGame);		
 		
 		//spacer
 		JLabel spacer = new JLabel();
