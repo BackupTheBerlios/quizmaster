@@ -41,7 +41,7 @@ public class StateChecker extends Thread
 		{
 			// Sending the state checker thread to sleep for 500ms
 			try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} catch (InterruptedException e)
 			{
 				System.err.println(e.getMessage());
@@ -75,14 +75,14 @@ public class StateChecker extends Thread
 					ChatMessage newMsg = (ChatMessage) this.servant.getMessages().elementAt(j);
 					
 					// DEBUG: Constructing a new message without sender, to see if that's the problem...
-					ChatMessage msg =  new ChatMessage(newMsg.getBody());
+					//ChatMessage msg =  new ChatMessage(newMsg.getBody());
 					
 					for(int i=0; i<this.servant.getConnectedClients().size(); i++)
 					{
 						System.out.println("Sending message to client #" + i + "...");
 						QuizClientServices client = (QuizClientServices) this.servant.getConnectedClients().elementAt(i);
 						try{
-							client.display(msg);
+							client.display(newMsg);
 						} catch(RemoteException e)
 						{
 							e.printStackTrace();

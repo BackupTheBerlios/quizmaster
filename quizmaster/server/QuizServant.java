@@ -96,7 +96,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	 */
 	public void takeMessage(ChatMessage msg)  throws RemoteException 
 	{
-		msg.setNickname(msg.getSender().getNickname());
 		this.messages.add(msg);
 	}
 	
@@ -173,8 +172,8 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	public String[] getClientNames() throws RemoteException
 	{
 		String[] res = new String[connectedClients.size()];
-		for(int i=0; i<connectedClients.size(); i++){
-			res[i] = ((QuizClientServices) connectedClients.elementAt(i)).getNickname();
+		for(int i=0; i<this.connectedClients.size(); i++){
+			res[i] = ((QuizClientServices) this.connectedClients.elementAt(i)).getNickname();
 		}
 		return res;
 	}
@@ -187,7 +186,7 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	{
 		for(int i=0; i<connectedClients.size(); i++)
 		{
-			((QuizClientServices) connectedClients.elementAt(0)).updateClientList(getClientNames());
+			((QuizClientServices) connectedClients.elementAt(0)).updateClientList(this.getClientNames());
 		}
 	}
 	

@@ -125,7 +125,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		if (e.getSource() == input) {
 			if (!"".equals(input.getText())) {
 				ChatMessage message = new ChatMessage(input.getText());
-				message.setSender(this);
+				//message.setSender(this);
 				message.setNickname(this.nickname);
 				try {
 					server.takeMessage(message);
@@ -234,15 +234,8 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 */
 	public void display(ChatMessage msg) throws RemoteException
 	{
-		System.out.println(msg.getBody());
-		System.err.println(msg.getBody());
-//		try 
-//		{
-			chatArea.append("\n<" + msg.getNickname() + "> " + msg.getBody());
-			chatArea.setCaretPosition(chatArea.getDocument().getLength());
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
+		chatArea.append("\n<" + msg.getNickname() + "> " + msg.getBody());
+		chatArea.setCaretPosition(chatArea.getDocument().getLength());
 	}
 
 	/*
