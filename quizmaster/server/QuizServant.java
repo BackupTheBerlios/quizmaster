@@ -319,15 +319,6 @@ public class QuizServant extends UnicastRemoteObject implements QuizServices {
 	{
 		if(this.checker.isAlive())
 		{
-//			if(this.isUseHighscore())
-//			{
-//				try {
-//					this.highscore.processScore(client.getNickname(), client.getScore());
-//				} catch (RemoteException e) {
-//					e.printStackTrace();
-//				}
-//			}
-			
 			this.checker.getGame().removeClient(client);
 			return false;
 		}

@@ -22,12 +22,14 @@ import java.util.Vector;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import messaging.ChatMessage;
 import messaging.QuizAnswer;
@@ -228,7 +230,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	 * Invokes the text of a ChatMessage to be displayed in the chat area.
 	 */
 	public void display(ChatMessage msg) throws RemoteException
-	{
+	{		
 		chatArea.append("\n<" + msg.getNickname() + "> " + msg.getBody());
 		chatArea.setCaretPosition(chatArea.getDocument().getLength());
 	}
@@ -265,13 +267,13 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	{
 		if(msg.getOpCode() == SystemMessage.RIGHT_ANSWER)
 		{
-			chatArea.append("\n<Quizmaster> " + msg.getBody());
+			chatArea.append("\n+++ " + msg.getBody());
 			chatArea.setCaretPosition(chatArea.getDocument().getLength());
 		}
 		
 		if(msg.getOpCode() == SystemMessage.QUIZ_DESC)
 		{
-			chatArea.append("\n<Quizmaster> " + msg.getBody());
+			chatArea.append("\n+++ " + msg.getBody());
 			chatArea.setCaretPosition(chatArea.getDocument().getLength());
 		}
 	}

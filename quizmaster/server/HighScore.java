@@ -65,6 +65,7 @@ public class HighScore
 		if(points!=0 && (points>=this.lowestscore || this.highscore.size()<MAXENTRIES))
 		{
 			this.addEntry(nick, points);
+			return true;
 		}
 		
 		return false;
@@ -96,7 +97,7 @@ public class HighScore
 				{
 					this.highscore.removeElementAt(i);
 					this.highscore.add(sc);
-					continue;
+					break;
 				}
 			}
 		}

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE quiz SYSTEM "quiz.dtd">
 <quiz description="Welcome to the Futurama trivia!">
-	<question id="0" text="Who is Zapp Brannigan's sidekick?" points="10">
+	<question id="0" text="Who is Zapp Brannigan's sidekick?" points="15">
 		<answer>Pif</answer>
 		<answer>Zif</answer>
 		<answer correct="true">Kif</answer>
 		<answer>Mif</answer>
 	</question>
-	<question id="1" text="In 'Hell is Other Robots', what group's heads perform a concert?" points="10">
+	<question id="1" text="In 'Hell is Other Robots', what group's heads perform a concert?" points="15">
 		<answer correct="true">Beastie Boys</answer>
 		<answer>The Eagles</answer>
 		<answer>Backstreet Boys</answer>
@@ -31,97 +31,97 @@
 		<answer>Amy</answer>
 		<answer>Zapp Brannigan</answer>
 	</question>
-	<question id="5" text="Which actress from 'The Simpsons' provides voices for many bit characters on 'Futurama?'" points="10">
+	<question id="5" text="Which actress from 'The Simpsons' provides voices for many bit characters on 'Futurama?'" points="25">
 		<answer>Julie Kavner</answer>
 		<answer correct="true">Tress MacNeille</answer>
 		<answer>Maggie Roswell</answer>
 		<answer>Marcia Wallace</answer>
 	</question>
-	<question id="6" text="Katey Sagal starred on what show prior to Futurama?" points="10">
+	<question id="6" text="Katey Sagal starred on what show prior to Futurama?" points="20">
 		<answer correct="true">Married with Children</answer>
 		<answer>Cheers</answer>
 		<answer>The A-Team</answer>
 		<answer>The Ropers</answer>
 	</question>
-	<question id="7" text="What is Fry's full name?" points="5">
+	<question id="7" text="What is Fry's full name?" points="10">
 		<answer>Fry Farnsworth</answer>
 		<answer>Glen Fry</answer>
 		<answer correct="true">Philip J. Fry</answer>
 		<answer>French Fry</answer>
 	</question>
-	<question id="8" text="Which career was Fry orignally assigned to after being unfrozen?" points="10">
+	<question id="8" text="Which career was Fry assigned to after being unfrozen?" points="10">
 		<answer>Space pilot</answer>
 		<answer>Science officer</answer>
 		<answer>Vice chairman of Planet Express</answer>
 		<answer correct="true">Delivery boy</answer>
 	</question>
-	<question id="9" text="What gas does Flexo use to play a trick on Fry in 'The Lesser of Two Evils'?" points="40">
+	<question id="9" text="What gas does Flexo use to play a trick on Fry in 'The Lesser of Two Evils'?" points="30">
 		<answer correct="true">Chlorine</answer>
 		<answer>Carbon Dioxde</answer>
 		<answer>Tear Gas</answer>
 		<answer>Sarin</answer>
 	</question>
-	<question id="10" text="Which of these Fighters did Bender NOT fight in the ring?" points="30">
+	<question id="10" text="Which of these Fighters did Bender not challenge in the ring?" points="30">
 		<answer>The Chain Smoker</answer>
 		<answer correct="true">The Masked Unit</answer>
 		<answer>Destructor</answer>
 		<answer>The Incredible Hulk</answer>
 	</question>
-	<question id="11" text="Who is Fry related to?" points="5">
+	<question id="11" text="Who is Fry related to?" points="10">
 		<answer correct="true">Professor Farnsworth</answer>
 		<answer>Amy Wong</answer>
 		<answer>Zapp Brannigan</answer>
 		<answer>President McNeal</answer>
 	</question>
-	<question id="12" text="What celebration was going on when Fry fell into the cryogenic chamber?" points="5">
+	<question id="12" text="What celebration was going on when Fry fell into the cryogenic chamber?" points="10">
 		<answer correct="true">New Year's Eve</answer>
 		<answer>Halloween</answer>
 		<answer>Easter</answer>
 		<answer>Christmas</answer>
 	</question>
-	<question id="13" text="Fry is his own grandfather. Which episode tells this story?" points="20">
+	<question id="13" text="Fry is his own grandfather. Which episode tells this story?" points="30">
 		<answer correct="true">Roswell that Ends Well</answer>
 		<answer>Spanish Fry</answer>
 		<answer>The Lesser of two Evils</answer>
 		<answer>A clone of my own</answer>
 	</question>
-	<question id="14" text="What's one of Professor Farnsworth inventions?" points="15">
+	<question id="14" text="What's one of Professor Farnsworth inventions?" points="25">
 		<answer correct="true">The Mutant Atomic Supermen</answer>
 		<answer>The Harlem Globetrotters</answer>
 		<answer>Swan boats</answer>
 		<answer>The Republican Party</answer>
 	</question>
-	<question id="15" text="How old is Bender?" points="20">
+	<question id="15" text="How old is Bender?" points="25">
 		<answer correct="true">1057 years (head), 4 years (body)</answer>
 		<answer>Nobody knows, he won't tell</answer>
 		<answer>7 years</answer>
 		<answer>15 years</answer>
 	</question>
-	<question id="16" text="What is Benders full name?" points="5">
+	<question id="16" text="What is Benders full name?" points="20">
 		<answer correct="true">Bender Bending Rodriguez</answer>
 		<answer>Dan Bender</answer>
 		<answer>Flexo Bender</answer>
 		<answer>Bender</answer>
 	</question>
-	<question id="17" text="What's a well known tradition on Nibblers homeworld?" points="10">
-		<answer correct="true">The Feast of a thousand hams</answer>
+	<question id="17" text="What's a well known tradition on Nibblers homeworld?" points="20">
+		<answer correct="true">The Feast of a thousand beasts</answer>
 		<answer>The great brain bashing</answer>
 		<answer>Dark matter party</answer>
 		<answer>The puppy feast</answer>
 	</question>
-	<question id="18" text="How many stars is Zapp Brannigan decorated with?" points="15">
+	<question id="18" text="How many stars is Zapp Brannigan decorated with?" points="20">
 		<answer correct="true">25</answer>
 		<answer>Not even one</answer>
 		<answer>18</answer>
 		<answer>3</answer>
 	</question>
-	<question id="19" text="Which role does Morbo have in Futurama?" points="10">
+	<question id="19" text="Which role does Morbo have in Futurama?" points="15">
 		<answer correct="true">Newsreader</answer>
 		<answer>Alien invader</answer>
 		<answer>Vice-President of the Earth</answer>
 		<answer>Santa Claus</answer>
 	</question>
-	<question id="20" text="What's Scruffy's regular phrase?" points="15">
+	<question id="20" text="What's Scruffy's regular phrase?" points="20">
 		<answer correct="true">I'm Scruffy... The Janitor</answer>
 		<answer>Whoaa! My hand is huge!</answer>
 		<answer>He's picking his nose, get him!</answer>
@@ -133,19 +133,19 @@
 		<answer>1983</answer>
 		<answer>Unknown</answer>
 	</question>
-	<question id="22" text="Who's iHawk?" points="40">
+	<question id="22" text="Who's iHawk?" points="35">
 		<answer correct="true">A human-sized blue robot who works for the DOOP army</answer>
 		<answer>Not a Futurama character</answer>
 		<answer>Planet Express Janitor</answer>
 		<answer>An invention by Professor Farnsworth</answer>
 	</question>
-	<question id="23" text="When did Futurama first air?" points="20">
+	<question id="23" text="When did Futurama first air?" points="25">
 		<answer correct="true">28th March 1999</answer>
 		<answer>31st December 1999</answer>
 		<answer>4th May 2000</answer>
 		<answer>17th August 1998</answer>
 	</question>
-	<question id="24" text="How many Futurama episodes are there?" points="20">
+	<question id="24" text="How many Futurama episodes are there?" points="25">
 		<answer correct="true">72 episodes</answer>
 		<answer>153 episodes</answer>
 		<answer>40 episodes</answer>
@@ -163,16 +163,82 @@
 		<answer>Leela</answer>
 		<answer>Lrrr</answer>
 	</question>
-	<question id="27" text="How many times do the aliens destroy New York?" points="20">
+	<question id="27" text="How many times do the aliens destroy New York?" points="25">
 		<answer correct="true">Twice</answer>
 		<answer>Once</answer>
 		<answer>Thrice</answer>
 		<answer>Zero times</answer>
 	</question>
-	<question id="28" text="What's the last sign visible during the opening theme?" points="25">
+	<question id="28" text="What's the last sign visible during the opening theme?" points="35">
 		<answer correct="true">Robot Wash</answer>
 		<answer>Bachelor Chow</answer>
 		<answer>Slurm</answer>
 		<answer>Applied Cryogenics</answer>
+	</question>
+	<question id="29" text="What is the name of the video game Fry is playing at the beginning of 'Space Pilot 3000'?" points="45">
+		<answer correct="true">Monkey Fracas Jr.</answer>
+		<answer>Zak Mckracken</answer>
+		<answer>Space Invaders</answer>
+		<answer>Space Quest 1</answer>
+	</question>
+	<question id="30" text="What day and time is it, when Fry leaves his work to make the fateful delivery?" points="25">
+		<answer correct="true">December 31st, 1999, at 11:41 PM</answer>
+		<answer>January 1st, 2000, at 0:00 AM</answer>
+		<answer>December 31st, 2000, at 11:41 PM</answer>
+		<answer>February 3rd, 2001, at 3:13 PM</answer>
+	</question>
+	<question id="31" text="Where does Fry work in old New York?" points="15">
+		<answer correct="true">Panucci's Pizza</answer>
+		<answer>Burger King</answer>
+		<answer>Luigi's Spaghetteria</answer>
+		<answer>An amusement park</answer>
+	</question>
+	<question id="32" text="What slogan is written on most pizza boxes appearing in Futurama?" points="20">
+		<answer correct="true">Please do not tip delivery boy!</answer>
+		<answer>Tell you neighbor!</answer>
+		<answer>Pizza please!</answer>
+		<answer>Eat! More! Pizza!</answer>
+	</question>
+	<question id="33" text="What's the name of Fry's ex-girlfriend?" points="20">
+		<answer correct="true">Michelle</answer>
+		<answer>Andy</answer>
+		<answer>Anna</answer>
+		<answer>Elsa</answer>
+	</question>
+	<question id="34" text="When was the Applied Cryogenics lab's last power failure in the first episode?" points="35">
+		<answer correct="true">1997</answer>
+		<answer>1999</answer>
+		<answer>1991</answer>
+		<answer>The didn't have one, yet!</answer>
+	</question>
+	<question id="35" text="What show dows Calculon star in frequently?" points="20">
+		<answer correct="true">All My Circuits</answer>
+		<answer>Married with Bots</answer>
+		<answer>Calculon's Seven Days</answer>
+		<answer>The unknown stuntman</answer>
+	</question>
+	<question id="36" text="How old is Calculon?" points="40">
+		<answer correct="true">1001</answer>
+		<answer>14</answer>
+		<answer>283</answer>
+		<answer>Nobody knows</answer>
+	</question>
+	<question id="37" text="What is the opening theme promotion in 'Space Pilot 3000'?" points="25">
+		<answer correct="true">In Color!</answer>
+		<answer>Playing in the future!</answer>
+		<answer>Handmade lightyears away!</answer>
+		<answer>Made for kids, by kids!</answer>
+	</question>
+	<question id="38" text="What's Zoidbergs full name?" points="20">
+		<answer correct="true">John Zoidberg</answer>
+		<answer>Rupert Zoidberg</answer>
+		<answer>Prawnee Zoidberg</answer>
+		<answer>Zoidberg Maggot</answer>
+	</question>
+	<question id="39" text="What's Leela's full name?" points="25">
+		<answer correct="true">Turanga Leela</answer>
+		<answer>Leela</answer>
+		<answer>Leela W.S. Ever</answer>
+		<answer>Leela Wong</answer>
 	</question>
 </quiz>
