@@ -19,6 +19,7 @@ import messaging.ChatMessage;
 import messaging.QuizAnswer;
 import messaging.QuizQuestion;
 import messaging.SystemMessage;
+import server.CliParamParser;
 import server.QuizServices;
 
 /**
@@ -198,6 +199,16 @@ public class SimpleClient implements QuizClientServices{
 	 */
 	public static void main(String[] args) {
 		
+		CliParamParser parser = new CliParamParser(args);
+		
+		String host = null;
+		host = parser.getStringArgument("-host");
+		
+		if(host==null)
+		{
+			host = "localhost";
+		}
+		
 		// Set the codebase for this application
 		System.setProperty("java.rmi.server.codebase", "http://localhost/classes/");
 		
@@ -212,7 +223,7 @@ public class SimpleClient implements QuizClientServices{
 		}
 		
 		// Connect to localhost for testing
-		client.connect("localhost");
+		client.connect(host);
 		
 		// Register the client with the server
 		try {

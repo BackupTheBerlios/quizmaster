@@ -92,7 +92,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		this.quizMode=false;
 
 		// Register the client with the server
-		connect(getCodeBase().getHost());
+		connect("uranus.f4.fhtw-berlin.de");
 
 		try {
 			UnicastRemoteObject.exportObject(this);
@@ -233,13 +233,13 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 	{
 		System.out.println(msg.getBody());
 		System.err.println(msg.getBody());
-		try 
-		{
-			chatArea.append("\n<" + msg.getSender().getNickname() + "> " + msg.getBody());
+//		try 
+//		{
+			chatArea.append("\n<" + "nick" + "> " + msg.getBody());
 			chatArea.setCaretPosition(chatArea.getDocument().getLength());
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
+//		} catch (RemoteException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	/*
