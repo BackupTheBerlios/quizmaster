@@ -92,7 +92,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		this.quizMode=false;
 
 		// Register the client with the server
-		connect("192.168.2.10");
+		connect(getCodeBase().getHost());
 
 		try {
 			UnicastRemoteObject.exportObject(this);
@@ -158,7 +158,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 				try{
 					this.quizMode = server.joinGame(this);
 					pointsLabel.setVisible(true);
-					startGame.setText("End game");
+					startGame.setText("Leave game");
 				}catch(RemoteException re){
 					System.err.println(re.getMessage());
 					re.printStackTrace();
@@ -191,7 +191,7 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 				}
 			}
 			
-			// Disable the quiz UI-elements, if quiz has ended
+			// Show the quiz UI-elements, if quiz has started
 			if(this.quizMode)
 			{
 				this.questionLabel.setVisible(true);
