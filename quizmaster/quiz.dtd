@@ -1,9 +1,9 @@
-<!ELEMENT quiz(question*)>
+<!ELEMENT quiz (question*)>
 
-<!ELEMENT question(answer*)>
-<!ATTLIST question 	id CDATA 
+<!ELEMENT question (answer*)>
+<!ATTLIST question 	id CDATA ''
 					text CDATA #REQUIRED
-					points CDATA>
+					points CDATA ''>
 					
-<!ELEMENT answer(#PCDATA)>
-<!ATTLIST answer	correct CDATA>
+<!ELEMENT answer (#PCDATA)>
+<!ATTLIST answer correct CDATA ''>
