@@ -90,6 +90,12 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		this.quizMode=false;
 
 		// Register the client with the server
+		String host = getCodeBase().getHost();
+		if(host==null)
+		{
+			host="localhost";
+		}
+		
 		connect(getCodeBase().getHost());
 
 		try {
@@ -436,6 +442,9 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 		try {
 			String name = "rmi://" + hostname + "/Quizmaster";
 			this.server = (QuizServices) Naming.lookup(name);
+			this.connected = true;
+			System.out.println("Successfully connected to " + hostname);
+			System.out.println("");
 		} catch (RemoteException e) {
 			System.err.println("Client RemoteException in connect(): ");
 			System.err.println(e.getMessage());
@@ -449,9 +458,6 @@ public class ClientApplet extends JApplet implements QuizClientServices,
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-		this.connected = true;
-		System.out.println("Successfully connected to " + hostname);
-		System.out.println("");
 	}
 	
 	/**
