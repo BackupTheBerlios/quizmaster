@@ -4,21 +4,30 @@ package
 	import flash.events.*;
 	import flash.net.*;
 	
+	import mx.collections.ArrayCollection;
+	
 	[SWF(width="800", height="800", backgroundColor="#00ffff", frameRate="30")]
 	
 	public class TourBus extends Sprite
 	{
-		var data:XML;
-		var tours:ArrayCollection;
+		private var data:XML;
+		private var tours:ArrayCollection;
+		private var callback:Function;
 		
-		public function TourBus(){
+		public function TourBus(callback:Function){
 			tours = new ArrayCollection();
+			this.callback = callback;
+		}		
+		
+		public function loadTours():void{
 			var loader:URLLoader = new URLLoader();
             configureListeners(loader);
             var request:URLRequest = new URLRequest("clap.xml");
+//            loader.addEventListener(Event.COMPLETE, callback);
             loader.load(request);
-		}		
-		
+ 		}
+            
+            
 		public function getTours():ArrayCollection {
 			return tours;
 		}
@@ -52,6 +61,7 @@ package
  			}
  			trace("tour: " + tours.getItemAt(0).shows.getItemAt(0).venueLat);
  			trace("completeHandler: " + this.data.toString());
+ 			callback.call();
         }
 
         private function openHandler(event:Event):void {

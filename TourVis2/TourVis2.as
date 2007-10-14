@@ -1,5 +1,7 @@
 package {
 	import flash.display.Sprite;
+	
+	import mx.collections.ArrayCollection;
 
 	[SWF(width="1000", height="800", backgroundColor="#ffffff", frameRate="30")]
 	public class TourVis2 extends Sprite
@@ -10,15 +12,20 @@ package {
 		{
 			gui = new Gui();
 			addChild(gui);
-			backend = new TourBus();
-			
-			
-			
+			trace("setting up backend");
+			backend = new TourBus(updateMap);
+			trace("backend instantiated.");
+			backend.loadTours();
+			trace("called loadTours");
 		}
 		
-		private function updateMap() {
-			ArrayCollection tours = backend.getTours();
-			foreach tour in 
+		public function updateMap() {
+			var tours:ArrayCollection = backend.getTours();
+			var tour:Tour;
+			trace ("updating map")
+			for each (tour in tours){
+			
+			} 
 		}
 		
 	}
