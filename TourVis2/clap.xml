@@ -1,0 +1,104 @@
+<TourList>
+	<tour band="Clap Your Hands Say Yeah">
+		<show date="2007-11-12">
+			<venue name="The Middle East">
+				<city>Cambridge</city>
+				<state>MA</state>
+				<geolocation lat="42.37447" lon="71.105759"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-16">
+			<venue name="Starlight">
+				<city>Philadelphia</city>
+				<state>PA</state>
+				<geolocation lat="39.95155" lon="75.163773"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-14">
+			<venue name="Studio">
+				<city>Brooklyn</city>
+				<state>NY</state>
+				<address>optional</address>
+				<geolocation lat="40.650799" lon="73.94539"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-13">
+			<venue name="Bowery Ballroom">
+				<city>New York</city>
+				<state>NY</state>
+				<geolocation lat="40.71463" lon="74.005806"/>
+			</venue>
+		</show>
+	</tour>
+	<tour band="Clap Your Hands Say Yeah">
+		<show date="2007-11-12">
+			<venue name="The Middle East">
+				<city>Cambridge</city>
+				<state>MA</state>
+				<geolocation lat="42.37447" lon="71.105759"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-16">
+			<venue name="Starlight">
+				<city>Philadelphia</city>
+				<state>PA</state>
+				<geolocation lat="39.95155" lon="75.163773"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-14">
+			<venue name="Studio">
+				<city>Brooklyn</city>
+				<state>NY</state>
+				<address>optional</address>
+				<geolocation lat="40.650799" lon="73.94539"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-13">
+			<venue name="Bowery Ballroom">
+				<city>New York</city>
+				<state>NY</state>
+				<geolocation lat="40.71463" lon="74.005806"/>
+			</venue>
+		</show>
+	</tour>
+	<tour band="Clap Your Hands Say Yeah">
+		<show date="2007-11-12">
+			<venue name="The Middle East">
+				<city>Cambridge</city>
+				<state>MA</state>
+				<geolocation lat="42.37447" lon="71.105759"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-16">
+			<venue name="Starlight">
+				<city>Philadelphia</city>
+				<state>PA</state>
+				<geolocation lat="39.95155" lon="75.163773"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-14">
+			<venue name="Studio">
+				<city>Brooklyn</city>
+				<state>NY</state>
+				<address>optional</address>
+				<geolocation lat="40.650799" lon="73.94539"/>
+			</venue>
+		</show>
+		
+		<show date="2007-11-13">
+			<venue name="Bowery Ballroom">
+				<city>New York</city>
+				<state>NY</state>
+				<geolocation lat="40.71463" lon="74.005806"/>
+			</venue>
+		</show>
+	</tour>
+</TourList>
