@@ -10,16 +10,26 @@ package {
 		private var backend:TourBus;
 		public function TourVis2()
 		{
-			gui = new Gui();
-			addChild(gui);
 			trace("setting up backend");
-			backend = new TourBus(updateMap);
+			backend = new TourBus(updateGui);
 			trace("backend instantiated.");
 			backend.loadTours();
 			trace("called loadTours");
 		}
 		
-		public function updateMap() {
+		public function updateGui():void{
+			gui = new Gui(this);
+			this.addChild(gui);
+			updateMap();
+			updateList(this.getBands());
+		}
+		
+		public function updateList(bands:Array):void{
+			gui.updateList(this.getBands());
+			}
+
+		
+		public function updateMap():void {
 			var tours:ArrayCollection = backend.getTours();
 			var tour:Tour;
 			trace ("updating map")
@@ -28,5 +38,14 @@ package {
 			} 
 		}
 		
+		public function getBands():Array{
+			var tours:ArrayCollection = backend.getTours();
+			var tour:Tour;
+			var result:Array = new Array();
+			for each (tour in tours){
+				result.push(tour.band);
+			}
+			return result;
+		}
 	}
 }
