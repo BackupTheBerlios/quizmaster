@@ -27,7 +27,7 @@ package{
 		private var circle:Sprite;
 		private var lineContainer:Sprite;		
 		
-		private var highlighted:String = "Modest Mouse";
+		private var highlighted:String;
 		
 		public function TourvisMap()
 		{
