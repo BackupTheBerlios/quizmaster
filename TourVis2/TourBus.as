@@ -22,7 +22,7 @@ package
 		public function loadTours():void{
 			var loader:URLLoader = new URLLoader();
             configureListeners(loader);
-            var request:URLRequest = new URLRequest("clap.xml");
+            var request:URLRequest = new URLRequest("bands.xml");
 //            loader.addEventListener(Event.COMPLETE, callback);
             loader.load(request);
  		}

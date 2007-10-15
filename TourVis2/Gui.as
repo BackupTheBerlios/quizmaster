@@ -1,7 +1,10 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
+	
+	import mx.collections.ArrayCollection;
 	
 	public class Gui extends Sprite {
 		private var map:TourvisMap;
@@ -22,15 +25,35 @@ package
 			return this.map;
 		}
 		
-		public function updateList(bands:Array):void{
-			var band:String;
-			for each (band in bands){
-				list.bandsList.appendText(band);
-				list.bandsList.appendText("\n");
+		public function updateList(tours:ArrayCollection):void{
+			var tour:Tour;
+			var yPosition:int = 0;
+			for each (tour in tours){
+				var newBand:Sprite = new Sprite();
+				var bandName:TextField = new TextField();
+				bandName.text = (tour.band);
+				bandName.textColor = tour.getColor();
+				newBand.addChild(bandName);
+				newBand.y = yPosition;
+				newBand.addEventListener(MouseEvent.MOUSE_OVER, highlight);
+				newBand.addEventListener(MouseEvent.MOUSE_OUT, unHighlight);
+				list.bandsList.addChild(newBand);
+				yPosition += 20;
 			}	
-			list.container.addChild(list.bandsList);
+//			list.container.addChild(list.bandsList);
+		}
+		
+		private function highlight(e:MouseEvent):void{
+			var temp:Sprite = Sprite(e.currentTarget);
+			var text:TextField = temp.getChildAt(0) as TextField;
+			trace (text.text);
+			map.highlight(temp.getChildAt(0).toString());
+		}
+		
+		private function unHighlight(e:MouseEvent):void{
+			
+		}
 		}
 		
 		
 	}
-}

@@ -25,10 +25,9 @@ package {
 		}
 		
 		public function updateList(bands:Array):void{
-			gui.updateList(this.getBands());
-			}
+			gui.updateList(backend.getTours());
+		}
 
-		
 		public function updateMap():void {
 			var tours:ArrayCollection = backend.getTours();
 			var tour:Tour;

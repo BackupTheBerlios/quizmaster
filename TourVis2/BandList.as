@@ -1,20 +1,27 @@
 package
 {
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	
 	
 	public class BandList extends Sprite
 	{
-		public var bandsList:TextField;
-		public var container:Sprite;
-		
+		public var bandsList:Sprite;
+//		public var listContainer:Sprite;
+				
 		public function BandList(x:Number, y:Number){
-			container = new Sprite();
-			bandsList = new TextField();
-			container.x = x;
-			container.y = y;
-//			container.scrollRect = new Rectangle(10,0,190,500);
-			this.addChild(container);			 
+//			listContainer = new Sprite();
+			bandsList = new Sprite;
+//			listContainer.addChild(bandsList);
+//			listContainer.x = x;
+//			listContainer.y = y;
+//			bandsList.width = 170;
+//			bandsList.height = 800;
+			bandsList.x = x;
+			bandsList.y = y;
+			addChild(bandsList);
+//			this.addChild(listContainer);			 
 		}
 	}
 }

@@ -27,7 +27,7 @@ package{
 		private var circle:Sprite;
 		private var lineContainer:Sprite;		
 		
-		private var highlighted:String;
+		private var highlighted:String = "Modest Mouse";
 		
 		public function TourvisMap()
 		{
@@ -72,7 +72,7 @@ package{
 			// Line
 			lines = new Sprite();
 			circle = new Sprite();
-			lineContainer.addChild(lines);
+			map.addChild(lines);
 			map.addChild(circle);
 			
 			redraw();
@@ -95,11 +95,10 @@ package{
 //				trace("color: " + new uint( colors[i % colors.length]).valueOf());
 //				var color:Number = i / tours.length *0xFFFFFF;
 //				var color:Number = i *0xFFFFFF;
-				var widthFactor = 1;
+				lines.graphics.lineStyle(map.getZoom() /3, tour.getColor(), .6);
 				if (tour.band == highlighted) {
-					widthFactor = 3;
+					lines.graphics.lineStyle(3 * map.getZoom() /3, 0xff0000);
 				}
-				lines.graphics.lineStyle(widthFactor * map.getZoom() /3, tour.getColor(), .6);
 				var last:Show;
 				for each (var show:Show in tour.shows) {
 					if (last != null) {
