@@ -116,6 +116,7 @@ package{
 		
 		public function highlight(band: String) {
 			this.highlighted = band;
+			redraw();
 		}
 		
 //		private function redraw():void {

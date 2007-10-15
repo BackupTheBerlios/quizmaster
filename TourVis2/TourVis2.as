@@ -20,21 +20,8 @@ package {
 		public function updateGui():void{
 			gui = new Gui(this);
 			this.addChild(gui);
-			updateMap();
-			updateList(this.getBands());
-		}
-		
-		public function updateList(bands:Array):void{
+			gui.getMap().updateMap(backend.getTours());
 			gui.updateList(backend.getTours());
-		}
-
-		public function updateMap():void {
-			var tours:ArrayCollection = backend.getTours();
-			var tour:Tour;
-			trace ("updating map")
-			for each (tour in tours){
-			
-			} 
 		}
 		
 		public function getBands():Array{

@@ -47,7 +47,7 @@ package
 			var temp:Sprite = Sprite(e.currentTarget);
 			var text:TextField = temp.getChildAt(0) as TextField;
 			trace (text.text);
-			map.highlight(temp.getChildAt(0).toString());
+			map.highlight(text.text);
 		}
 		
 		private function unHighlight(e:MouseEvent):void{
