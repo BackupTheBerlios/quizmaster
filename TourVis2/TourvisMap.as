@@ -41,7 +41,7 @@ package{
 	        
 //	        provider = new BlueMarbleMapProvider();
 	        provider = new OpenStreetMapProvider();
-			map = new Map(600, 600, true, provider);
+			map = new Map(800, 600, true, provider);
 			addChild(map);
 			lineContainer = new Sprite();
 			lineContainer.width = map.width;
@@ -51,9 +51,7 @@ package{
 	        map.addEventListener(MapEvent.STOP_ZOOMING, onStopZoom);
 	        map.addEventListener(MapEvent.PANNED, onPanned);
 	        map.addEventListener(MapEvent.STOP_PANNING, onStopPan);
-//			map.setExtent(new MapExtent(37.829853, 25.700121, -122.212601, -110.514725));
-			map.setExtent(new MapExtent(37.829853, 5.700121, -122.212601, -100.514725));
-//			map.putMarker("asdf", new Location(37.804274, -122.262940));
+			map.setExtent(new MapExtent(47.829853, 15.700121, -112.212601, -90.514725));
 			var buttons:Array = new Array();
 	        
 	        navButtons = new Sprite();
@@ -71,7 +69,11 @@ package{
 			
 			// Line
 			lines = new Sprite();
+//			lines.width = map.width;
+//			lines.height = map.height;
 			circle = new Sprite();
+//			circle.width = map.width;
+//			circle.height = map.height;
 			map.addChild(lines);
 			map.addChild(circle);
 			
@@ -114,7 +116,7 @@ package{
 			}
 		}
 		
-		public function highlight(band: String) {
+		public function highlight(band: String):void {
 			this.highlighted = band;
 			redraw();
 		}
